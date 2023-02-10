@@ -18,5 +18,14 @@ public interface CustomerSessionBeanLocal {
     public List<Customer> retrieveAllCustomers();
 
     public Long createNewCustomer(Customer customer);
-    
+
+    public Customer retrieveCustomerById(Long customerId);
+
+    public Customer retrieveCustomerByUsernameAndPassword(String username, String password);    
+
+    public void updateCustomerProfile(Customer newCustomer);
+
+    public void updateCustomerPassword(Long customerId, String password);
+
+    public void deactivateCustomerAccount(Long customerId);
 }

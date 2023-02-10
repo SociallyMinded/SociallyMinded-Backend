@@ -5,15 +5,10 @@
 package service;
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
-import ejb.session.stateless.CustomerSessionBeanRemote;
-import entity.Customer;
+import entity.SocialEnterprise;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -31,27 +26,31 @@ import javax.ws.rs.core.MediaType;
  * @author ongyongen
  */
 @Stateless
-@Path("entity.customer")
-public class CustomerFacadeREST extends AbstractFacade<Customer> {
-    
+@Path("entity.socialenterprise")
+public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise> {
+
+    @EJB
+    private CustomerSessionBeanLocal customerSessionBeanLocal;
+
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
+ 
 
-    public CustomerFacadeREST() {
-        super(Customer.class);
+    public SocialEnterpriseFacadeREST() {
+        super(SocialEnterprise.class);
     }
 
     @POST
     @Override
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Customer entity) {
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void create(SocialEnterprise entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Customer entity) {
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void edit(@PathParam("id") Long id, SocialEnterprise entity) {
         super.edit(entity);
     }
 
@@ -63,22 +62,22 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Customer find(@PathParam("id") Long id) {
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public SocialEnterprise find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<Customer> findAll() {
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<SocialEnterprise> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<Customer> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<SocialEnterprise> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -93,6 +92,5 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
     
 }

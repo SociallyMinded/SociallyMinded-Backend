@@ -4,8 +4,6 @@
  */
 package ejb.session.stateless;
 
-import entity.Customer;
-import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -13,11 +11,6 @@ import javax.ejb.Remote;
  * @author ongyongen
  */
 @Remote
-public interface CustomerSessionBeanRemote {
+public interface ProductSessionBeanRemote {
     
-    public List<Customer> retrieveAllCustomers();
-
-    public Long createNewCustomer(Customer customer);
-    
-    public Customer retrieveCustomerById(Long customerId);
 }
