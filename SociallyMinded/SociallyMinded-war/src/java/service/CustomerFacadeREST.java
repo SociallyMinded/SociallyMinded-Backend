@@ -45,12 +45,6 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
         super(Customer.class);
     }
 
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Customer entity) {
-        super.create(entity);
-    }
 
     @PUT
     @Path("{id}")
@@ -108,6 +102,24 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .header("Access-Control-Max-Age", "1209600")
                 .entity(super.findAll())
+                .build();
+    }
+
+    @POST
+    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Asynchronous
+    public void create(@Suspended final AsyncResponse asyncResponse, final Customer entity) {
+        asyncResponse.resume(doCreate(entity));
+    }
+
+    private Response doCreate(Customer entity) {
+        super.create(entity);
+        return Response.status(200)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .header("Access-Control-Max-Age", "1209600")
                 .build();
     }
 

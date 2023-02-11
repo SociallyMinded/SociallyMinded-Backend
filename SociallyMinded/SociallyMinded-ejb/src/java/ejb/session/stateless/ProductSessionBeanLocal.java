@@ -15,8 +15,16 @@ import javax.ejb.Local;
 @Local
 public interface ProductSessionBeanLocal {
 
-    public Long createNewProduct(Product product);
-
     public List<Product> retrieveAllProducts();
+
+    public Long createNewProduct(Product product, Long enterpriseId);
+
+    public List<Product> retrieveAllProductsByEnterpriseId(Long enterpriseId);
+
+    public List<Product> retrieveAllProductsByEnterpriseName(String enterpriseName);
+
+    public Product retrieveProductById(Long productId);
+
+    public List<Product> retrieveProductByName(String productName);
     
 }

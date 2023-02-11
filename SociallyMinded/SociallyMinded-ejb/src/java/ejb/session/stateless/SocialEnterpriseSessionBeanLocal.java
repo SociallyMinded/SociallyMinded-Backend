@@ -4,6 +4,8 @@
  */
 package ejb.session.stateless;
 
+import entity.SocialEnterprise;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -12,5 +14,13 @@ import javax.ejb.Local;
  */
 @Local
 public interface SocialEnterpriseSessionBeanLocal {
+
+    public Long createNewSocialEnterprise(SocialEnterprise enterprise);
+
+    public List<SocialEnterprise> retrieveAllSocialEnterprises();
+
+    public SocialEnterprise retrieveSocialEnterpriseById(Long enterpriseId);
+
+    public List<SocialEnterprise> retrieveSocialEnterpriseByName(String enterpriseName);
     
 }

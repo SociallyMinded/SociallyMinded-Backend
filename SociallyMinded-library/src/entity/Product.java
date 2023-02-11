@@ -6,10 +6,13 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,8 +31,24 @@ public class Product implements Serializable {
     private BigDecimal price;
     private String description;
     private String imageLink;
+    private BigDecimal ratingScore;
+    private BigDecimal numRatings;
+    
+    @OneToMany(mappedBy="product")
+    private List<Review> reviews; 
+    
+    @OneToOne
+    private SocialEnterprise socialenterprise;
+    
+    @OneToMany(mappedBy="product")
+    private List<OrderRecord> orders;
 
     public Product() {
+    }
+    
+    // TODO : delete after testing
+    public Product(String name) {
+        this.name = name;
     }
 
     public Product(String name, BigDecimal price, String description, String imageLink) {
@@ -37,7 +56,52 @@ public class Product implements Serializable {
         this.price = price;
         this.description = description;
         this.imageLink = imageLink;
+        this.ratingScore = new BigDecimal(0);
+        this.numRatings = new BigDecimal(0);
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public SocialEnterprise getSocialenterprise() {
+        return socialenterprise;
+    }
+
+    public void setSocialenterprise(SocialEnterprise socialenterprise) {
+        this.socialenterprise = socialenterprise;
+    }
+
+    public List<OrderRecord> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderRecord> orders) {
+        this.orders = orders;
+    }
+    
+    
+
+    public Number getRatingScore() {
+        return ratingScore;
+    }
+
+    public void setRatingScore(BigDecimal ratingScore) {
+        this.ratingScore = ratingScore;
+    }
+
+    public Number getNumRatings() {
+        return numRatings;
+    }
+
+    public void setNumRatings(BigDecimal numRatings) {
+        this.numRatings = numRatings;
+    }
+
 
     public String getName() {
         return name;

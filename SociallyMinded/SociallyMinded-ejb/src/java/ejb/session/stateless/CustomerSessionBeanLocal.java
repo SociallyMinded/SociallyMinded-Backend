@@ -5,6 +5,7 @@
 package ejb.session.stateless;
 
 import entity.Customer;
+import enumeration.AccountStatus;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -23,9 +24,7 @@ public interface CustomerSessionBeanLocal {
 
     public Customer retrieveCustomerByUsernameAndPassword(String username, String password);    
 
-    public void updateCustomerProfile(Customer newCustomer);
-
-    public void updateCustomerPassword(Long customerId, String password);
-
     public void deactivateCustomerAccount(Long customerId);
+
+    public void updateCustomerProfile(Long customerId, String username, String password, String address, String email, String firstName, String lastName, String creditCardNos, String creditCardCVV, AccountStatus accountStatus);
 }

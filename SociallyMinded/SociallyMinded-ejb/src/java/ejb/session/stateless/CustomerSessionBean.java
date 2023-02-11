@@ -54,28 +54,26 @@ public class CustomerSessionBean implements CustomerSessionBeanRemote, CustomerS
         return (Customer) query.getSingleResult();
     }
     
-    
-    public void updateCustomerProfile(Customer newCustomer) {
-        Customer customerToUpdate = this.retrieveCustomerById(newCustomer.getCustomerId());
-        customerToUpdate.setUsername(newCustomer.getUsername());
-        customerToUpdate.setPassword(newCustomer.getPassword());
-        customerToUpdate.setAddress(newCustomer.getAddress());
-        customerToUpdate.setEmail(newCustomer.getEmail());
-        customerToUpdate.setFirstName(newCustomer.getFirstName());
-        customerToUpdate.setLastName(newCustomer.getLastName());
-        customerToUpdate.setDateJoined(newCustomer.getDateJoined());
-        customerToUpdate.setCreditCardNos(newCustomer.getCreditCardNos());
-        customerToUpdate.setCreditCardCVV(newCustomer.getCreditCardCVV());
-        customerToUpdate.setCreditCardExpiryDate(newCustomer.getCreditCardExpiryDate());
+    public void updateCustomerProfile(Long customerId, String username, String password, String address, 
+            String email, String firstName, String lastName, String creditCardNos, 
+            String creditCardCVV, AccountStatus accountStatus) {
+        Customer customer = this.retrieveCustomerById(customerId);
+        customer.setUsername(username);
+        customer.setPassword(password);
+        customer.setAddress(address);
+        customer.setEmail(email);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setCreditCardNos(creditCardNos);
+        customer.setCreditCardCVV(creditCardCVV);
+        customer.setAccountStatus(accountStatus);
     }
-    
-    public void updateCustomerPassword(Long customerId, String password) {
-        Customer customerToUpdate = this.retrieveCustomerById(customerId);
-        customerToUpdate.setPassword(password);
-    }
-    
+
+    // TODO : prevent deactivation if there's pending orders ; decide whether to 
+    //        delete this entirely or deactivate?
     public void deactivateCustomerAccount(Long customerId) {
         Customer customerToDeactivate = this.retrieveCustomerById(customerId);
         customerToDeactivate.setAccountStatus(AccountStatus.INACTIVE);
     }
+    
 }

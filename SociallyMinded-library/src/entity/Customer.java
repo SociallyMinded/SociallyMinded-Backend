@@ -7,10 +7,12 @@ package entity;
 import enumeration.AccountStatus;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,10 +45,17 @@ public class Customer implements Serializable {
     @Temporal(DATE)
     private Date creditCardExpiryDate; 
     
+    @OneToMany(mappedBy="customer")
+    private List<Review> reviews;
+    
+    @OneToMany(mappedBy="customer")
+    private List<OrderRecord> orders;
+    
 
     public Customer() {
     }
     
+    // TODO : Delete after testing
     public Customer(String name) {
         this.username = name;
     }
@@ -84,6 +93,24 @@ public class Customer implements Serializable {
     public void setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<OrderRecord> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderRecord> orders) {
+        this.orders = orders;
+    }
+    
+    
     
     public String getPassword() {
         return password;

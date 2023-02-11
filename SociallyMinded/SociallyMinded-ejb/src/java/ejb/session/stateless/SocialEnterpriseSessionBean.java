@@ -6,6 +6,7 @@ package ejb.session.stateless;
 
 import entity.Product;
 import entity.SocialEnterprise;
+import enumeration.AccountStatus;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,7 +43,16 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
         Query query = em.createQuery("SELECT e FROM SocialEnterprise e"
                 + "WHERE e.enterpriseName = :enterpriseName");
         return query.getResultList();
-        
     }
     
+    public void updateSocialEnterpriseDetails(Long enterpriseId, String name, String username, String password,
+            String address, String email, AccountStatus accountStatus) {
+        SocialEnterprise enterprise = this.retrieveSocialEnterpriseById(enterpriseId);
+        enterprise.setEnterpriseName(name);
+        enterprise.setUsername(username);
+        enterprise.setPassword(password);
+        enterprise.setAddress(address);
+        enterprise.setEmail(email);
+        enterprise.setAccountStatus(accountStatus);
+    }
 }

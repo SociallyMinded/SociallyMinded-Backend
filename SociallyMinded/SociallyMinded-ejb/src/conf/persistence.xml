@@ -3,6 +3,10 @@
   <persistence-unit name="SociallyMinded-ejbPU" transaction-type="JTA">
     <jta-data-source>jdbc/SociallyMinded</jta-data-source>
     <class>entity.Customer</class>
+    <class>entity.Product</class>
+    <class>entity.Review</class>
+    <class>entity.SocialEnterprise</class>
+    <class>entity.OrderRecord</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

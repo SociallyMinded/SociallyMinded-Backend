@@ -4,12 +4,15 @@
  */
 package entity;
 
+import enumeration.AccountStatus;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,24 +28,59 @@ public class SocialEnterprise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long socialEnterpriseId;
     private String enterpriseName; 
+    private String username;
     private String password;
     private String address;
     private String email;    
     private Date dateJoined;
-    private String phoneNos;
+    private AccountStatus accountStatus;
+    
+    @OneToMany(mappedBy="socialenterprise")
+    private List<Product> products;
 
     public SocialEnterprise() {
     }
+    
+    // TODO : delete after testing
+    public SocialEnterprise(String username) {
+        this.username = username;
+    }
 
-    public SocialEnterprise(String companyName, String password, String address, String email, Date dateJoined, String phoneNos) {
-        this.enterpriseName = companyName;
+    public SocialEnterprise(String enterpriseName, String username, String password, String address, String email, Date dateJoined) {
+        this.enterpriseName = enterpriseName;
+        this.username = username;
         this.password = password;
         this.address = address;
         this.email = email;
         this.dateJoined = dateJoined;
-        this.phoneNos = phoneNos;
+        this.accountStatus = AccountStatus.ACTIVE;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+    
     public String getEnterpriseName() {
         return enterpriseName;
     }
@@ -82,15 +120,6 @@ public class SocialEnterprise implements Serializable {
     public void setDateJoined(Date dateJoined) {
         this.dateJoined = dateJoined;
     }
-
-    public String getPhoneNos() {
-        return phoneNos;
-    }
-
-    public void setPhoneNos(String phoneNos) {
-        this.phoneNos = phoneNos;
-    }
-    
 
     public Long getSocialEnterpriseId() {
         return socialEnterpriseId;
