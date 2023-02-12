@@ -7,18 +7,19 @@ package model;
 
 import entity.Product;
 
+
 /**
  *
  * @author ongyongen
  */
-public class ProductRequestTemplate {
+public class CreateOrUpdateProductTemplate {
     private Product product;
     private Long socialEnterpriseId;
 
-    public ProductRequestTemplate() {
+    public CreateOrUpdateProductTemplate() {
     }
 
-    public ProductRequestTemplate(Product product, Long socialEnterpriseId) {
+    public CreateOrUpdateProductTemplate(Product product, Long socialEnterpriseId) {
         this.product = product;
         this.socialEnterpriseId = socialEnterpriseId;
     }

@@ -8,6 +8,7 @@ import enumeration.AccountStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,9 +51,11 @@ public class Customer implements Serializable {
     @Temporal(DATE)
     private Date creditCardExpiryDate; 
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @OneToMany(mappedBy="customer")
     private List<Review> reviews;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @OneToMany(mappedBy="customer")
     private List<OrderRecord> orders;
     

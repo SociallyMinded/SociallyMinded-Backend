@@ -11,15 +11,24 @@ import entity.Product;
 import entity.SocialEnterprise;
 import enumeration.OrderStatus;
 import exception.CustomerNotFoundException;
+import exception.InputDataValidationException;
 import exception.OrderRecordNotFoundException;
 import exception.ProductNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -33,29 +42,51 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
 
     @EJB
     private CustomerSessionBeanLocal customerSessionBeanLocal;
+    
 
-    
-    
     @PersistenceContext(unitName = "SociallyMinded-ejbPU")
     private EntityManager em;
+    
+    private final ValidatorFactory validatorFactory;
+    private final javax.validation.Validator validator;
+    
+    public OrderRecordSessionBean() {
+        this.validatorFactory = Validation.buildDefaultValidatorFactory();
+        this.validator = validatorFactory.getValidator();
+    }
+    
+    private String prepareInputDataValidationErrorMsg(Set<ConstraintViolation<OrderRecord>> violations) {
+        String msg = "";
+
+        for (ConstraintViolation violation : violations) {
+            msg += violation.getPropertyPath() + " - " + violation.getMessage() + ";";
+        }
+
+        return msg;
+    }
 
     
     @Override
-    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException {
+    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
         if (productSessionBeanLocal.retrieveProductById(productId) == null) {
             throw new ProductNotFoundException();
         } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
             throw new CustomerNotFoundException();
         } else {
-            Product product = productSessionBeanLocal.retrieveProductById(productId);
-            Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
-            product.getOrders().add(order);
-            customer.getOrders().add(order);
-            order.setProduct(product);
-            order.setCustomer(customer);
-            em.persist(order);
-            em.flush();
-            return order.getOrderRecordId();
+            Set<ConstraintViolation<OrderRecord>> constraintViolations = validator.validate(order);
+            if (constraintViolations.isEmpty()) {
+                Product product = productSessionBeanLocal.retrieveProductById(productId);
+                Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+                product.getOrders().add(order);
+                customer.getOrders().add(order);
+                order.setProduct(product);
+                order.setCustomer(customer);
+                em.persist(order);
+                em.flush();
+                return order.getOrderRecordId();
+            } else {
+                throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+            }
         } 
     }
 
@@ -93,15 +124,22 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     
     //TODO : check if need to merge back to customer / product List
     @Override
-    public void updateOrderRecord(Long oldOrderRecordId, BigDecimal quantity, 
-            BigDecimal totalPrice, OrderStatus orderstatus) throws OrderRecordNotFoundException {
-        if (this.retrieveOrderRecordById(oldOrderRecordId) == null) {
-            throw new OrderRecordNotFoundException();
+    public void updateOrderRecordDetails(OrderRecord newOrderRecord, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
+        if (productSessionBeanLocal.retrieveProductById(productId) == null) {
+            throw new ProductNotFoundException();
+        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+            throw new CustomerNotFoundException();
         } else {
-            OrderRecord order = this.retrieveOrderRecordById(oldOrderRecordId);
-            order.setQuantity(quantity);
-            order.setTotalPrice(totalPrice);
-            order.setOrderStatus(orderstatus);
+            Set<ConstraintViolation<OrderRecord>> constraintViolations = validator.validate(newOrderRecord);
+            if (constraintViolations.isEmpty()) {
+                Product product = productSessionBeanLocal.retrieveProductById(productId);
+                Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+                newOrderRecord.setProduct(product);
+                newOrderRecord.setCustomer(customer);
+                em.merge(newOrderRecord);
+            } else {
+                throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+            }
         }
     }
     

@@ -4,15 +4,10 @@
  */
 package service;
 
-import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.OrderRecordSessionBeanLocal;
-import entity.Customer;
 import entity.OrderRecord;
-import entity.SocialEnterprise;
-import exception.CustomerNotFoundException;
-import exception.InputDataValidationException;
+import exception.OrderRecordNotFoundException;
 import java.util.List;
-import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,11 +21,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.ProductRequestTemplate;
+import model.CreateOrUpdateOrderRecordTemplate;
 import model.ErrorResponseTemplate;
 
 /**
@@ -60,7 +53,7 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
  
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response findAllOrders() {
+    public Response findAllOrderRecords() {
         try {
             List<OrderRecord> orders = orderRecordSessionBeanLocal.retrieveAllOrderRecords();
             return Response
@@ -77,13 +70,124 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
           
     }
        
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findOrderRecordById(@PathParam("id") Long id) {
+        try {
+            OrderRecord record = orderRecordSessionBeanLocal.retrieveOrderRecordById(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(record)
+                    .build();
+        } catch (OrderRecordNotFoundException ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
     
-//    @DELETE
-//    @Path("{id}")
-//    public void remove(@PathParam("id") Long id) {
-//        super.remove(super.find(id));
-//    }
     
+    @GET
+    @Path("findOrderRecordsByCustomerId/{customerId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findOrderRecordsByCustomerId(@PathParam("customerId") Long customerId) {
+        try {
+            List<OrderRecord> records = orderRecordSessionBeanLocal.retrieveOrderRecordsByCustomerId(customerId);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(records)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @GET
+    @Path("findOrderRecordsByProductId/{productId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findOrderRecordsByProductId(@PathParam("customerId") Long productId) {
+        try {
+            List<OrderRecord> records = orderRecordSessionBeanLocal.retrieveOrderRecordsByProductId(productId);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(records)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @GET
+    @Path("count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String countREST() {
+        return String.valueOf(super.count());
+    }
+    
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response create(CreateOrUpdateOrderRecordTemplate orderReq) {
+        try {
+            Long recordId = orderRecordSessionBeanLocal.createNewOrderRecord(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerId());
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response edit(@PathParam("id") Long id, CreateOrUpdateOrderRecordTemplate orderReq) {
+        try {
+            orderRecordSessionBeanLocal.updateOrderRecordDetails(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerId());
+            
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+      
+    @DELETE
+    @Path("{id}")
+    public Response remove(@PathParam("id") Long id) {
+         try {
+            orderRecordSessionBeanLocal.deleteOrderRecord(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+         
+    }    
 }
 
  

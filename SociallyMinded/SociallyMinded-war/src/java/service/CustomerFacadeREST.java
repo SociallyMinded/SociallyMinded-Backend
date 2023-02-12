@@ -27,7 +27,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.ProductRequestTemplate;
+import model.CreateOrUpdateProductTemplate;
 import model.ErrorResponseTemplate;
 
 /**

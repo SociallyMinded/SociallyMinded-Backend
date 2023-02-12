@@ -30,7 +30,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.ProductRequestTemplate;
+import model.CreateOrUpdateProductTemplate;
 import model.ErrorResponseTemplate;
 
 /**
@@ -118,6 +118,25 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
     
     @GET
+    @Path("findProductsByEnterpriseId/{enterpriseId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findProductsByEnterpriseId(@PathParam("enterpriseId") Long enterpriseId) {
+        try {
+            List<Product> products = productSessionBeanLocal.retrieveAllProductsByEnterpriseId(enterpriseId);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(products)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @GET
     @Path("findProductByEnterpriseName/{enterprisename}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response findProductsByEnterpriseName(@PathParam("enterprisename") String enterprisename) {
@@ -152,7 +171,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response create(ProductRequestTemplate productReq) {
+    public Response create(CreateOrUpdateProductTemplate productReq) {
         try {
             Long productId = productSessionBeanLocal.createNewProduct(productReq.getProduct(), productReq.getSocialEnterpriseId());
             return Response
@@ -170,7 +189,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response edit(@PathParam("id") Long id, ProductRequestTemplate productReq) {
+    public Response edit(@PathParam("id") Long id, CreateOrUpdateProductTemplate productReq) {
         try {
             productSessionBeanLocal.updateProductDetails(productReq.getProduct(), productReq.getSocialEnterpriseId());
             

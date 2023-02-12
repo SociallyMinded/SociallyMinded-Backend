@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,9 +36,11 @@ public class Review implements Serializable {
     @Temporal(DATE)
     private Date dateOfReview;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Customer customer;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Product product;
 

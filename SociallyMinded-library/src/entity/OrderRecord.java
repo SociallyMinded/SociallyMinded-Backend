@@ -9,6 +9,7 @@ import enumeration.OrderStatus;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,16 +33,21 @@ public class OrderRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderRecordId;
+    
+    @NotNull
     private BigDecimal quantity;
     private BigDecimal totalPrice;
     private OrderStatus orderStatus;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @Temporal(DATE)
     private Date dateOfOrder;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Product product;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Customer customer;
 
