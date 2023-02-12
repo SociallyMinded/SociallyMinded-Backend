@@ -7,6 +7,7 @@ package ejb.session.stateless;
 
 import entity.Review;
 import exception.CustomerNotFoundException;
+import exception.InputDataValidationException;
 import exception.ProductNotFoundException;
 import exception.ReviewNotFoundException;
 import java.util.List;
@@ -24,10 +25,15 @@ public interface ReviewSessionBeanLocal {
 
     public List<Review> retrieveAllReviews();
 
-    public Long createNewReview(Review review, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException;
-
+    public Long createNewReview(Review review, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;
+    
     public List<Review> retrieveReviewsByCustomerId(Long customerId);
 
     public List<Review> retrieveReviewsByProductId(Long productId);
+
+    public void deleteReview(Long reviewId) throws ReviewNotFoundException;
+    
+    public void updateReviewDetails(Review newReview, Long productId, Long customerId) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException;
+
     
 }

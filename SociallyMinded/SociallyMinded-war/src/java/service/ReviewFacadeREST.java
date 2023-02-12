@@ -5,8 +5,11 @@
  */
 package service;
 
+import ejb.session.stateless.ReviewSessionBeanLocal;
 import entity.Review;
+import exception.ReviewNotFoundException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +22,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import model.CreateOrUpdateReviewTemplate;
+import model.ErrorResponseTemplate;
 
 /**
  *
@@ -28,64 +34,154 @@ import javax.ws.rs.core.MediaType;
 @Path("entity.review")
 public class ReviewFacadeREST extends AbstractFacade<Review> {
 
+    @EJB
+    private ReviewSessionBeanLocal reviewSessionBeanLocal;
+    
+
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
+    
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
     public ReviewFacadeREST() {
         super(Review.class);
     }
-
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Review entity) {
-        super.create(entity);
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findAllReviews() {
+        try {
+            List<Review> reviews = reviewSessionBeanLocal.retrieveAllReviews();
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(reviews)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }   
     }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Review entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
-    }
-
+    
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Review find(@PathParam("id") Long id) {
-        return super.find(id);
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findReviewById(@PathParam("id") Long id) {
+        try {
+            Review review = reviewSessionBeanLocal.retrieveReviewById(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(review)
+                    .build();
+        } catch (ReviewNotFoundException ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
-
+    
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Review> findAll() {
-        return super.findAll();
+    @Path("findReviewsByProductId/{productId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findReviewsByProductId(@PathParam("productId") Long productId) {
+        try {
+            List<Review> reviews = reviewSessionBeanLocal.retrieveReviewsByProductId(productId);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(reviews)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
-
+    
     @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Review> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    @Path("findReviewsByCustomerId/{customerId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findReviewsByCustomerId(@PathParam("customerId") Long customerId) {
+        try {
+            List<Review> reviews = reviewSessionBeanLocal.retrieveReviewsByCustomerId(customerId);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(reviews)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
-
+    
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response create(CreateOrUpdateReviewTemplate reviewReq) {
+        try {
+            Long reviewId = reviewSessionBeanLocal.createNewReview(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustomerId());
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
     
+    @PUT
+    @Path("{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response edit(@PathParam("id") Long id, CreateOrUpdateReviewTemplate reviewReq) {
+        try {
+            reviewSessionBeanLocal.updateReviewDetails(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustomerId());            
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public Response remove(@PathParam("id") Long id) {
+         try {
+            reviewSessionBeanLocal.deleteReview(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }   
+    }
 }
+    
