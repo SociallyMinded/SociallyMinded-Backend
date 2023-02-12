@@ -61,7 +61,7 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
 
     @Override
     public List<OrderRecord> retrieveAllOrderRecords() {
-        Query query = em.createQuery("SELECT ord FROM Order ord");
+        Query query = em.createQuery("SELECT ord FROM OrderRecord ord");
         return query.getResultList();
     }
     
