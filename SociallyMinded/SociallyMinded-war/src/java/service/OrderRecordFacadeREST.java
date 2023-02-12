@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.service;
+package service;
 
-import entity.Customer;
+import entity.OrderRecord;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,27 +25,27 @@ import javax.ws.rs.core.MediaType;
  * @author admin
  */
 @Stateless
-@Path("entity.customer")
-public class CustomerFacadeREST extends AbstractFacade<Customer> {
+@Path("entity.orderrecord")
+public class OrderRecordFacadeREST extends AbstractFacade<OrderRecord> {
 
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
 
-    public CustomerFacadeREST() {
-        super(Customer.class);
+    public OrderRecordFacadeREST() {
+        super(OrderRecord.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Customer entity) {
+    public void create(OrderRecord entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Customer entity) {
+    public void edit(@PathParam("id") Long id, OrderRecord entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Customer find(@PathParam("id") Long id) {
+    public OrderRecord find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Customer> findAll() {
+    public List<OrderRecord> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Customer> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<OrderRecord> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

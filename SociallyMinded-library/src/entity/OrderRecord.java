@@ -17,12 +17,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ongyongen
  */
 @Entity
+@XmlRootElement
 public class OrderRecord implements Serializable {
 
     private static final long serialVersionUID = 1L;

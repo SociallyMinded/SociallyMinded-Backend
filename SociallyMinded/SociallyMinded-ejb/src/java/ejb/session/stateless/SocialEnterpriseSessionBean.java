@@ -97,11 +97,5 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
         } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
         }
-    }
-    
-    public void addProductToSocialEnterprise(Product product) throws SocialEnterpriseNotFoundException {
-        Long enterpriseId = product.getSocialenterprise().getSocialEnterpriseId();
-        SocialEnterprise enterprise = this.retrieveSocialEnterpriseById(enterpriseId);
-        enterprise.getProducts().add(product);
-    }
+    } 
 }

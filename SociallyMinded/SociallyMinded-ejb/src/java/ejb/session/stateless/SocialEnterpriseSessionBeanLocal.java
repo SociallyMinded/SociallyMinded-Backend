@@ -27,7 +27,5 @@ public interface SocialEnterpriseSessionBeanLocal {
     public SocialEnterprise retrieveSocialEnterpriseByName(String enterpriseName) throws SocialEnterpriseNotFoundException;
 
     public void updateSocialEnterpriseDetails(SocialEnterprise newSocialEnterprise) throws InputDataValidationException;
-
-    public void addProductToSocialEnterprise(Product product) throws SocialEnterpriseNotFoundException;
     
 }
