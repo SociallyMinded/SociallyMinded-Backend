@@ -154,13 +154,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .build();
         }
     }
-    
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<Product> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
+
 
     @GET
     @Path("count")

@@ -6,9 +6,7 @@
 package service;
 
 import ejb.session.stateless.SocialEnterpriseSessionBeanLocal;
-import entity.Customer;
 import entity.SocialEnterprise;
-import exception.CustomerNotFoundException;
 import exception.SocialEnterpriseNotFoundException;
 import java.util.List;
 import javax.ejb.Asynchronous;
@@ -17,7 +15,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -32,7 +29,7 @@ import model.ErrorResponseTemplate;
 
 /**
  *
- * @author admin
+ * @author ongyongen
  */
 @Stateless
 @Path("entity.socialenterprise")
@@ -109,13 +106,6 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
                     .entity(errorRsp)
                     .build();
         }
-    }
-    
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<SocialEnterprise> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
     }
 
     @GET
