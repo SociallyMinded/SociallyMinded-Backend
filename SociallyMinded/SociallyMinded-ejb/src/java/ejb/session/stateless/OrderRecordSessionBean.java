@@ -77,7 +77,7 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     
     @Override
     public List<OrderRecord> retrieveOrderRecordsByProductId(Long productId) {
-        Query query = em.createQuery("SELECT ord FROM Order ord "
+        Query query = em.createQuery("SELECT ord FROM OrderRecord ord "
                 + "WHERE ord.product.productId = :productId");
         query.setParameter("productId", productId);
         return query.getResultList();
@@ -85,7 +85,7 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     
     @Override
     public List<OrderRecord> retrieveOrderRecordsByCustomerId(Long customerId) {
-        Query query = em.createQuery("SELECT ord FROM Order ord "
+        Query query = em.createQuery("SELECT ord FROM OrderRecord ord "
                 + "WHERE ord.customer.customerId = :customerId");
         query.setParameter("customerId", customerId);
         return query.getResultList();

@@ -137,25 +137,6 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
     
     @GET
-    @Path("findProductByEnterpriseId/{enterpriseid}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response findProductsByEnterpriseId(@PathParam("enterprisename") Long enterpriseid) {
-        try {
-            List<Product> products = productSessionBeanLocal.retrieveAllProductsByEnterpriseId(enterpriseid);
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(products)
-                    .build();
-        } catch (Exception ex) {
-            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(errorRsp)
-                    .build();
-        }
-    }
-    
-    @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON})
     public List<Product> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
