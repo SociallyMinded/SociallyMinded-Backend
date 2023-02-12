@@ -7,6 +7,9 @@ package ejb.session.stateless;
 
 import entity.OrderRecord;
 import enumeration.OrderStatus;
+import exception.CustomerNotFoundException;
+import exception.OrderRecordNotFoundException;
+import exception.ProductNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
@@ -20,14 +23,16 @@ public interface OrderRecordSessionBeanLocal {
 
     public List<OrderRecord> retrieveOrderRecordsByProductId(Long productId);
 
-    public void deleteOrderRecord(Long oldOrderId);
+    public void deleteOrderRecord(Long oldOrderId) throws OrderRecordNotFoundException;
 
-    public void updateOrderRecord(Long oldOrderId, BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderstatus);
+    public void updateOrderRecord(Long oldOrderId, BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderstatus) throws OrderRecordNotFoundException;
 
     public List<OrderRecord> retrieveOrderRecordsByCustomerId(Long customerId);
 
-    public OrderRecord retrieveOrderRecordById(Long orderId);
+    public OrderRecord retrieveOrderRecordById(Long orderId) throws OrderRecordNotFoundException;
 
     public List<OrderRecord> retrieveAllOrderRecords();
+
+    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException;
     
 }

@@ -4,7 +4,10 @@
  */
 package ejb.session.stateless;
 
+import entity.Product;
 import entity.SocialEnterprise;
+import exception.InputDataValidationException;
+import exception.SocialEnterpriseNotFoundException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,12 +18,16 @@ import javax.ejb.Local;
 @Local
 public interface SocialEnterpriseSessionBeanLocal {
 
-    public Long createNewSocialEnterprise(SocialEnterprise enterprise);
+    public Long createNewSocialEnterprise(SocialEnterprise enterprise) throws InputDataValidationException;
 
     public List<SocialEnterprise> retrieveAllSocialEnterprises();
 
-    public SocialEnterprise retrieveSocialEnterpriseById(Long enterpriseId);
+    public SocialEnterprise retrieveSocialEnterpriseById(Long enterpriseId) throws SocialEnterpriseNotFoundException;
 
-    public List<SocialEnterprise> retrieveSocialEnterpriseByName(String enterpriseName);
+    public SocialEnterprise retrieveSocialEnterpriseByName(String enterpriseName) throws SocialEnterpriseNotFoundException;
+
+    public void updateSocialEnterpriseDetails(SocialEnterprise newSocialEnterprise) throws InputDataValidationException;
+
+    public void addProductToSocialEnterprise(Product product) throws SocialEnterpriseNotFoundException;
     
 }

@@ -4,9 +4,17 @@
  */
 package service;
 
+import ejb.session.stateless.ProductSessionBeanLocal;
+import ejb.session.stateless.SocialEnterpriseSessionBeanLocal;
 import entity.Product;
+import exception.InputDataValidationException;
+import exception.ProductNotFoundException;
+import exception.SocialEnterpriseNotFoundException;
 import java.util.List;
+import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebParam;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -17,7 +25,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import model.CreateNewProductReq;
+import model.ErrorRsp;
 
 /**
  *
@@ -27,50 +41,123 @@ import javax.ws.rs.core.MediaType;
 @Path("entity.product")
 public class ProductFacadeREST extends AbstractFacade<Product> {
 
+    @EJB
+    private SocialEnterpriseSessionBeanLocal socialEnterpriseSessionBeanLocal;
+
+    @EJB
+    private ProductSessionBeanLocal productSessionBeanLocal;
+    
+
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
+        
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
     public ProductFacadeREST() {
         super(Product.class);
     }
-
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Product entity) {
-        super.create(entity);
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findAllProducts() {
+        try {
+            List<Product> products = productSessionBeanLocal.retrieveAllProducts();
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(products)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+          
     }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Product entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
-    }
-
+    
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Product find(@PathParam("id") Long id) {
-        return super.find(id);
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findProductById(@PathParam("id") Long id) {
+        try {
+            Product product = productSessionBeanLocal.retrieveProductById(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(product)
+                    .build();
+        } catch (ProductNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
-
+    
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Product> findAll() {
-        return super.findAll();
+    @Path("findProductByName/{productname}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findProductByName(@PathParam("productname") String productname) {
+        try {
+            Product product = productSessionBeanLocal.retrieveProductByName(productname);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(product)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
-
+    
+    @GET
+    @Path("findProductByEnterpriseName/{enterprisename}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findProductsByEnterpriseName(@PathParam("enterprisename") String enterprisename) {
+        try {
+            List<Product> products = productSessionBeanLocal.retrieveAllProductsByEnterpriseName(enterprisename);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(products)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @GET
+    @Path("findProductByEnterpriseId/{enterpriseid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findProductsByEnterpriseId(@PathParam("enterprisename") Long enterpriseid) {
+        try {
+            List<Product> products = productSessionBeanLocal.retrieveAllProductsByEnterpriseId(enterpriseid);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(products)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Product> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -81,10 +168,59 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
     
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response create(CreateNewProductReq createNewProductReq) {
+        try {
+            Long productId = productSessionBeanLocal.createNewProduct(createNewProductReq.getProduct(), createNewProductReq.getSocialEnterpriseId());
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response edit(@PathParam("id") Long id, CreateNewProductReq createNewProductReq) {
+        try {
+            productSessionBeanLocal.updateProductDetails(createNewProductReq.getProduct(), createNewProductReq.getSocialEnterpriseId());
+            
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+      
+    @DELETE
+    @Path("{id}")
+    public Response remove(@PathParam("id") Long id) {
+         try {
+            productSessionBeanLocal.deleteProduct(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+         
+    }
+
 }

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package enumeration;
+package exception;
 
 /**
  *
  * @author ongyongen
  */
-public enum OrderStatus {
-    PENDING_APPROVAL,
-    IN_DELIVERY,
-    DELIVERED,
-    COMPLETED
+public class OrderRecordNotFoundException extends Exception{
+    public OrderRecordNotFoundException() {
+    }
+
+    public OrderRecordNotFoundException(String msg) {
+        super(msg);
+    }
 }

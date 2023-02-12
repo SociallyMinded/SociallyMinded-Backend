@@ -5,6 +5,8 @@
 package ejb.session.stateless;
 
 import entity.Customer;
+import exception.CustomerNotFoundException;
+import exception.InputDataValidationException;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -17,7 +19,7 @@ public interface CustomerSessionBeanRemote {
     
     public List<Customer> retrieveAllCustomers();
 
-    public Long createNewCustomer(Customer customer);
+    public Long createNewCustomer(Customer customer) throws InputDataValidationException;
     
-    public Customer retrieveCustomerById(Long customerId);
+    public Customer retrieveCustomerById(Long customerId) throws CustomerNotFoundException;
 }

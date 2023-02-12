@@ -5,16 +5,27 @@
 package ejb.session.stateless;
 
 import entity.Customer;
+import entity.OrderRecord;
 import entity.Product;
 import entity.Review;
 import entity.SocialEnterprise;
+import enumeration.OrderStatus;
+import exception.InputDataValidationException;
+import exception.ProductNotFoundException;
+import exception.SocialEnterpriseNotFoundException;
+import exception.UncompletedOrdersException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.Order;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -30,16 +41,41 @@ public class ProductSessionBean implements ProductSessionBeanRemote, ProductSess
     @PersistenceContext(unitName = "SociallyMinded-ejbPU")
     private EntityManager em;
     
+    private final ValidatorFactory validatorFactory;
+    private final javax.validation.Validator validator;
     
+    public ProductSessionBean() {
+        this.validatorFactory = Validation.buildDefaultValidatorFactory();
+        this.validator = validatorFactory.getValidator();
+    }
+    
+    private String prepareInputDataValidationErrorMsg(Set<ConstraintViolation<Product>> violations) {
+        String msg = "";
 
+        for (ConstraintViolation violation : violations) {
+            msg += violation.getPropertyPath() + " - " + violation.getMessage() + ";";
+        }
+
+        return msg;
+    }
+    
     @Override
-    public Long createNewProduct(Product product, Long enterpriseId) {
-        SocialEnterprise enterprise = socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseById(enterpriseId);
-        enterprise.getProducts().add(product);
-        product.setSocialenterprise(enterprise);
-        em.persist(product);
-        em.flush();
-        return product.getProductId();
+    public Long createNewProduct(Product product, Long enterpriseId) throws SocialEnterpriseNotFoundException, InputDataValidationException {
+        if (socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseById(enterpriseId) == null) {
+            throw new SocialEnterpriseNotFoundException();
+        } else {
+            Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
+            if (constraintViolations.isEmpty()) {
+                SocialEnterprise enterprise = socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseById(enterpriseId);
+                enterprise.getProducts().add(product);
+                product.setSocialenterprise(enterprise);
+                em.persist(product);
+                em.flush();
+                return product.getProductId();
+            } else {
+                throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+            }
+        }
     }
     
     @Override
@@ -49,60 +85,94 @@ public class ProductSessionBean implements ProductSessionBeanRemote, ProductSess
     }
     
     @Override
-    public List<Product> retrieveAllProductsByEnterpriseId(Long enterpriseId) {
+    public List<Product> retrieveAllProductsByEnterpriseId(Long socialEnterpriseId) {
         Query query = em.createQuery("SELECT p FROM Product p "
-                + "WHERE p.enterprise.socialEnterpriseId = :enterpriseId");
-        query.setParameter("enterpriseId", enterpriseId);
+                + "WHERE p.socialenterprise.socialEnterpriseId = :socialEnterpriseId");
+        query.setParameter("socialEnterpriseId", socialEnterpriseId);
         return query.getResultList();       
     }
     
     @Override
     public List<Product> retrieveAllProductsByEnterpriseName(String enterpriseName) {
         Query query = em.createQuery("SELECT p FROM Product p "
-                + "WHERE p.enterprise.enterpriseName = :enterpriseName");
+                + "WHERE p.socialenterprise.enterpriseName = :enterpriseName");
         query.setParameter("enterpriseName", enterpriseName);
         return query.getResultList();       
     }
     
     @Override
-    public Product retrieveProductById(Long productId) {
-        Product product = em.find(Product.class, productId);
-        return product;
+    public Product retrieveProductById(Long productId) throws ProductNotFoundException {
+        if (em.find(Product.class, productId) == null) {
+            throw new ProductNotFoundException();
+        } else {
+            Product product = em.find(Product.class, productId);
+            return product;
+        }
     }
     
     @Override
-    public List<Product> retrieveProductByName(String productName) {
+    public Product retrieveProductByName(String productName) throws ProductNotFoundException {
         Query query = em.createQuery("SELECT p FROM Product p "
                 + "WHERE p.name = :productName"
         );
         query.setParameter("productName", productName);
-        return query.getResultList();
-    }
-    
-    public void updateProductDetails(Long oldProductId, String name, BigDecimal price, String description, 
-            String imageLink, BigDecimal ratingScore, BigDecimal numRatings) {
-        Product product = this.retrieveProductById(oldProductId);
-        product.setName(name);
-        product.setPrice(price);
-        product.setDescription(description);
-        product.setImageLink(imageLink);
-        product.setRatingScore(ratingScore);
-        product.setNumRatings(numRatings);
-       
-    }
-    
-    public void deleteProduct(Long oldProductId) {
-        Product product = this.retrieveProductById(oldProductId);
-        product.getSocialenterprise().getProducts().remove(product);
-        for (Review review : product.getReviews()) {
-            em.remove(review);
+        
+        if (query.getResultList().isEmpty()) {
+            throw new ProductNotFoundException();
+        } else {
+            return (Product) query.getSingleResult();
         }
-        // TODO : Check that you cannot delete product if you still have unfulfilled orders
-        product.setSocialenterprise(null);
-        product.setReviews(null);
-        product.setOrders(null);
-        em.remove(product);
+    }
+
     
+    @Override
+    public void updateProductDetails(Product newProduct, Long enterpriseId) throws InputDataValidationException, SocialEnterpriseNotFoundException {
+        if (socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseById(enterpriseId) == null) {
+            throw new SocialEnterpriseNotFoundException();
+        } else {
+            Set<ConstraintViolation<Product>> constraintViolations = validator.validate(newProduct);
+            if (constraintViolations.isEmpty()) {
+                SocialEnterprise enterprise = socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseById(enterpriseId);
+                newProduct.setSocialenterprise(enterprise);
+                em.merge(newProduct);
+            } else {
+                throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+            }
+        }
+    }
+    
+    @Override
+    public void deleteProduct(Long oldProductId) throws ProductNotFoundException, UncompletedOrdersException {
+        if (this.retrieveProductById(oldProductId) == null) {
+            throw new ProductNotFoundException();
+        } else {
+            Product product = this.retrieveProductById(oldProductId);
+            
+            boolean noOrdersLeft = true;
+            for (OrderRecord order : product.getOrders()) {
+                if (order.getOrderStatus() != OrderStatus.COMPLETED) {
+                    noOrdersLeft = false;
+                }
+            }
+            
+            if (noOrdersLeft) {
+                product.getSocialenterprise().getProducts().remove(product);
+                for (Review review : product.getReviews()) {
+                    em.remove(review);
+                }
+                for (OrderRecord order : product.getOrders()) {
+                    em.remove(order);
+                }
+
+                product.setSocialenterprise(null);
+                product.setReviews(null);
+                product.setOrders(null);
+                em.remove(product);
+                
+            } else {
+                throw new UncompletedOrdersException();
+            }   
+        }    
     }
 }
     

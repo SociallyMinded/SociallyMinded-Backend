@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
@@ -35,10 +36,10 @@ public class OrderRecord implements Serializable {
     @Temporal(DATE)
     private Date dateOfOrder;
     
-    @OneToOne
+    @ManyToOne
     private Product product;
     
-    @OneToOne
+    @ManyToOne
     private Customer customer;
 
     public OrderRecord() {

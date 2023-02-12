@@ -8,12 +8,15 @@ import enumeration.AccountStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,6 +30,8 @@ public class SocialEnterprise implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long socialEnterpriseId;
+    
+    @NotNull
     private String enterpriseName; 
     private String username;
     private String password;
@@ -35,6 +40,7 @@ public class SocialEnterprise implements Serializable {
     private Date dateJoined;
     private AccountStatus accountStatus;
     
+    @JsonbTransient
     @OneToMany(mappedBy="socialenterprise")
     private List<Product> products;
 
@@ -56,6 +62,7 @@ public class SocialEnterprise implements Serializable {
         this.accountStatus = AccountStatus.ACTIVE;
     }
 
+    @XmlTransient
     public List<Product> getProducts() {
         return products;
     }

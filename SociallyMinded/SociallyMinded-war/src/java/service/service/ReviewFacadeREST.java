@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package service.service;
 
-import entity.SocialEnterprise;
+import entity.Review;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,27 +25,27 @@ import javax.ws.rs.core.MediaType;
  * @author admin
  */
 @Stateless
-@Path("entity.socialenterprise")
-public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise> {
+@Path("entity.review")
+public class ReviewFacadeREST extends AbstractFacade<Review> {
 
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
 
-    public SocialEnterpriseFacadeREST() {
-        super(SocialEnterprise.class);
+    public ReviewFacadeREST() {
+        super(Review.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(SocialEnterprise entity) {
+    public void create(Review entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, SocialEnterprise entity) {
+    public void edit(@PathParam("id") Long id, Review entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public SocialEnterprise find(@PathParam("id") Long id) {
+    public Review find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<SocialEnterprise> findAll() {
+    public List<Review> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<SocialEnterprise> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Review> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

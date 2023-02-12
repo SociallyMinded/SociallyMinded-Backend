@@ -15,7 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,7 +31,10 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
+    
+    @NotNull
     private String username;
+    
     private String password;
     private String address;
     private String email;
@@ -94,6 +99,7 @@ public class Customer implements Serializable {
         this.accountStatus = accountStatus;
     }
 
+    @XmlTransient
     public List<Review> getReviews() {
         return reviews;
     }
@@ -102,6 +108,7 @@ public class Customer implements Serializable {
         this.reviews = reviews;
     }
 
+    @XmlTransient
     public List<OrderRecord> getOrders() {
         return orders;
     }

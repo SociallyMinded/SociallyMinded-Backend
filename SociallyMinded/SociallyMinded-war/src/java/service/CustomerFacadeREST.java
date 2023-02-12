@@ -5,16 +5,14 @@
 package service;
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
-import ejb.session.stateless.CustomerSessionBeanRemote;
 import entity.Customer;
+import entity.SocialEnterprise;
+import exception.CustomerNotFoundException;
+import exception.InputDataValidationException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -29,6 +27,8 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import model.CreateNewProductReq;
+import model.ErrorRsp;
 
 /**
  *
@@ -37,36 +37,81 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("entity.customer")
 public class CustomerFacadeREST extends AbstractFacade<Customer> {
+
+    @EJB
+    private CustomerSessionBeanLocal customerSessionBeanLocal;
     
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
-
+    
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+    
     public CustomerFacadeREST() {
         super(Customer.class);
     }
 
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Customer entity) {
-        super.edit(entity);
+ 
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findAllCustomers() {
+        try {
+            List<Customer> customers = customerSessionBeanLocal.retrieveAllCustomers();
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(customers)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+          
     }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
-    }
-
+        
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Customer find(@PathParam("id") Long id) {
-        return super.find(id);
+    public Response findCustomerById(@PathParam("id") Long id) {
+        try {
+            Customer customer = customerSessionBeanLocal.retrieveCustomerById(id);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(customer)
+                    .build();
+        } catch (CustomerNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+          
     }
-
-
+    
+    @GET
+    @Path("findCustomerByUsername/{username}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findCustomerByUsername(@PathParam("username") String username) {
+        try {
+            Customer customer = customerSessionBeanLocal.retrieveCustomerByUsername(username);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(customer)
+                    .build();
+        } catch (CustomerNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -80,31 +125,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @GET
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    @Asynchronous
-    public void findAll(@Suspended final AsyncResponse asyncResponse) {
-        asyncResponse.resume(doFindAll());
-    }
-
-    private Response doFindAll() {
-        return Response
-                .status(200)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600")
-                .entity(super.findAll())
-                .build();
-    }
-
+    
     @POST
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Asynchronous
@@ -113,15 +134,44 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     }
 
     private Response doCreate(Customer entity) {
-        super.create(entity);
-        return Response.status(200)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600")
-                .build();
+        try {
+            customerSessionBeanLocal.createNewCustomer(entity);
+            return Response
+                    .status(Response.Status.OK)
+                    .build(); 
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
 
+    @PUT
+    @Path("{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response edit(@PathParam("id") Long id, Customer entity) {
+        try {
+            customerSessionBeanLocal.updateCustomerProfile(entity);
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+//    @DELETE
+//    @Path("{id}")
+//    public void remove(@PathParam("id") Long id) {
+//        super.remove(super.find(id));
+//    }
     
 }
+
+ 

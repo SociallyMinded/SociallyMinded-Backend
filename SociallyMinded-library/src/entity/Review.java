@@ -11,15 +11,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author admin
  */
 @Entity
+@XmlRootElement
 public class Review implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,10 +35,10 @@ public class Review implements Serializable {
     @Temporal(DATE)
     private Date dateOfReview;
     
-    @OneToOne
+    @ManyToOne
     private Customer customer;
     
-    @OneToOne
+    @ManyToOne
     private Product product;
 
     public Review() {

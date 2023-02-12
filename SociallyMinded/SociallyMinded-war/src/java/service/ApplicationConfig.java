@@ -31,7 +31,12 @@ public class ApplicationConfig extends Application {
         resources.add(cors.NewCrossOriginResourceSharingFilter.class);
         resources.add(service.CustomerFacadeREST.class);
         resources.add(service.ProductFacadeREST.class);
+        resources.add(service.ReviewFacadeREST.class);
         resources.add(service.SocialEnterpriseFacadeREST.class);
+        resources.add(service.service.CustomerFacadeREST.class);
+        resources.add(service.service.ProductFacadeREST.class);
+        resources.add(service.service.ReviewFacadeREST.class);
+        resources.add(service.service.SocialEnterpriseFacadeREST.class);
     }
     
 }

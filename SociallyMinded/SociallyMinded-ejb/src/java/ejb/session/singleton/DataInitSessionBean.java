@@ -6,6 +6,9 @@ package ejb.session.singleton;
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import entity.Customer;
+import exception.InputDataValidationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -32,14 +35,18 @@ public class DataInitSessionBean {
     @PostConstruct
     public void postConstruct() {
         if (em.find(Customer.class, 1l) == null) {
-            Customer A = new Customer("A");
-            Customer B = new Customer("B");
-            Customer C = new Customer("C");
-            Customer D = new Customer("D");
-            customerSessionBeanLocal.createNewCustomer(A);
-            customerSessionBeanLocal.createNewCustomer(B);
-            customerSessionBeanLocal.createNewCustomer(C);
-            customerSessionBeanLocal.createNewCustomer(D);
+            try {
+                Customer A = new Customer("A");
+                Customer B = new Customer("B");
+                Customer C = new Customer("C");
+                Customer D = new Customer("D");
+                customerSessionBeanLocal.createNewCustomer(A);
+                customerSessionBeanLocal.createNewCustomer(B);
+                customerSessionBeanLocal.createNewCustomer(C);
+                customerSessionBeanLocal.createNewCustomer(D);
+            } catch (InputDataValidationException ex) {
+                Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
         

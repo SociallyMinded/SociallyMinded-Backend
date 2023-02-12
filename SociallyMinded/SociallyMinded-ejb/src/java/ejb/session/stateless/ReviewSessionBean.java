@@ -8,6 +8,9 @@ package ejb.session.stateless;
 import entity.Customer;
 import entity.Product;
 import entity.Review;
+import exception.CustomerNotFoundException;
+import exception.ProductNotFoundException;
+import exception.ReviewNotFoundException;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -37,22 +40,33 @@ public class ReviewSessionBean implements ReviewSessionBeanRemote, ReviewSession
     
 
     @Override
-    public Long createNewReview(Review review, Long productId, Long customerId) {
-        Product product = productSessionBeanLocal.retrieveProductById(productId);
-        Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
-        product.getReviews().add(review);
-        customer.getReviews().add(review);
-        review.setProduct(product);
-        review.setCustomer(customer);
-        em.persist(review);
-        em.flush();
-        return review.getReviewId();
+    public Long createNewReview(Review review, Long productId, Long customerId) 
+            throws ProductNotFoundException, CustomerNotFoundException {
+        if (productSessionBeanLocal.retrieveProductById(productId) == null) {
+            throw new ProductNotFoundException();
+        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+            throw new CustomerNotFoundException();
+        } else {
+            Product product = productSessionBeanLocal.retrieveProductById(productId);
+            Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+            product.getReviews().add(review);
+            customer.getReviews().add(review);
+            review.setProduct(product);
+            review.setCustomer(customer);
+            em.persist(review);
+            em.flush();
+            return review.getReviewId();
+        }
     }
     
     @Override
-    public Review retrieveReviewById(Long reviewId) {
-        Review review = em.find(Review.class, reviewId);
-        return review;
+    public Review retrieveReviewById(Long reviewId) throws ReviewNotFoundException {
+        if (em.find(Review.class, reviewId) == null) {
+            throw new ReviewNotFoundException();
+        } else {
+            Review review = em.find(Review.class, reviewId);
+            return review;
+        }
     }
     
     @Override
@@ -77,19 +91,28 @@ public class ReviewSessionBean implements ReviewSessionBeanRemote, ReviewSession
         return query.getResultList();
     }
     
-    public void updateReviewDetails(Long reviewId, String title, String description, Date dateOfReview) {
-        Review review = this.retrieveReviewById(reviewId);
-        review.setReviewTitle(title);
-        review.setReviewDescription(description);
-        review.setDateOfReview(dateOfReview);
+    public void updateReviewDetails(Long reviewId, String title,
+            String description, Date dateOfReview) throws ReviewNotFoundException {
+        if (this.retrieveReviewById(reviewId) == null) {
+            throw new ReviewNotFoundException();
+        } else {
+            Review review = this.retrieveReviewById(reviewId);
+            review.setReviewTitle(title);
+            review.setReviewDescription(description);
+            review.setDateOfReview(dateOfReview);
+        }
     }
     
-    public void deleteReview(Long reviewId) {
-        Review review = this.retrieveReviewById(reviewId);
-        review.getProduct().getReviews().remove(review);
-        review.getCustomer().getReviews().remove(review);
-        review.setProduct(null);
-        review.setCustomer(null);
-        em.remove(review);
+    public void deleteReview(Long reviewId) throws ReviewNotFoundException {
+        if (this.retrieveReviewById(reviewId) == null) {
+            throw new ReviewNotFoundException();
+        } else {
+            Review review = this.retrieveReviewById(reviewId);
+            review.getProduct().getReviews().remove(review);
+            review.getCustomer().getReviews().remove(review);
+            review.setProduct(null);
+            review.setCustomer(null);
+            em.remove(review);
+        }
     }
 }

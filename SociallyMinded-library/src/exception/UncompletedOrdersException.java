@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package enumeration;
+package exception;
 
 /**
  *
  * @author ongyongen
  */
-public enum OrderStatus {
-    PENDING_APPROVAL,
-    IN_DELIVERY,
-    DELIVERED,
-    COMPLETED
+public class UncompletedOrdersException extends Exception {
+    public UncompletedOrdersException() {
+    }
+
+    public UncompletedOrdersException(String msg) {
+        super(msg);
+    }
 }

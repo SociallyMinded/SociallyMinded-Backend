@@ -7,13 +7,16 @@ package entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,12 +37,15 @@ public class Product implements Serializable {
     private BigDecimal ratingScore;
     private BigDecimal numRatings;
     
+    @JsonbTransient
     @OneToMany(mappedBy="product")
     private List<Review> reviews; 
     
-    @OneToOne
+    @JsonbTransient
+    @ManyToOne
     private SocialEnterprise socialenterprise;
     
+    @JsonbTransient // resolve circular reference issues in REST APIs
     @OneToMany(mappedBy="product")
     private List<OrderRecord> orders;
 
@@ -60,6 +66,8 @@ public class Product implements Serializable {
         this.numRatings = new BigDecimal(0);
     }
 
+
+    @XmlTransient
     public List<Review> getReviews() {
         return reviews;
     }
@@ -76,6 +84,7 @@ public class Product implements Serializable {
         this.socialenterprise = socialenterprise;
     }
 
+    @XmlTransient
     public List<OrderRecord> getOrders() {
         return orders;
     }

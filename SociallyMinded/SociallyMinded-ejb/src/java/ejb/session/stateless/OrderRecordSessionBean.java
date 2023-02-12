@@ -10,6 +10,9 @@ import entity.OrderRecord;
 import entity.Product;
 import entity.SocialEnterprise;
 import enumeration.OrderStatus;
+import exception.CustomerNotFoundException;
+import exception.OrderRecordNotFoundException;
+import exception.ProductNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -37,16 +40,23 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     private EntityManager em;
 
     
-    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) {
-        Product product = productSessionBeanLocal.retrieveProductById(productId);
-        Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
-        product.getOrders().add(order);
-        customer.getOrders().add(order);
-        order.setProduct(product);
-        order.setCustomer(customer);
-        em.persist(order);
-        em.flush();
-        return order.getOrderRecordId();
+    @Override
+    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException {
+        if (productSessionBeanLocal.retrieveProductById(productId) == null) {
+            throw new ProductNotFoundException();
+        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+            throw new CustomerNotFoundException();
+        } else {
+            Product product = productSessionBeanLocal.retrieveProductById(productId);
+            Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+            product.getOrders().add(order);
+            customer.getOrders().add(order);
+            order.setProduct(product);
+            order.setCustomer(customer);
+            em.persist(order);
+            em.flush();
+            return order.getOrderRecordId();
+        } 
     }
 
     @Override
@@ -56,9 +66,13 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     }
     
     @Override
-    public OrderRecord retrieveOrderRecordById(Long orderRecordId) {
-        OrderRecord order = em.find(OrderRecord.class, orderRecordId);
-        return order;
+    public OrderRecord retrieveOrderRecordById(Long orderRecordId) throws OrderRecordNotFoundException {
+        if (em.find(OrderRecord.class, orderRecordId) == null) {
+            throw new OrderRecordNotFoundException();
+        } else {
+            OrderRecord order = em.find(OrderRecord.class, orderRecordId);
+            return order;
+        }
     }
     
     @Override
@@ -79,22 +93,31 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     
     //TODO : check if need to merge back to customer / product List
     @Override
-    public void updateOrderRecord(Long oldOrderRecordId, BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderstatus) {
-        OrderRecord order = this.retrieveOrderRecordById(oldOrderRecordId);
-        order.setQuantity(quantity);
-        order.setTotalPrice(totalPrice);
-        order.setOrderStatus(orderstatus);
+    public void updateOrderRecord(Long oldOrderRecordId, BigDecimal quantity, 
+            BigDecimal totalPrice, OrderStatus orderstatus) throws OrderRecordNotFoundException {
+        if (this.retrieveOrderRecordById(oldOrderRecordId) == null) {
+            throw new OrderRecordNotFoundException();
+        } else {
+            OrderRecord order = this.retrieveOrderRecordById(oldOrderRecordId);
+            order.setQuantity(quantity);
+            order.setTotalPrice(totalPrice);
+            order.setOrderStatus(orderstatus);
+        }
     }
     
     // TODO : check if logic is correct
     @Override
-    public void deleteOrderRecord(Long oldOrderRecordId) {
-        OrderRecord order = this.retrieveOrderRecordById(oldOrderRecordId);
-        order.getProduct().getOrders().remove(order);
-        order.getCustomer().getOrders().remove(order);
-        order.setProduct(null);
-        order.setCustomer(null);
-        em.remove(order); 
+    public void deleteOrderRecord(Long oldOrderRecordId) throws OrderRecordNotFoundException {
+        if (this.retrieveOrderRecordById(oldOrderRecordId) == null) {
+            throw new OrderRecordNotFoundException();
+        } else {
+            OrderRecord order = this.retrieveOrderRecordById(oldOrderRecordId);
+            order.getProduct().getOrders().remove(order);
+            order.getCustomer().getOrders().remove(order);
+            order.setProduct(null);
+            order.setCustomer(null);
+            em.remove(order); 
+        }
     }
         
 }

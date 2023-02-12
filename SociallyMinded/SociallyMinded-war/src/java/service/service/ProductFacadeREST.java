@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package service.service;
 
-import entity.SocialEnterprise;
+import entity.Product;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,27 +25,27 @@ import javax.ws.rs.core.MediaType;
  * @author admin
  */
 @Stateless
-@Path("entity.socialenterprise")
-public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise> {
+@Path("entity.product")
+public class ProductFacadeREST extends AbstractFacade<Product> {
 
     @PersistenceContext(unitName = "SociallyMinded-warPU")
     private EntityManager em;
 
-    public SocialEnterpriseFacadeREST() {
-        super(SocialEnterprise.class);
+    public ProductFacadeREST() {
+        super(Product.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(SocialEnterprise entity) {
+    public void create(Product entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, SocialEnterprise entity) {
+    public void edit(@PathParam("id") Long id, Product entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public SocialEnterprise find(@PathParam("id") Long id) {
+    public Product find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<SocialEnterprise> findAll() {
+    public List<Product> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<SocialEnterprise> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Product> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

@@ -6,6 +6,8 @@ package ejb.session.stateless;
 
 import entity.Customer;
 import enumeration.AccountStatus;
+import exception.CustomerNotFoundException;
+import exception.InputDataValidationException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -18,13 +20,15 @@ public interface CustomerSessionBeanLocal {
 
     public List<Customer> retrieveAllCustomers();
 
-    public Long createNewCustomer(Customer customer);
+    public Long createNewCustomer(Customer customer) throws InputDataValidationException;
 
-    public Customer retrieveCustomerById(Long customerId);
+    public Customer retrieveCustomerById(Long customerId) throws CustomerNotFoundException;
 
-    public Customer retrieveCustomerByUsernameAndPassword(String username, String password);    
+    public Customer retrieveCustomerByUsernameAndPassword(String username, String password) throws CustomerNotFoundException;    
 
-    public void deactivateCustomerAccount(Long customerId);
+    public void deactivateCustomerAccount(Long customerId) throws CustomerNotFoundException;
 
-    public void updateCustomerProfile(Long customerId, String username, String password, String address, String email, String firstName, String lastName, String creditCardNos, String creditCardCVV, AccountStatus accountStatus);
+    public Customer retrieveCustomerByUsername(String username) throws CustomerNotFoundException;
+
+    public void updateCustomerProfile(Customer newCustomer) throws InputDataValidationException;
 }

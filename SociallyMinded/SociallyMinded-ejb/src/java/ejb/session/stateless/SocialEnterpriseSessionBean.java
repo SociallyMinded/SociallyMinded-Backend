@@ -4,14 +4,21 @@
  */
 package ejb.session.stateless;
 
+import entity.Customer;
 import entity.Product;
 import entity.SocialEnterprise;
 import enumeration.AccountStatus;
+import exception.InputDataValidationException;
+import exception.SocialEnterpriseNotFoundException;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -22,11 +29,35 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
 
     @PersistenceContext(unitName = "SociallyMinded-ejbPU")
     private EntityManager em;
+    
+    private final ValidatorFactory validatorFactory;
+    private final javax.validation.Validator validator;
+    
+    public SocialEnterpriseSessionBean() {
+        this.validatorFactory = Validation.buildDefaultValidatorFactory();
+        this.validator = validatorFactory.getValidator();
+    }
+    
+    private String prepareInputDataValidationErrorMsg(Set<ConstraintViolation<SocialEnterprise>> violations) {
+        String msg = "";
 
-    public Long createNewSocialEnterprise(SocialEnterprise enterprise) {
-        em.persist(enterprise);
-        em.flush();
-        return enterprise.getSocialEnterpriseId();
+        for (ConstraintViolation violation : violations) {
+            msg += violation.getPropertyPath() + " - " + violation.getMessage() + ";";
+        }
+
+        return msg;
+    }
+
+    @Override
+    public Long createNewSocialEnterprise(SocialEnterprise enterprise) throws InputDataValidationException {
+        Set<ConstraintViolation<SocialEnterprise>> constraintViolations = validator.validate(enterprise);
+        if (constraintViolations.isEmpty()) {
+            em.persist(enterprise);
+            em.flush();
+            return enterprise.getSocialEnterpriseId();
+        } else {
+            throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+        }  
     }
     
     public List<SocialEnterprise> retrieveAllSocialEnterprises() {
@@ -34,25 +65,43 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
         return query.getResultList();
     }
     
-    public SocialEnterprise retrieveSocialEnterpriseById(Long enterpriseId) {
-        SocialEnterprise enterprise = em.find(SocialEnterprise.class, enterpriseId);
-        return enterprise;
+    @Override
+    public SocialEnterprise retrieveSocialEnterpriseById(Long enterpriseId) throws SocialEnterpriseNotFoundException {
+        if (em.find(SocialEnterprise.class, enterpriseId) == null) {
+            throw new SocialEnterpriseNotFoundException();
+        } else {
+            SocialEnterprise enterprise = em.find(SocialEnterprise.class, enterpriseId);
+            return enterprise;
+        }
     }
     
-    public List<SocialEnterprise> retrieveSocialEnterpriseByName(String enterpriseName) {
-        Query query = em.createQuery("SELECT e FROM SocialEnterprise e"
+    @Override
+    public SocialEnterprise retrieveSocialEnterpriseByName(String enterpriseName) throws SocialEnterpriseNotFoundException {
+        Query query = em.createQuery("SELECT e FROM SocialEnterprise e "
                 + "WHERE e.enterpriseName = :enterpriseName");
-        return query.getResultList();
+        query.setParameter("enterpriseName", enterpriseName);
+        
+        if (query.getResultList().isEmpty()) {
+            throw new SocialEnterpriseNotFoundException();
+        } else {
+            return (SocialEnterprise) query.getSingleResult();
+        }        
     }
     
-    public void updateSocialEnterpriseDetails(Long enterpriseId, String name, String username, String password,
-            String address, String email, AccountStatus accountStatus) {
+    
+    @Override
+    public void updateSocialEnterpriseDetails(SocialEnterprise newSocialEnterprise) throws InputDataValidationException {
+        Set<ConstraintViolation<SocialEnterprise>> constraintViolations = validator.validate(newSocialEnterprise);
+        if (constraintViolations.isEmpty()) {
+            em.merge(newSocialEnterprise);
+        } else {
+            throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+        }
+    }
+    
+    public void addProductToSocialEnterprise(Product product) throws SocialEnterpriseNotFoundException {
+        Long enterpriseId = product.getSocialenterprise().getSocialEnterpriseId();
         SocialEnterprise enterprise = this.retrieveSocialEnterpriseById(enterpriseId);
-        enterprise.setEnterpriseName(name);
-        enterprise.setUsername(username);
-        enterprise.setPassword(password);
-        enterprise.setAddress(address);
-        enterprise.setEmail(email);
-        enterprise.setAccountStatus(accountStatus);
+        enterprise.getProducts().add(product);
     }
 }
