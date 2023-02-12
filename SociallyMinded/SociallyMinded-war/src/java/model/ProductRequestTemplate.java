@@ -11,14 +11,14 @@ import entity.Product;
  *
  * @author ongyongen
  */
-public class CreateNewProductReq {
+public class ProductRequestTemplate {
     private Product product;
     private Long socialEnterpriseId;
 
-    public CreateNewProductReq() {
+    public ProductRequestTemplate() {
     }
 
-    public CreateNewProductReq(Product product, Long socialEnterpriseId) {
+    public ProductRequestTemplate(Product product, Long socialEnterpriseId) {
         this.product = product;
         this.socialEnterpriseId = socialEnterpriseId;
     }

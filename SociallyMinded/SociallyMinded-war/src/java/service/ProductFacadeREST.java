@@ -30,8 +30,8 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.CreateNewProductReq;
-import model.ErrorRsp;
+import model.ProductRequestTemplate;
+import model.ErrorResponseTemplate;
 
 /**
  *
@@ -70,7 +70,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .entity(products)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -90,7 +90,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .entity(product)
                     .build();
         } catch (ProductNotFoundException ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -109,7 +109,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .entity(product)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -128,7 +128,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .entity(products)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -147,7 +147,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .entity(products)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -171,14 +171,14 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response create(CreateNewProductReq createNewProductReq) {
+    public Response create(ProductRequestTemplate productReq) {
         try {
-            Long productId = productSessionBeanLocal.createNewProduct(createNewProductReq.getProduct(), createNewProductReq.getSocialEnterpriseId());
+            Long productId = productSessionBeanLocal.createNewProduct(productReq.getProduct(), productReq.getSocialEnterpriseId());
             return Response
                     .status(Response.Status.OK)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -189,15 +189,15 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response edit(@PathParam("id") Long id, CreateNewProductReq createNewProductReq) {
+    public Response edit(@PathParam("id") Long id, ProductRequestTemplate productReq) {
         try {
-            productSessionBeanLocal.updateProductDetails(createNewProductReq.getProduct(), createNewProductReq.getSocialEnterpriseId());
+            productSessionBeanLocal.updateProductDetails(productReq.getProduct(), productReq.getSocialEnterpriseId());
             
             return Response
                     .status(Response.Status.OK)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -214,7 +214,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .status(Response.Status.OK)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)

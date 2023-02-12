@@ -9,14 +9,14 @@ package model;
  *
  * @author admin
  */
-public class ErrorRsp {
+public class ErrorResponseTemplate {
     private String message;
     
-    public ErrorRsp(){
+    public ErrorResponseTemplate(){
         
     }
     
-    public ErrorRsp(String message) {
+    public ErrorResponseTemplate(String message) {
         this.message = message;
     }
 

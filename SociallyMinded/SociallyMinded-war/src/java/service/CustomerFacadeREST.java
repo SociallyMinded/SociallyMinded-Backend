@@ -27,8 +27,8 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.CreateNewProductReq;
-import model.ErrorRsp;
+import model.ProductRequestTemplate;
+import model.ErrorResponseTemplate;
 
 /**
  *
@@ -64,7 +64,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                     .entity(customers)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -84,7 +84,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                     .entity(customer)
                     .build();
         } catch (CustomerNotFoundException ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -104,7 +104,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                     .entity(customer)
                     .build();
         } catch (CustomerNotFoundException ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -140,7 +140,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                     .status(Response.Status.OK)
                     .build(); 
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
@@ -158,7 +158,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                     .status(Response.Status.OK)
                     .build();
         } catch (Exception ex) {
-            ErrorRsp errorRsp = new ErrorRsp(ex.toString());
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)
