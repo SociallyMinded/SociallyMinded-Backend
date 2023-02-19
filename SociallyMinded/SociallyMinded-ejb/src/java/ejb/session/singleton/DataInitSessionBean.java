@@ -44,7 +44,7 @@ public class DataInitSessionBean {
                 customerSessionBeanLocal.createNewCustomer(B);
                 customerSessionBeanLocal.createNewCustomer(C);
                 customerSessionBeanLocal.createNewCustomer(D);
-            } catch (InputDataValidationException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
 

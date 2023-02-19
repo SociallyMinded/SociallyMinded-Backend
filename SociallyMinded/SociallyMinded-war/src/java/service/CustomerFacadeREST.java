@@ -111,6 +111,26 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
                     .build();
         }
     }
+    
+    @PUT
+    @Path("loginViaGmail/")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response handleLoginViaGmail(Customer customer) {
+        try {
+            customerSessionBeanLocal.logInViaGmailAccount(customer);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(customer)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
 
     @GET
     @Path("count")
@@ -142,9 +162,8 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response edit(@PathParam("id") Long id, Customer entity) {
+    public Response editCustomer(Customer entity) {
         try {
             customerSessionBeanLocal.updateCustomerProfile(entity);
             return Response

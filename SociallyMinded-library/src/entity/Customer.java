@@ -8,6 +8,7 @@ import enumeration.AccountStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,6 @@ public class Customer implements Serializable {
     @NotNull
     private String username;
     
-    private String password;
     private String address;
     private String email;
     private String firstName;
@@ -44,6 +44,8 @@ public class Customer implements Serializable {
     private String creditCardNos;
     private String creditCardCVV;
     private AccountStatus accountStatus;
+    
+    private String firebaseUid;
     
     @Temporal(DATE)
     private Date dateJoined;
@@ -68,9 +70,14 @@ public class Customer implements Serializable {
         this.username = name;
     }
 
-    public Customer(String username, String password, String address, String email, String firstName, String lastName, Date dateJoined, String creditCardNos, String creditCardCVV, Date creditCardExpiryDate) {
+    public Customer(String username, String email, String firebaseUid) {
         this.username = username;
-        this.password = password;
+        this.email = username;
+        this.firebaseUid = firebaseUid;
+    }
+        
+    public Customer(String username, String address, String email, String firstName, String lastName, Date dateJoined, String creditCardNos, String creditCardCVV, Date creditCardExpiryDate) {
+        this.username = username;
         this.address = address;
         this.email = email;
         this.firstName = firstName;
@@ -81,11 +88,23 @@ public class Customer implements Serializable {
         this.creditCardExpiryDate = creditCardExpiryDate;
         this.accountStatus = AccountStatus.ACTIVE;
     }
+    
+    public Customer(String username, String address, String email, String firstName, String lastName, String creditCardNos, String creditCardCVV, Date creditCardExpiryDate) {
+        this.username = username;
+        this.address = address;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.creditCardNos = creditCardNos;
+        this.creditCardCVV = creditCardCVV;
+        this.creditCardExpiryDate = creditCardExpiryDate;
+        this.accountStatus = AccountStatus.ACTIVE;
+        this.dateJoined = new Date();
+    }
 
-    public Customer(Long id, String username, String password, String address, String email, String firstName, String lastName, Date dateJoined) {
+    public Customer(Long id, String username, String address, String email, String firstName, String lastName, Date dateJoined) {
         this.customerId = id;
         this.username = username;
-        this.password = password;
         this.address = address;
         this.email = email;
         this.firstName = firstName;
@@ -94,6 +113,14 @@ public class Customer implements Serializable {
         this.accountStatus = AccountStatus.ACTIVE;
     }
 
+    public String getFirebaseUid() {
+        return firebaseUid;
+    }
+
+    public void setFirebaseUid(String firebaseUid) {
+        this.firebaseUid = firebaseUid;
+    }
+    
     public AccountStatus getAccountStatus() {
         return accountStatus;
     }
@@ -120,16 +147,6 @@ public class Customer implements Serializable {
         this.orders = orders;
     }
     
-    
-    
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getAddress() {
         return address;
     }

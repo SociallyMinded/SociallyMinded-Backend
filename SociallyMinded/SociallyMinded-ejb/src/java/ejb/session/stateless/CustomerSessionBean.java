@@ -8,6 +8,9 @@ import entity.Customer;
 import enumeration.AccountStatus;
 import exception.CustomerNotFoundException;
 import exception.InputDataValidationException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
@@ -45,10 +48,13 @@ public class CustomerSessionBean implements CustomerSessionBeanRemote, CustomerS
 
         return msg;
     }
-
-    
+  
     @Override
-    public Long createNewCustomer(Customer customer) throws InputDataValidationException {
+    public Long createNewCustomer(Customer customer) throws InputDataValidationException, ParseException {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String stringDate = dateFormat.format(customer.getCreditCardExpiryDate());
+//        Date date = dateFormat.parse(stringDate);
+
         Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(customer);
         if (constraintViolations.isEmpty()) {
             em.persist(customer);
@@ -87,24 +93,33 @@ public class CustomerSessionBean implements CustomerSessionBeanRemote, CustomerS
     }
     
     @Override
-    public Customer retrieveCustomerByUsernameAndPassword(String username, String password) throws CustomerNotFoundException {
+    public Customer retrieveCustomerByFirebaseUid(String firebaseUid) {
         Query query = em.createQuery("SELECT c FROM Customer c "
-                + "WHERE c.username = :username AND "
-                + "c.password = :password"
+                + "WHERE c.firebaseUid = :firebaseUid"
         );
-        query.setParameter("username", username);
-        query.setParameter("password", password);
+        query.setParameter("firebaseUid", firebaseUid);
         if (query.getResultList().isEmpty()) {
-            throw new CustomerNotFoundException();
+            return null;
         } else {
-            return (Customer) query.getSingleResult();           
+            return (Customer) query.getResultList().get(0);           
         }
     }
       
     public void updateCustomerProfile(Customer newCustomer) throws InputDataValidationException {
         Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(newCustomer);
-        if (constraintViolations.isEmpty()) {
+        if (constraintViolations.isEmpty()) {            
             em.merge(newCustomer);
+        } else {
+            throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+        }
+    }
+    
+    public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException {
+        Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(newCustomer);
+        if (constraintViolations.isEmpty()) {        
+            if (this.retrieveCustomerByFirebaseUid(newCustomer.getFirebaseUid()) == null) {
+                em.persist(newCustomer);
+            }
         } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
         }
