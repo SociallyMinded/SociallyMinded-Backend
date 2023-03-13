@@ -6,6 +6,7 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.List;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
@@ -36,6 +37,7 @@ public class Product implements Serializable {
     private String imageLink;
     private BigDecimal ratingScore;
     private BigDecimal numRatings;
+    private String category;
     
     @JsonbTransient
     @OneToMany(mappedBy="product")
@@ -57,13 +59,14 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Product(String name, BigDecimal price, String description, String imageLink) {
+    public Product(String name, BigDecimal price, String description, String imageLink, String category) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.imageLink = imageLink;
         this.ratingScore = new BigDecimal(0);
         this.numRatings = new BigDecimal(0);
+        this.category = category;
     }
 
 
@@ -153,6 +156,14 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

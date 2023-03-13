@@ -48,8 +48,8 @@ public class SocialEnterprise implements Serializable {
     }
     
     // TODO : delete after testing
-    public SocialEnterprise(String username) {
-        this.username = username;
+    public SocialEnterprise(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
     }
 
     public SocialEnterprise(String enterpriseName, String username, String password, String address, String email, Date dateJoined) {
