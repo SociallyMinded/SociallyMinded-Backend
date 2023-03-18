@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,8 +33,7 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     
-    @NotNull
-    private String reviewTitle;
+    @Column(columnDefinition="varchar(1000)")
     private String reviewDescription;
     
     @Temporal(DATE)
@@ -51,12 +51,11 @@ public class Review implements Serializable {
     }
     
     // TODO : delete after testing
-    public Review(String title) {
-        this.reviewTitle = title;
+    public Review(String description) {
+        this.reviewDescription = description;
     }
 
-    public Review(String reviewTitle, String reviewDescription, Date dateOfReview) {
-        this.reviewTitle = reviewTitle;
+    public Review(String reviewDescription, Date dateOfReview) {
         this.reviewDescription = reviewDescription;
         this.dateOfReview = dateOfReview;
     }
@@ -84,14 +83,6 @@ public class Review implements Serializable {
 
     public void setReviewId(Long reviewId) {
         this.reviewId = reviewId;
-    }
-
-    public String getReviewTitle() {
-        return reviewTitle;
-    }
-
-    public void setReviewTitle(String reviewTitle) {
-        this.reviewTitle = reviewTitle;
     }
 
     public String getReviewDescription() {
