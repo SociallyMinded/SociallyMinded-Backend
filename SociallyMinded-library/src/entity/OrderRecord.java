@@ -58,6 +58,13 @@ public class OrderRecord implements Serializable {
     public OrderRecord(BigDecimal quantity) {
         this.quantity = quantity;
     }
+    
+    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice) {
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.orderStatus = OrderStatus.PENDING_APPROVAL;
+        this.dateOfOrder = new Date();
+    }
 
     public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderStatus, Date dateOfOrder) {
         this.quantity = quantity;

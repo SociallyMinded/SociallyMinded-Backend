@@ -139,7 +139,7 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(CreateOrUpdateOrderRecordTemplate orderReq) {
         try {
-            Long recordId = orderRecordSessionBeanLocal.createNewOrderRecord(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerId());
+            Long recordId = orderRecordSessionBeanLocal.createNewOrderRecord(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerFirebaseUid());
             return Response
                     .status(Response.Status.OK)
                     .build();
@@ -157,8 +157,7 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response edit(@PathParam("id") Long id, CreateOrUpdateOrderRecordTemplate orderReq) {
         try {
-            orderRecordSessionBeanLocal.updateOrderRecordDetails(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerId());
-            
+            orderRecordSessionBeanLocal.updateOrderRecordDetails(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerFirebaseUid());
             return Response
                     .status(Response.Status.OK)
                     .build();
