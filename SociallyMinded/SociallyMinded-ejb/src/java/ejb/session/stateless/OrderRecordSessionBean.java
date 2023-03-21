@@ -68,6 +68,7 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
     
     @Override
     public Long createNewOrderRecord(OrderRecord order, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
+        System.out.println(customerFirebaseUid);
         if (productSessionBeanLocal.retrieveProductById(productId) == null) {
             throw new ProductNotFoundException();
         } else if (customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid) == null) {
@@ -119,6 +120,14 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
         Query query = em.createQuery("SELECT ord FROM OrderRecord ord "
                 + "WHERE ord.customer.customerId = :customerId");
         query.setParameter("customerId", customerId);
+        return query.getResultList();
+    }
+    
+    @Override
+    public List<OrderRecord> retrieveOrderRecordsByCustomerFirebaseUid(String firebaseUid) {
+        Query query = em.createQuery("SELECT ord FROM OrderRecord ord "
+                + "WHERE ord.customer.firebaseUid = :firebaseUid");
+        query.setParameter("firebaseUid", firebaseUid);
         return query.getResultList();
     }
     

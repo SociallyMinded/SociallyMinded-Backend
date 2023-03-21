@@ -38,8 +38,8 @@ public class OrderRecord implements Serializable {
     private BigDecimal quantity;
     private BigDecimal totalPrice;
     private OrderStatus orderStatus;
+    private String orderTitle;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
     @Temporal(DATE)
     private Date dateOfOrder;
     
@@ -59,12 +59,14 @@ public class OrderRecord implements Serializable {
         this.quantity = quantity;
     }
     
-    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice) {
+    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, String orderTitle) {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.orderStatus = OrderStatus.PENDING_APPROVAL;
         this.dateOfOrder = new Date();
+        this.orderTitle = orderTitle;
     }
+    
 
     public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderStatus, Date dateOfOrder) {
         this.quantity = quantity;
@@ -128,9 +130,16 @@ public class OrderRecord implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
-    
 
+    public String getOrderTitle() {
+        return orderTitle;
+    }
+
+    public void setOrderTitle(String orderTitle) {
+        this.orderTitle = orderTitle;
+    }
+    
+ 
     @Override
     public int hashCode() {
         int hash = 0;

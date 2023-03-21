@@ -35,5 +35,7 @@ public interface OrderRecordSessionBeanLocal {
     public List<OrderRecord> retrieveAllOrderRecords();
 
     public Long createNewOrderRecord(OrderRecord order, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;    
+
+    public List<OrderRecord> retrieveOrderRecordsByCustomerFirebaseUid(String firebaseUid);
 }
 
