@@ -31,7 +31,7 @@ public interface CustomerSessionBeanLocal {
 
     public void updateCustomerProfile(Customer newCustomer) throws InputDataValidationException;
 
-    public Customer retrieveCustomerByFirebaseUid(String firebaseUid);
+    public Customer retrieveCustomerByFirebaseUid(String firebaseUid) throws CustomerNotFoundException;
 
-    public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException;
+    public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException, CustomerNotFoundException;
 }

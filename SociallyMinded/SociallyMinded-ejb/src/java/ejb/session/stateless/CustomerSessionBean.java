@@ -93,13 +93,13 @@ public class CustomerSessionBean implements CustomerSessionBeanRemote, CustomerS
     }
     
     @Override
-    public Customer retrieveCustomerByFirebaseUid(String firebaseUid) {
+    public Customer retrieveCustomerByFirebaseUid(String firebaseUid) throws CustomerNotFoundException {
         Query query = em.createQuery("SELECT c FROM Customer c "
                 + "WHERE c.firebaseUid = :firebaseUid"
         );
         query.setParameter("firebaseUid", firebaseUid);
         if (query.getResultList().isEmpty()) {
-            return null;
+            throw new CustomerNotFoundException();
         } else {
             return (Customer) query.getResultList().get(0);           
         }
@@ -114,7 +114,7 @@ public class CustomerSessionBean implements CustomerSessionBeanRemote, CustomerS
         }
     }
     
-    public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException {
+    public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException, CustomerNotFoundException {
         Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(newCustomer);
         if (constraintViolations.isEmpty()) {        
             if (this.retrieveCustomerByFirebaseUid(newCustomer.getFirebaseUid()) == null) {
