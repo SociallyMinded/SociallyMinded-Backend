@@ -43,11 +43,11 @@ public class OrderRecord implements Serializable {
     @Temporal(DATE)
     private Date dateOfOrder;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
+    //@JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Product product;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
+    //@JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Customer customer;
 

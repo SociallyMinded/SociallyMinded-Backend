@@ -14,15 +14,15 @@ import entity.Review;
 public class CreateOrUpdateReviewTemplate {
     private Review review;
     private Long productId;
-    private Long customerId;
+    private String custFirebaseUid;
 
     public CreateOrUpdateReviewTemplate() {
     }
 
-    public CreateOrUpdateReviewTemplate(Review review, Long productId, Long customerId) {
+    public CreateOrUpdateReviewTemplate(Review review, Long productId, String custFirebaseUid) {
         this.review = review;
         this.productId = productId;
-        this.customerId = customerId;
+        this.custFirebaseUid = custFirebaseUid;
     }
 
     public Review getReview() {
@@ -41,12 +41,12 @@ public class CreateOrUpdateReviewTemplate {
         this.productId = productId;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public String getCustFirebaseUid() {
+        return custFirebaseUid;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustFirebaseUid(Long customerId) {
+        this.custFirebaseUid = custFirebaseUid;
     }
 
 }

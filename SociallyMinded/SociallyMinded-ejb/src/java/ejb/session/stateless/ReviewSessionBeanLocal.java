@@ -24,8 +24,6 @@ public interface ReviewSessionBeanLocal {
     public Review retrieveReviewById(Long reviewId) throws ReviewNotFoundException;
 
     public List<Review> retrieveAllReviews();
-
-    public Long createNewReview(Review review, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;
     
     public List<Review> retrieveReviewsByCustomerId(Long customerId);
 
@@ -33,7 +31,9 @@ public interface ReviewSessionBeanLocal {
 
     public void deleteReview(Long reviewId) throws ReviewNotFoundException;
     
-    public void updateReviewDetails(Review newReview, Long productId, Long customerId) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException;
+    public Long createNewReview(Review review, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;
+
+    public void updateReviewDetails(Review newReview, Long productId, String custFirebaseUid) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException;
 
     
 }

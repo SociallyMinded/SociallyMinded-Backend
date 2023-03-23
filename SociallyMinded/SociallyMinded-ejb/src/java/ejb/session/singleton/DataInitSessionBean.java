@@ -203,81 +203,81 @@ public class DataInitSessionBean {
                 Review rO3 = new Review(template1);
                 Review rO4 = new Review(template1); 
                 
-                reviewSessionBeanLocal.createNewReview(rA1, 1l, 1l);
-                reviewSessionBeanLocal.createNewReview(rA2, 1l, 1l);
-                reviewSessionBeanLocal.createNewReview(rA3, 1l, 1l);
-                reviewSessionBeanLocal.createNewReview(rA4, 1l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rB1, 2l, 1l);
-                reviewSessionBeanLocal.createNewReview(rB2, 2l, 1l);
-                reviewSessionBeanLocal.createNewReview(rB3, 2l, 1l);
-                reviewSessionBeanLocal.createNewReview(rB4, 2l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rC1, 3l, 1l);
-                reviewSessionBeanLocal.createNewReview(rC2, 3l, 1l);
-                reviewSessionBeanLocal.createNewReview(rC3, 3l, 1l);
-                reviewSessionBeanLocal.createNewReview(rC4, 3l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rD1, 4l, 1l);
-                reviewSessionBeanLocal.createNewReview(rD2, 4l, 1l);
-                reviewSessionBeanLocal.createNewReview(rD3, 4l, 1l);
-                reviewSessionBeanLocal.createNewReview(rD4, 4l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rE1, 5l, 1l);
-                reviewSessionBeanLocal.createNewReview(rE2, 5l, 1l);
-                reviewSessionBeanLocal.createNewReview(rE3, 5l, 1l);
-                reviewSessionBeanLocal.createNewReview(rE4, 5l, 1l);
-     
-                reviewSessionBeanLocal.createNewReview(rF1, 6l, 1l);
-                reviewSessionBeanLocal.createNewReview(rF2, 6l, 1l);
-                reviewSessionBeanLocal.createNewReview(rF3, 6l, 1l);
-                reviewSessionBeanLocal.createNewReview(rF4, 6l, 1l);
-                
-                     
-                reviewSessionBeanLocal.createNewReview(rG1, 7l, 1l);
-                reviewSessionBeanLocal.createNewReview(rG2, 7l, 1l);
-                reviewSessionBeanLocal.createNewReview(rG3, 7l, 1l);
-                reviewSessionBeanLocal.createNewReview(rG4, 7l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rH1, 8l, 1l);
-                reviewSessionBeanLocal.createNewReview(rH2, 8l, 1l);
-                reviewSessionBeanLocal.createNewReview(rH3, 8l, 1l);
-                reviewSessionBeanLocal.createNewReview(rH4, 8l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rI1, 9l, 1l);
-                reviewSessionBeanLocal.createNewReview(rI2, 9l, 1l);
-                reviewSessionBeanLocal.createNewReview(rI3, 9l, 1l);
-                reviewSessionBeanLocal.createNewReview(rI4, 9l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rJ1, 10l, 1l);
-                reviewSessionBeanLocal.createNewReview(rJ2, 10l, 1l);
-                reviewSessionBeanLocal.createNewReview(rJ3, 10l, 1l);
-                reviewSessionBeanLocal.createNewReview(rJ4, 10l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rK1, 11l, 1l);
-                reviewSessionBeanLocal.createNewReview(rK2, 11l, 1l);
-                reviewSessionBeanLocal.createNewReview(rK3, 11l, 1l);
-                reviewSessionBeanLocal.createNewReview(rK4, 11l, 1l);
-              
-                reviewSessionBeanLocal.createNewReview(rL1, 12l, 1l);
-                reviewSessionBeanLocal.createNewReview(rL2, 12l, 1l);
-                reviewSessionBeanLocal.createNewReview(rL3, 12l, 1l);
-                reviewSessionBeanLocal.createNewReview(rL4, 12l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rM1, 13l, 1l);
-                reviewSessionBeanLocal.createNewReview(rM2, 13l, 1l);
-                reviewSessionBeanLocal.createNewReview(rM3, 13l, 1l);
-                reviewSessionBeanLocal.createNewReview(rM4, 13l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rN1, 14l, 1l);
-                reviewSessionBeanLocal.createNewReview(rN2, 14l, 1l);
-                reviewSessionBeanLocal.createNewReview(rN3, 14l, 1l);
-                reviewSessionBeanLocal.createNewReview(rN4, 14l, 1l);
-                
-                reviewSessionBeanLocal.createNewReview(rO1, 15l, 1l);
-                reviewSessionBeanLocal.createNewReview(rO2, 15l, 1l);
-                reviewSessionBeanLocal.createNewReview(rO3, 15l, 1l);
-                reviewSessionBeanLocal.createNewReview(rO4, 15l, 1l);
+                reviewSessionBeanLocal.createNewReview(rA1, 1l, "rq");
+                reviewSessionBeanLocal.createNewReview(rA2, 1l, "rwqf");
+                reviewSessionBeanLocal.createNewReview(rA3, 1l, "fedvev");
+                reviewSessionBeanLocal.createNewReview(rA4, 1l, "geac");
+//                
+//                reviewSessionBeanLocal.createNewReview(rB1, 2l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rB2, 2l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rB3, 2l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rB4, 2l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rC1, 3l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rC2, 3l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rC3, 3l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rC4, 3l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rD1, 4l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rD2, 4l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rD3, 4l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rD4, 4l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rE1, 5l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rE2, 5l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rE3, 5l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rE4, 5l, 1l);
+//     
+//                reviewSessionBeanLocal.createNewReview(rF1, 6l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rF2, 6l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rF3, 6l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rF4, 6l, 1l);
+//                
+//                     
+//                reviewSessionBeanLocal.createNewReview(rG1, 7l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rG2, 7l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rG3, 7l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rG4, 7l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rH1, 8l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rH2, 8l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rH3, 8l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rH4, 8l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rI1, 9l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rI2, 9l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rI3, 9l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rI4, 9l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rJ1, 10l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rJ2, 10l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rJ3, 10l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rJ4, 10l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rK1, 11l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rK2, 11l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rK3, 11l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rK4, 11l, 1l);
+//              
+//                reviewSessionBeanLocal.createNewReview(rL1, 12l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rL2, 12l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rL3, 12l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rL4, 12l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rM1, 13l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rM2, 13l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rM3, 13l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rM4, 13l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rN1, 14l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rN2, 14l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rN3, 14l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rN4, 14l, 1l);
+//                
+//                reviewSessionBeanLocal.createNewReview(rO1, 15l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rO2, 15l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rO3, 15l, 1l);
+//                reviewSessionBeanLocal.createNewReview(rO4, 15l, 1l);
 
             } catch (Exception ex) {
                 Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);

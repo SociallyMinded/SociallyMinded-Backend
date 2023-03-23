@@ -136,7 +136,7 @@ public class ReviewFacadeREST extends AbstractFacade<Review> {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(CreateOrUpdateReviewTemplate reviewReq) {
         try {
-            Long reviewId = reviewSessionBeanLocal.createNewReview(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustomerId());
+            Long reviewId = reviewSessionBeanLocal.createNewReview(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustFirebaseUid());
             return Response
                     .status(Response.Status.OK)
                     .build();
@@ -154,7 +154,7 @@ public class ReviewFacadeREST extends AbstractFacade<Review> {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response edit(@PathParam("id") Long id, CreateOrUpdateReviewTemplate reviewReq) {
         try {
-            reviewSessionBeanLocal.updateReviewDetails(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustomerId());            
+            reviewSessionBeanLocal.updateReviewDetails(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustFirebaseUid());            
             return Response
                     .status(Response.Status.OK)
                     .build();
