@@ -39,6 +39,7 @@ public class OrderRecord implements Serializable {
     private BigDecimal totalPrice;
     private String orderStatus;
     private String orderTitle;
+    private String address;
     
     @Temporal(DATE)
     private Date dateOfOrder;
@@ -59,12 +60,13 @@ public class OrderRecord implements Serializable {
         this.quantity = quantity;
     }
     
-    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, String orderTitle) {
+    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, String orderTitle, String address) {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.orderStatus = "Pending Approval";
         this.dateOfOrder = new Date();
         this.orderTitle = orderTitle;
+        this.address = address;
     }
     
 
@@ -158,6 +160,14 @@ public class OrderRecord implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
