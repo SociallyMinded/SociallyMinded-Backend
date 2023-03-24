@@ -43,7 +43,6 @@ public class Product implements Serializable {
     @OneToMany(mappedBy="product")
     private List<Review> reviews; 
     
-    @JsonbTransient
     @ManyToOne
     private SocialEnterprise socialenterprise;
     
