@@ -45,8 +45,8 @@ public class CreateOrUpdateReviewTemplate {
         return custFirebaseUid;
     }
 
-    public void setCustFirebaseUid(Long customerId) {
-        this.custFirebaseUid = custFirebaseUid;
+    public void setCustFirebaseUid(String customerId) {
+        this.custFirebaseUid = customerId;
     }
 
 }

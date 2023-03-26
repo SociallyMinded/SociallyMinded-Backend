@@ -8,6 +8,7 @@ package service;
 import ejb.session.stateless.ReviewSessionBeanLocal;
 import entity.Review;
 import exception.ReviewNotFoundException;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -133,9 +134,11 @@ public class ReviewFacadeREST extends AbstractFacade<Review> {
     }
     
     @POST
-    @Consumes({MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response create(CreateOrUpdateReviewTemplate reviewReq) {
         try {
+            Review r = reviewReq.getReview();
+            r.setDateOfReview(new Date());
             Long reviewId = reviewSessionBeanLocal.createNewReview(reviewReq.getReview(), reviewReq.getProductId(), reviewReq.getCustFirebaseUid());
             return Response
                     .status(Response.Status.OK)
