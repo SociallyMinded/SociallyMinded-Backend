@@ -131,6 +131,7 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
                     .build(); 
         } catch (Exception ex) {
             ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            System.out.println(ex.getMessage());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)

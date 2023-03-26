@@ -143,7 +143,7 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
         try {
             OrderRecord r = orderReq.getRecord();
             r.setDateOfOrder(new Date());
-            r.setOrderStatus(OrderStatus.PENDING_APPROVAL);
+            r.setOrderStatus("Pending Approval");
             Long recordId = orderRecordSessionBeanLocal.createNewOrderRecord(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustFirebaseUid());
             return Response
                     .status(Response.Status.OK)

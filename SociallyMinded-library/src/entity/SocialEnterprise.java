@@ -31,13 +31,13 @@ public class SocialEnterprise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long socialEnterpriseId;
     
-    @NotNull
     private String enterpriseName; 
     private String username;
     private String password;
     private String address;
     private String email;    
     private Date dateJoined;
+    private String firebaseUid;
     private AccountStatus accountStatus;
     
     @JsonbTransient
@@ -51,7 +51,7 @@ public class SocialEnterprise implements Serializable {
     public SocialEnterprise(String enterpriseName) {
         this.enterpriseName = enterpriseName;
     }
-
+    
     public SocialEnterprise(String enterpriseName, String username, String password, String address, String email, Date dateJoined) {
         this.enterpriseName = enterpriseName;
         this.username = username;
@@ -134,6 +134,14 @@ public class SocialEnterprise implements Serializable {
 
     public void setSocialEnterpriseId(Long socialEnterpriseId) {
         this.socialEnterpriseId = socialEnterpriseId;
+    }
+
+    public String getFirebaseUid() {
+        return firebaseUid;
+    }
+
+    public void setFirebaseUid(String firebaseUid) {
+        this.firebaseUid = firebaseUid;
     }
 
     @Override

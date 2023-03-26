@@ -150,7 +150,7 @@ public class ProductSessionBean implements ProductSessionBeanRemote, ProductSess
             
             boolean noOrdersLeft = true;
             for (OrderRecord order : product.getOrders()) {
-                if (order.getOrderStatus() != OrderStatus.COMPLETED) {
+                if (!order.getOrderStatus().equals("Completed")) {
                     noOrdersLeft = false;
                 }
             }
