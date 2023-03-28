@@ -63,6 +63,14 @@ public class Review implements Serializable {
 //
 //    }
 
+    public Review(String reviewDescription, Integer rating, boolean isAnonymous) {
+        this.reviewDescription = reviewDescription;
+        this.rating = rating;
+        this.isAnonymous = isAnonymous;
+    }
+
+    
+    
     public Review(String reviewDescription, Integer rating, boolean isAnonymous, String[] reviewImages) {
         this.reviewDescription = reviewDescription;
         this.rating = rating;
