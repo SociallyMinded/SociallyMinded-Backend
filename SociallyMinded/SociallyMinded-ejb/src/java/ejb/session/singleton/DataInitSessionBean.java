@@ -367,6 +367,7 @@ public class DataInitSessionBean {
                 reviewSessionBeanLocal.createNewReview(rO4, 15l, "abc4");
 
 
+
             } catch (Exception ex) {
                 Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);
             }

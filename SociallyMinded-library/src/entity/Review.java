@@ -70,7 +70,7 @@ public class Review implements Serializable {
     }
 
     
-    
+
     public Review(String reviewDescription, Integer rating, boolean isAnonymous, String[] reviewImages) {
         this.reviewDescription = reviewDescription;
         this.rating = rating;
@@ -144,6 +144,7 @@ public class Review implements Serializable {
         return rating;
     }
 
+
     /**
      * @param rating the rating to set
      */
@@ -152,6 +153,7 @@ public class Review implements Serializable {
     }
 
     /**
+
      * @return the isAnonymous
      */
     public boolean isIsAnonymous() {
