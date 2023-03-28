@@ -216,6 +216,7 @@ public class DataInitSessionBean {
                 
                 Review rA1 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, false);
                 Review rA2 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!", 5, false);
+
                 Review rA3 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 5, false);
                 Review rA4 = new Review("The colour of the dress is very unique and it has become my favourite piece in my closet!",5, false);
                 
@@ -225,6 +226,7 @@ public class DataInitSessionBean {
                 Review rB4 = new Review("This is my favourite pants at the moment :)",5, false);
                 
                 Review rC1 = new Review("Test C",5, false);
+
                 Review rC2 = new Review("The turquoise colour of the dress is very unique. It is hard to find dresses in this colour so I really like this piece",5, false);
                 Review rC3 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!",5, false);
                 Review rC4 = new Review("The sizing of this dress runs big. It is recommended that you size down if you are in between sizes",5, false);
