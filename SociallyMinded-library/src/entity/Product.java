@@ -63,8 +63,8 @@ public class Product implements Serializable {
         this.price = price;
         this.description = description;
         this.imageLink = imageLink;
-        this.ratingScore = new BigDecimal(0);
-        this.numRatings = new BigDecimal(0);
+        this.ratingScore = new BigDecimal(20);
+        this.numRatings = new BigDecimal(4);
         this.category = category;
     }
 

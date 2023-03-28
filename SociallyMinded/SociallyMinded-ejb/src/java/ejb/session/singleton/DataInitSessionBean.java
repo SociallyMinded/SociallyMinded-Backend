@@ -216,15 +216,15 @@ public class DataInitSessionBean {
                 
                 Review rA1 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, false);
                 Review rA2 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!", 5, false);
-                Review rA3 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 3, false);
-                Review rA4 = new Review("The colour of the dress is very unique and it has become my favourite piece in my closet!",4, false);
+                Review rA3 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 5, false);
+                Review rA4 = new Review("The colour of the dress is very unique and it has become my favourite piece in my closet!",5, false);
                 
                 Review rB1 = new Review("Test B",5, false);
                 Review rB2 = new Review("These pants are so flare that it looks like a skirt from far.  A very versatile piece to style :)",5, false);
-                Review rB3 = new Review("I like these pants so much that I bought 2 of it in both colours, black and blue.",4, false);
-                Review rB4 = new Review("This is my favourite pants at the moment :)",4, false);
+                Review rB3 = new Review("I like these pants so much that I bought 2 of it in both colours, black and blue.",5, false);
+                Review rB4 = new Review("This is my favourite pants at the moment :)",5, false);
                 
-                Review rC1 = new Review("Test C",4, false);
+                Review rC1 = new Review("Test C",5, false);
                 Review rC2 = new Review("The turquoise colour of the dress is very unique. It is hard to find dresses in this colour so I really like this piece",5, false);
                 Review rC3 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!",5, false);
                 Review rC4 = new Review("The sizing of this dress runs big. It is recommended that you size down if you are in between sizes",5, false);
