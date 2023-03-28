@@ -117,7 +117,93 @@ public class DataInitSessionBean {
                 productSessionBeanLocal.createNewProduct(pR, 1l);
                 productSessionBeanLocal.createNewProduct(pS, 1l);
                 productSessionBeanLocal.createNewProduct(pT, 1l);
+//                
+//                String template1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+//                        + " Maecenas vitae risus rhoncus, fringilla mi sed, fringilla mi. "
+//                        + "Sed in blandit metus, congue mattis velit. Aenean at lacus vitae "
+//                        + "nisi condimentum bibendum. Morbi pulvinar nunc nec interdum rhoncus. "
+//                        + "Curabitur consectetur sagittis laoreet. Maecenas luctus nec mi in mattis. "
+//                        + "Phasellus velit tortor, dapibus eu lacus id, ullamcorper placerat lorem. "
+//                        + "Vestibulum gravida ipsum sed urna vulputate volutpat. Suspendisse quis dictum ante. "
+//                        + "Suspendisse convallis, risus eu semper imperdiet, massa arcu pretium dui, ac pretium "
+//                        + "lacus justo sit amet mauris. ";
+//                Review rA1 = new Review("Test A");
+//                Review rA2 = new Review(template1);
+//                Review rA3 = new Review(template1);
+//                Review rA4 = new Review(template1);
+//                
+//                Review rB1 = new Review("Test B");
+//                Review rB2 = new Review(template1);
+//                Review rB3 = new Review(template1);
+//                Review rB4 = new Review(template1);
+//                
+//                Review rC1 = new Review("Test C");
+//                Review rC2 = new Review(template1);
+//                Review rC3 = new Review(template1);
+//                Review rC4 = new Review(template1);
+//                   
+//                Review rD1 = new Review("Test D");
+//                Review rD2 = new Review(template1);
+//                Review rD3 = new Review(template1);
+//                Review rD4 = new Review(template1);
+//                
+//                Review rE1 = new Review("Test E");
+//                Review rE2 = new Review(template1);
+//                Review rE3 = new Review(template1);
+//                Review rE4 = new Review(template1); 
+//
+//                Review rF1 = new Review("Test F");
+//                Review rF2 = new Review(template1);
+//                Review rF3 = new Review(template1);
+//                Review rF4 = new Review(template1); 
+//
+//                Review rG1 = new Review("Test G");
+//                Review rG2 = new Review(template1);
+//                Review rG3 = new Review(template1);
+//                Review rG4 = new Review(template1); 
+//                
+//                Review rH1 = new Review("Test H");
+//                Review rH2 = new Review(template1);
+//                Review rH3 = new Review(template1);
+//                Review rH4 = new Review(template1); 
+//
+//                
+//                Review rI1 = new Review("Test I");
+//                Review rI2 = new Review(template1);
+//                Review rI3 = new Review(template1);
+//                Review rI4 = new Review(template1); 
+//
+//                Review rJ1 = new Review("Test J");
+//                Review rJ2 = new Review(template1);
+//                Review rJ3 = new Review(template1);
+//                Review rJ4 = new Review(template1); 
+//                
+//                Review rK1 = new Review("Test K");
+//                Review rK2 = new Review(template1);
+//                Review rK3 = new Review(template1);
+//                Review rK4 = new Review(template1); 
+//                
+//                Review rL1 = new Review("Test L");
+//                Review rL2 = new Review(template1);
+//                Review rL3 = new Review(template1);
+//                Review rL4 = new Review(template1); 
+//                
+//                Review rM1 = new Review("Test M");
+//                Review rM2 = new Review(template1);
+//                Review rM3 = new Review(template1);
+//                Review rM4 = new Review(template1); 
+//                
+//                Review rN1 = new Review("Test N");
+//                Review rN2 = new Review(template1);
+//                Review rN3 = new Review(template1);
+//                Review rN4 = new Review(template1); 
+//                
+//                Review rO1 = new Review("Test O");
+//                Review rO2 = new Review(template1);
+//                Review rO3 = new Review(template1);
+//                Review rO4 = new Review(template1); 
                 
+
                 /* String template1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
                         + " Maecenas vitae risus rhoncus, fringilla mi sed, fringilla mi. "
                         + "Sed in blandit metus, congue mattis velit. Aenean at lacus vitae "
@@ -279,6 +365,7 @@ public class DataInitSessionBean {
                 reviewSessionBeanLocal.createNewReview(rO2, 15l, 1l);
                 reviewSessionBeanLocal.createNewReview(rO3, 15l, 1l);
                 reviewSessionBeanLocal.createNewReview(rO4, 15l, 1l);
+
 
             } catch (Exception ex) {
                 Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);

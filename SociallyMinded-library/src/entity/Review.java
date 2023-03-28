@@ -36,10 +36,16 @@ public class Review implements Serializable {
     @Column(columnDefinition="varchar(1000)")
     private String reviewDescription;
     
+    private Integer rating;
+    
+    private boolean isAnonymous;
+    
+    private String[] reviewImages;
+    
     @Temporal(DATE)
     private Date dateOfReview;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
+//    @JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Customer customer;
     
@@ -51,14 +57,36 @@ public class Review implements Serializable {
     }
     
     // TODO : delete after testing
-    public Review(String description) {
-        this.reviewDescription = description;
+//    public Review(String description) {
+//        this.reviewDescription = description;
+//        this.dateOfReview = new Date();
+//
+//    }
+
+    public Review(String reviewDescription, Integer rating, boolean isAnonymous, String[] reviewImages) {
+        this.reviewDescription = reviewDescription;
+        this.rating = rating;
+        this.isAnonymous = isAnonymous;
+        this.reviewImages = reviewImages;
+        this.dateOfReview = new Date();
     }
 
-    public Review(String reviewDescription, Date dateOfReview) {
+    public Review(String reviewDescription, Integer rating, boolean isAnonymous, String[] reviewImages, Date dateOfReview) {
         this.reviewDescription = reviewDescription;
+        this.rating = rating;
+        this.isAnonymous = isAnonymous;
+        this.reviewImages = reviewImages;
         this.dateOfReview = dateOfReview;
     }
+    
+    
+    
+//    
+//
+//    public Review(String reviewDescription, Date dateOfReview) {
+//        this.reviewDescription = reviewDescription;
+//        this.dateOfReview = dateOfReview;
+//    }
 
     public Customer getCustomer() {
         return customer;
@@ -101,7 +129,49 @@ public class Review implements Serializable {
         this.dateOfReview = dateOfReview;
     }
 
+    /**
+     * @return the rating
+     */
+    public Integer getRating() {
+        return rating;
+    }
 
+    /**
+     * @param rating the rating to set
+     */
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    /**
+     * @return the isAnonymous
+     */
+    public boolean isIsAnonymous() {
+        return isAnonymous;
+    }
+
+    /**
+     * @param isAnonymous the isAnonymous to set
+     */
+    public void setIsAnonymous(boolean isAnonymous) {
+        this.isAnonymous = isAnonymous;
+    }
+
+    /**
+     * @return the reviewImages
+     */
+    public String[] getReviewImages() {
+        return reviewImages;
+    }
+
+    /**
+     * @param reviewImages the reviewImages to set
+     */
+    public void setReviewImages(String[] reviewImages) {
+        this.reviewImages = reviewImages;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -49,6 +49,7 @@ public class OrderRecord implements Serializable {
     private Product product;
     
 //    @JsonbTransient // resolve circular reference issues in REST APIs
+
     @ManyToOne
     private Customer customer;
 
