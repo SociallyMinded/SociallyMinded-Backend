@@ -63,10 +63,22 @@ public class Product implements Serializable {
         this.price = price;
         this.description = description;
         this.imageLink = imageLink;
-        this.ratingScore = new BigDecimal(20);
-        this.numRatings = new BigDecimal(4);
+        this.ratingScore = new BigDecimal(0);
+        this.numRatings = new BigDecimal(0);
         this.category = category;
     }
+
+    public Product(String name, BigDecimal price, String description, String imageLink, String category, BigDecimal ratingScore, BigDecimal numRatings) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.imageLink = imageLink;
+        this.ratingScore = ratingScore;
+        this.numRatings = numRatings;
+        this.category = category;
+    }
+    
+    
 
 
     @XmlTransient
