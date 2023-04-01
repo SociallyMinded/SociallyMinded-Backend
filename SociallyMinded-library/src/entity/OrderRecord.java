@@ -56,11 +56,6 @@ public class OrderRecord implements Serializable {
     public OrderRecord() {
     }
     
-    // TODO : Delete after testing
-    public OrderRecord(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-    
     public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, String orderTitle, String address) {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
