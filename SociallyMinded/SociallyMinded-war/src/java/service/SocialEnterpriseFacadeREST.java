@@ -126,6 +126,26 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
                     .build();
         }
     }
+    
+    @PUT
+    @Path("loginViaGmail/")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response handleLoginViaGmail(SocialEnterprise socialEnterprise) {
+        try {
+            socialEnterpriseSessionBeanLocal.logInViaGmailAccount(socialEnterprise);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(socialEnterprise)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
 
     @GET
     @Path("count")
@@ -133,7 +153,6 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
     
     @POST
     @Consumes(value = {MediaType.APPLICATION_JSON})
@@ -150,6 +169,7 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
                     .build(); 
         } catch (Exception ex) {
             ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            System.out.println(ex.getMessage());
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(errorRsp)

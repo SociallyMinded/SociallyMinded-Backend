@@ -26,7 +26,7 @@ public interface OrderRecordSessionBeanLocal {
 
     public void deleteOrderRecord(Long oldOrderId) throws OrderRecordNotFoundException;
 
-    public void updateOrderRecordDetails(OrderRecord newOrderRecord, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;
+    public void updateOrderRecordDetails(OrderRecord newOrderRecord, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;
 
     public List<OrderRecord> retrieveOrderRecordsByCustomerId(Long customerId);
 
@@ -34,7 +34,7 @@ public interface OrderRecordSessionBeanLocal {
 
     public List<OrderRecord> retrieveAllOrderRecords();
 
-    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;    
+    public Long createNewOrderRecord(OrderRecord order, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;    
+
+    public List<OrderRecord> retrieveOrderRecordsByCustomerFirebaseUid(String firebaseUid);
 }
-
-

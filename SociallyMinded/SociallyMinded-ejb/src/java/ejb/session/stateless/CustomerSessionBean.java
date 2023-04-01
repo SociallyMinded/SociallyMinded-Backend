@@ -112,7 +112,7 @@ public class CustomerSessionBean implements CustomerSessionBeanRemote, CustomerS
         } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
         }
-    }
+    } 
     
     public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException {
         Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(newCustomer);

@@ -30,6 +30,6 @@ public interface SocialEnterpriseSessionBeanLocal {
 
     public SocialEnterprise retrieveSocialEnterpriseByFirebaseUid(String firebaseUid) throws SocialEnterpriseNotFoundException;
 
-    public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException, SocialEnterpriseNotFoundException;
+    public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException;
     
 }

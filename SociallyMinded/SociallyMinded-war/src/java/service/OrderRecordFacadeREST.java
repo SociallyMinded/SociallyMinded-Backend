@@ -6,7 +6,9 @@ package service;
 
 import ejb.session.stateless.OrderRecordSessionBeanLocal;
 import entity.OrderRecord;
+import enumeration.OrderStatus;
 import exception.OrderRecordNotFoundException;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -93,9 +95,9 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
     @GET
     @Path("findOrderRecordsByCustomerId/{customerId}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response findOrderRecordsByCustomerId(@PathParam("customerId") Long customerId) {
+    public Response findOrderRecordsByCustomerId(@PathParam("customerId") String customerFirebaseUid) {
         try {
-            List<OrderRecord> records = orderRecordSessionBeanLocal.retrieveOrderRecordsByCustomerId(customerId);
+            List<OrderRecord> records = orderRecordSessionBeanLocal.retrieveOrderRecordsByCustomerFirebaseUid(customerFirebaseUid);
             return Response
                     .status(Response.Status.OK)
                     .entity(records)
@@ -139,7 +141,10 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(CreateOrUpdateOrderRecordTemplate orderReq) {
         try {
-            Long recordId = orderRecordSessionBeanLocal.createNewOrderRecord(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerId());
+            OrderRecord r = orderReq.getRecord();
+            r.setDateOfOrder(new Date());
+            r.setOrderStatus("Pending Approval");
+            Long recordId = orderRecordSessionBeanLocal.createNewOrderRecord(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustFirebaseUid());
             return Response
                     .status(Response.Status.OK)
                     .build();
@@ -157,8 +162,7 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response edit(@PathParam("id") Long id, CreateOrUpdateOrderRecordTemplate orderReq) {
         try {
-            orderRecordSessionBeanLocal.updateOrderRecordDetails(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustomerId());
-            
+            orderRecordSessionBeanLocal.updateOrderRecordDetails(orderReq.getRecord(), orderReq.getProductId(), orderReq.getCustFirebaseUid());
             return Response
                     .status(Response.Status.OK)
                     .build();

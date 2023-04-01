@@ -69,7 +69,14 @@ public class Customer implements Serializable {
     public Customer(String name) {
         this.username = name;
     }
+    
+    //for the data Init
+    public Customer(String username, String firebaseUid) {
+        this.username = username;
+        this.firebaseUid = firebaseUid;
+    }
 
+    
     public Customer(String username, String email, String firebaseUid) {
         this.username = username;
         this.email = username;

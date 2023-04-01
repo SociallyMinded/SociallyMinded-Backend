@@ -110,12 +110,11 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
     } 
     
     @Override
-    public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException, SocialEnterpriseNotFoundException {
+    public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException {
         Set<ConstraintViolation<SocialEnterprise>> constraintViolations = validator.validate(newSocialEnterprise);
-        if (constraintViolations.isEmpty()) {        
-            if (this.retrieveSocialEnterpriseByFirebaseUid(newSocialEnterprise.getFirebaseUid()) == null) {
-                em.persist(newSocialEnterprise);
-            }
+        if (constraintViolations.isEmpty()) {       
+            //em.persist(newSocialEnterprise);
+            createNewSocialEnterprise(newSocialEnterprise);
         } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
         }

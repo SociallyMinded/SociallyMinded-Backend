@@ -21,7 +21,7 @@ public interface CustomerSessionBeanRemote {
     public List<Customer> retrieveAllCustomers();
 
     public Long createNewCustomer(Customer customer) throws InputDataValidationException, ParseException;
-
+    
     public Customer retrieveCustomerById(Long customerId) throws CustomerNotFoundException;
 
     public void deactivateCustomerAccount(Long customerId) throws CustomerNotFoundException;

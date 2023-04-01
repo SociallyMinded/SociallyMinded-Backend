@@ -31,15 +31,14 @@ public class SocialEnterprise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long socialEnterpriseId;
     
-    @NotNull
     private String enterpriseName; 
     private String username;
     private String password;
     private String address;
     private String email;    
     private Date dateJoined;
-    private AccountStatus accountStatus;
     private String firebaseUid;
+    private AccountStatus accountStatus;
     
     @JsonbTransient
     @OneToMany(mappedBy="socialenterprise")
@@ -49,13 +48,24 @@ public class SocialEnterprise implements Serializable {
     }
     
     // TODO : delete after testing
-    public SocialEnterprise(String enterpriseName, String username, String email, String firebaseUid) {
+    public SocialEnterprise(String enterpriseName) {
         this.enterpriseName = enterpriseName;
+    }
+    
+    public SocialEnterprise(String username, String email, String firebaseUid) {
+        this.enterpriseName = username;
         this.username = username;
         this.email = email;
         this.firebaseUid = firebaseUid;
     }
-
+    
+    public SocialEnterprise(String enterpriseName, String username, String email, String firebaseUid) {
+        this.enterpriseName = enterpriseName;
+        this.username = username;
+        this.email = username;
+        this.firebaseUid = firebaseUid;
+    }
+    
     public SocialEnterprise(String enterpriseName, String username, String password, String address, String email, Date dateJoined) {
         this.enterpriseName = enterpriseName;
         this.username = username;
@@ -139,7 +149,7 @@ public class SocialEnterprise implements Serializable {
     public void setSocialEnterpriseId(Long socialEnterpriseId) {
         this.socialEnterpriseId = socialEnterpriseId;
     }
-    
+
     public String getFirebaseUid() {
         return firebaseUid;
     }

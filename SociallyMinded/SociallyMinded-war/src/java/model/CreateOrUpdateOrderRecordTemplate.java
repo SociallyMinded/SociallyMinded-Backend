@@ -14,15 +14,16 @@ import entity.OrderRecord;
 public class CreateOrUpdateOrderRecordTemplate {
     private OrderRecord record;
     private Long productId;
-    private Long customerId;
+    private String custFirebaseUid;
 
+        
     public CreateOrUpdateOrderRecordTemplate() {
     }
 
-    public CreateOrUpdateOrderRecordTemplate(OrderRecord record, Long productId, Long customerId) {
+    public CreateOrUpdateOrderRecordTemplate(OrderRecord record, Long productId, String custFirebaseUid) {
         this.record = record;
         this.productId = productId;
-        this.customerId = customerId;
+        this.custFirebaseUid = custFirebaseUid;
     }
 
     public OrderRecord getRecord() {
@@ -40,13 +41,12 @@ public class CreateOrUpdateOrderRecordTemplate {
     public void setProductId(Long productId) {
         this.productId = productId;
     }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
     
+    public String getCustFirebaseUid() {
+        return custFirebaseUid;
+    }
+
+    public void setCustFirebaseUid(String custFirebaseUid) {
+        this.custFirebaseUid = custFirebaseUid;
+    }    
 }

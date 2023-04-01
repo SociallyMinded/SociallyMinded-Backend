@@ -74,11 +74,11 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     }
         
     @GET
-    @Path("{id}")
+    @Path("{uid}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response findCustomerById(@PathParam("id") Long id) {
+    public Response findCustomerByFirebaseUid(@PathParam("uid") String uid) {
         try {
-            Customer customer = customerSessionBeanLocal.retrieveCustomerById(id);
+            Customer customer = customerSessionBeanLocal.retrieveCustomerByFirebaseUid(uid);
             return Response
                     .status(Response.Status.OK)
                     .entity(customer)

@@ -67,16 +67,17 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
 
     
     @Override
-    public Long createNewOrderRecord(OrderRecord order, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
+    public Long createNewOrderRecord(OrderRecord order, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
+        System.out.println(customerFirebaseUid);
         if (productSessionBeanLocal.retrieveProductById(productId) == null) {
             throw new ProductNotFoundException();
-        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+        } else if (customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid) == null) {
             throw new CustomerNotFoundException();
         } else {
             Set<ConstraintViolation<OrderRecord>> constraintViolations = validator.validate(order);
             if (constraintViolations.isEmpty()) {
                 Product product = productSessionBeanLocal.retrieveProductById(productId);
-                Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+                Customer customer = customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid);
                 product.getOrders().add(order);
                 customer.getOrders().add(order);
                 order.setProduct(product);
@@ -122,18 +123,26 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
         return query.getResultList();
     }
     
+    @Override
+    public List<OrderRecord> retrieveOrderRecordsByCustomerFirebaseUid(String firebaseUid) {
+        Query query = em.createQuery("SELECT ord FROM OrderRecord ord "
+                + "WHERE ord.customer.firebaseUid = :firebaseUid");
+        query.setParameter("firebaseUid", firebaseUid);
+        return query.getResultList();
+    }
+    
     //TODO : check if need to merge back to customer / product List
     @Override
-    public void updateOrderRecordDetails(OrderRecord newOrderRecord, Long productId, Long customerId) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
+    public void updateOrderRecordDetails(OrderRecord newOrderRecord, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
         if (productSessionBeanLocal.retrieveProductById(productId) == null) {
             throw new ProductNotFoundException();
-        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+        } else if (customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid) == null) {
             throw new CustomerNotFoundException();
         } else {
             Set<ConstraintViolation<OrderRecord>> constraintViolations = validator.validate(newOrderRecord);
             if (constraintViolations.isEmpty()) {
                 Product product = productSessionBeanLocal.retrieveProductById(productId);
-                Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+                Customer customer = customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid);
                 newOrderRecord.setProduct(product);
                 newOrderRecord.setCustomer(customer);
                 em.merge(newOrderRecord);

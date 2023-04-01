@@ -37,17 +37,19 @@ public class OrderRecord implements Serializable {
     @NotNull
     private BigDecimal quantity;
     private BigDecimal totalPrice;
-    private OrderStatus orderStatus;
+    private String orderStatus;
+    private String orderTitle;
+    private String address;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
     @Temporal(DATE)
     private Date dateOfOrder;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
+//    @JsonbTransient // resolve circular reference issues in REST APIs
     @ManyToOne
     private Product product;
     
-    @JsonbTransient // resolve circular reference issues in REST APIs
+//    @JsonbTransient // resolve circular reference issues in REST APIs
+
     @ManyToOne
     private Customer customer;
 
@@ -58,11 +60,21 @@ public class OrderRecord implements Serializable {
     public OrderRecord(BigDecimal quantity) {
         this.quantity = quantity;
     }
+    
+    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, String orderTitle, String address) {
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.orderStatus = "Pending Approval";
+        this.dateOfOrder = new Date();
+        this.orderTitle = orderTitle;
+        this.address = address;
+    }
+    
 
     public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderStatus, Date dateOfOrder) {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        this.orderStatus = orderStatus;
+        this.orderStatus = "Pending Approval";
         this.dateOfOrder = dateOfOrder;
     }
     
@@ -90,11 +102,11 @@ public class OrderRecord implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public OrderStatus getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -121,9 +133,16 @@ public class OrderRecord implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
-    
 
+    public String getOrderTitle() {
+        return orderTitle;
+    }
+
+    public void setOrderTitle(String orderTitle) {
+        this.orderTitle = orderTitle;
+    }
+    
+ 
     @Override
     public int hashCode() {
         int hash = 0;
@@ -142,6 +161,14 @@ public class OrderRecord implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

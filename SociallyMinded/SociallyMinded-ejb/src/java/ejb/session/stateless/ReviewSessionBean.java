@@ -63,17 +63,17 @@ public class ReviewSessionBean implements ReviewSessionBeanRemote, ReviewSession
     
     
     @Override
-    public Long createNewReview(Review review, Long productId, Long customerId) 
+    public Long createNewReview(Review review, Long productId, String customerFirebaseUid) 
             throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
         if (productSessionBeanLocal.retrieveProductById(productId) == null) {
             throw new ProductNotFoundException();
-        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+        } else if (customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid) == null) {
             throw new CustomerNotFoundException();
         } else {
             Set<ConstraintViolation<Review>> constraintViolations = validator.validate(review);
             if (constraintViolations.isEmpty()) {
                 Product product = productSessionBeanLocal.retrieveProductById(productId);
-                Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+                Customer customer = customerSessionBeanLocal.retrieveCustomerByFirebaseUid(customerFirebaseUid);
                 product.getReviews().add(review);
                 customer.getReviews().add(review);
                 review.setProduct(product);
@@ -119,16 +119,17 @@ public class ReviewSessionBean implements ReviewSessionBeanRemote, ReviewSession
         return query.getResultList();
     }
     
-    public void updateReviewDetails(Review newReview, Long productId, Long customerId) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException {
+    @Override
+    public void updateReviewDetails(Review newReview, Long productId, String custFirebaseUid) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException {
         if (productSessionBeanLocal.retrieveProductById(productId) == null) {
             throw new ProductNotFoundException();
-        } else if (customerSessionBeanLocal.retrieveCustomerById(customerId) == null) {
+        } else if (customerSessionBeanLocal.retrieveCustomerByFirebaseUid(custFirebaseUid) == null) {
             throw new CustomerNotFoundException();
         } else {
             Set<ConstraintViolation<Review>> constraintViolations = validator.validate(newReview);
             if (constraintViolations.isEmpty()) {
                 Product product = productSessionBeanLocal.retrieveProductById(productId);
-                Customer customer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+                Customer customer = customerSessionBeanLocal.retrieveCustomerByFirebaseUid(custFirebaseUid);
                 newReview.setProduct(product);
                 newReview.setCustomer(customer);
                 em.merge(newReview);
