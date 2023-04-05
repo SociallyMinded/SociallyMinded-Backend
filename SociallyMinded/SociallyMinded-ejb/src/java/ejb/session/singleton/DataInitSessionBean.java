@@ -4,10 +4,8 @@
  */
 package ejb.session.singleton;
 
+
 import ejb.session.stateless.CustomerSessionBeanLocal;
-import ejb.session.stateless.ProductSessionBeanLocal;
-import ejb.session.stateless.ReviewSessionBeanLocal;
-import ejb.session.stateless.SocialEnterpriseSessionBeanLocal;
 import entity.Customer;
 import entity.Product;
 import entity.Review;
@@ -35,23 +33,11 @@ import javax.persistence.PersistenceContext;
 public class DataInitSessionBean {
 
     @EJB
-    private ReviewSessionBeanLocal reviewSessionBeanLocal;
-    
-    @EJB
-    private SocialEnterpriseSessionBeanLocal socialEnterpriseSessionBeanLocal;
+    private CustomerSessionBeanLocal customerSessionBeanLocal;
     
     @PersistenceContext(unitName = "SociallyMinded-ejbPU")
     private EntityManager em;
-
-    @EJB
-    private CustomerSessionBeanLocal customerSessionBeanLocal;
     
-    @EJB
-    private ProductSessionBeanLocal productSessionBeanLocal;
-    
-    
-    
-  
     @PostConstruct
     public void postConstruct() {
         if (em.find(Customer.class, 1l) == null) {
