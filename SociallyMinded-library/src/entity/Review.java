@@ -87,6 +87,13 @@ public class Review implements Serializable {
         this.dateOfReview = dateOfReview;
     }
     
+      public Review(String reviewDescription, Integer rating, boolean isAnonymous,Date dateOfReview) {
+        this.reviewDescription = reviewDescription;
+        this.rating = rating;
+        this.isAnonymous = isAnonymous;
+        this.dateOfReview = dateOfReview;
+    }
+    
     
     
 //    
