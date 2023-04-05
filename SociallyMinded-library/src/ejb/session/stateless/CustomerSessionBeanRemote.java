@@ -18,19 +18,4 @@ import javax.ejb.Remote;
 @Remote
 public interface CustomerSessionBeanRemote {
     
-    public List<Customer> retrieveAllCustomers();
-
-    public Long createNewCustomer(Customer customer) throws InputDataValidationException, ParseException;
-    
-    public Customer retrieveCustomerById(Long customerId) throws CustomerNotFoundException;
-
-    public void deactivateCustomerAccount(Long customerId) throws CustomerNotFoundException;
-
-    public Customer retrieveCustomerByUsername(String username) throws CustomerNotFoundException;
-
-    public void updateCustomerProfile(Customer newCustomer) throws InputDataValidationException;
-
-    public Customer retrieveCustomerByFirebaseUid(String firebaseUid);
-
-    public void logInViaGmailAccount(Customer newCustomer) throws InputDataValidationException;
 }
