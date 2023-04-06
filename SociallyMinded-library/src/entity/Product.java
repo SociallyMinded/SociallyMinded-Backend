@@ -34,7 +34,7 @@ public class Product implements Serializable {
     private String name;
     private BigDecimal price;
     private String description;
-    private String imageLink;
+    private String[] imageLink;
     private BigDecimal ratingScore;
     private BigDecimal numRatings;
     private String category;
@@ -58,7 +58,7 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Product(String name, BigDecimal price, String description, String imageLink, String category) {
+    public Product(String name, BigDecimal price, String description, String[] imageLink, String category) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -138,11 +138,11 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public String getImageLink() {
+    public String[] getImageLink() {
         return imageLink;
     }
 
-    public void setImageLink(String imageLink) {
+    public void setImageLink(String[] imageLink) {
         this.imageLink = imageLink;
     }
     

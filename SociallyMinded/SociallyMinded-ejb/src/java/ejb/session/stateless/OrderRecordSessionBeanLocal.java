@@ -38,4 +38,3 @@ public interface OrderRecordSessionBeanLocal {
 
     public List<OrderRecord> retrieveOrderRecordsByCustomerFirebaseUid(String firebaseUid);
 }
-

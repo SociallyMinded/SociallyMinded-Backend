@@ -52,6 +52,20 @@ public class SocialEnterprise implements Serializable {
         this.enterpriseName = enterpriseName;
     }
     
+    public SocialEnterprise(String username, String email, String firebaseUid) {
+        this.enterpriseName = username;
+        this.username = username;
+        this.email = email;
+        this.firebaseUid = firebaseUid;
+    }
+    
+    public SocialEnterprise(String enterpriseName, String username, String email, String firebaseUid) {
+        this.enterpriseName = enterpriseName;
+        this.username = username;
+        this.email = username;
+        this.firebaseUid = firebaseUid;
+    }
+    
     public SocialEnterprise(String enterpriseName, String username, String password, String address, String email, Date dateJoined) {
         this.enterpriseName = enterpriseName;
         this.username = username;

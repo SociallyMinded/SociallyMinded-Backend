@@ -107,6 +107,45 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
                     .build();
         }
     }
+    
+    @GET
+    @Path("findSocialEnterpriseByFirebaseUid/{firebaseUid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findSocialEnterpriseByFirebaseUid(@PathParam("firebaseUid") String firebaseUid) {
+        try {
+            SocialEnterprise enterprise = socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseByFirebaseUid(firebaseUid);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(enterprise)
+                    .build();
+        } catch (SocialEnterpriseNotFoundException ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @PUT
+    @Path("loginViaGmail/")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response handleLoginViaGmail(SocialEnterprise socialEnterprise) {
+        try {
+            socialEnterpriseSessionBeanLocal.logInViaGmailAccount(socialEnterprise);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(socialEnterprise)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
 
     @GET
     @Path("count")
@@ -114,7 +153,6 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
     
     @POST
     @Consumes(value = {MediaType.APPLICATION_JSON})
