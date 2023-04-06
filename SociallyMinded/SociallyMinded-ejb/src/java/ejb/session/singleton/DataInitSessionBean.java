@@ -4,6 +4,7 @@
  */
 package ejb.session.singleton;
 
+
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import ejb.session.stateless.ReviewSessionBeanLocal;
@@ -46,20 +47,21 @@ public class DataInitSessionBean {
     private ReviewSessionBeanLocal reviewSessionBeanLocal;
 
     @EJB
-    private SocialEnterpriseSessionBeanLocal socialEnterpriseSessionBean;
+    private ProductSessionBeanLocal productSessionBeanLocal;
 
-    @PersistenceContext(unitName = "SociallyMinded-ejbPU")
-    private EntityManager em;
+    @EJB
+    private SocialEnterpriseSessionBeanLocal socialEnterpriseSessionBean;
 
     @EJB
     private CustomerSessionBeanLocal customerSessionBeanLocal;
     
-    @EJB
-    private ProductSessionBeanLocal productSessionBeanLocal;
+    
+    
+    @PersistenceContext(unitName = "SociallyMinded-ejbPU")
+    private EntityManager em;
     
     private javax.ejb.SessionContext ctx;
     
-  
     @PostConstruct
     public void postConstruct() {
         if (em.find(Customer.class, 1l) == null) {
@@ -73,8 +75,8 @@ public class DataInitSessionBean {
                 customerSessionBeanLocal.createNewCustomer(C);
                 customerSessionBeanLocal.createNewCustomer(D);
                 
-                SocialEnterprise sA = new SocialEnterprise("LittleMatchGirl");
                 
+                SocialEnterprise sA = new SocialEnterprise("LittleMatchGirl");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sA);
                 
                 //image for product a
@@ -411,6 +413,28 @@ public class DataInitSessionBean {
                 Product pS = new Product("Personalised Birthstone Bag Charm", new BigDecimal(75), "This bag charm is crafted using long-lasting premium flowers and completed with a meaningful birthstone.", imageForProductS, "OTHERS",new BigDecimal(20),new BigDecimal(4));//bloomback
                 Product pT = new Product("Handmade Natural Soap (Roselle/ Rice Milk)", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality roselle and rice milk.", imageForProductT, "CRAFTS",new BigDecimal(20),new BigDecimal(4)); //olive tree
 
+//                Product pA = new Product("Amber Pleated Dress", new BigDecimal(169), "Light TENCEL™ fabric : skin-friendly, soft texture, high breathability, made from sustainable wood sources.", new String[] {""}, "CLOTHING");
+//                Product pB = new Product("Raffles Leg Pants", new BigDecimal(159), "This mid waist and wide legs pants was designed to suit any occasion." , new String[] {}, "CLOTHING");
+//                Product pC = new Product("Bugis Maxi Dress", new BigDecimal(189), "This dress that comes in 2 colours was designed to suit any occasion.", new String[] {}, "CLOTHING");
+//                Product pD = new Product("X-line Dress", new BigDecimal(199), "Soft woven fabric made of TENCEL™ lyocell with decorative seams", new String[] {}, "CLOTHING");
+//                Product pE = new Product("Blend Dress", new BigDecimal(179), "Jersey made of TENCEL™ modal and and skirt belnd with Woven TENCEL, designed with a V-neckline" , new String[] {}, "CLOTHING");
+//                Product pF = new Product("U-Shaped Drape Dress", new BigDecimal(159), "Made from Tencel - known as environment-friendly fabrics. Designed with a bowtie and a side open slit.", new String[] {}, "CLOTHING");
+//                Product pG = new Product("Amber Belted Dress", new BigDecimal(199), "A timeless piece, this dress will last a lifetime.  Featuring front panel details and a removable waist tie.", new String[] {}, "CLOTHING");
+//                Product pH = new Product("Rice Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality tamarind and rice.", new String[] {}, "CRAFTS"); //Olive Tree
+//                Product pI = new Product("Crocheted Angels", new BigDecimal(25), "Bring home these large decorative assorted crocheted angels crafted by our volunteer Aunty Nancy!", new String[] {}, "CRAFTS"); //Olive Tree
+//                Product pJ = new Product("Elastic Collar Shirt", new BigDecimal(139), "TENCEL is a natural fibre which is degradable.  Special properties include: enhanced breathability &  gentle on the skin.", new String[] {}, "CLOTHING");
+//                Product pK = new Product("Sunshine Chips", new BigDecimal(5), "We took the spectrum of sunlight, separated it and vacuum fried them into chips. No artificial colourings or preservatives!", new String[] {}, "FOOD"); //boxgreen
+//                Product pL = new Product("Ground Peanut Butter Jar", new BigDecimal(10), "Roasted peanuts grounded twice for extra smoothness with heart-healthy coconut oil and a dash of salt to bring the flavours home. ", new String[] {}, "CRAFTS"); //boxgreen
+//                Product pM = new Product("Thai Mountain Espresso", new BigDecimal(75), "A world class single origin coffee, backed by multiple awards, our Organic Espresso is the perfect espresso shot you’ve been looking for.", new String[] {}, "FOOD"); //noharmdone
+//                Product pN = new Product("Thai Iced Tea", new BigDecimal(10), "Earthy black Ceylon tea leaves brewed to give you an authentic orange coloured tea that'll take your senses to the bustling streets of Bangkok.", new String[] {}, "FOOD");//noharmdone
+//                Product pO = new Product("Choco Kopi", new BigDecimal(8), "For Mondays, hangovers, make ups, breakups, late nights, early starts, rainy days… A hug in a mug. Our toasty Kopi-o with a malty chocolate infusion. ", new String[] {}, "FOOD"); //noharmdone
+//                Product pP = new Product("Gula Melaka Kopi", new BigDecimal(8), "We've blended our signature Kopi-o with caramelised coconut sugar, giving your favourite brew a decadent twist." , new String[] {}, "FOOD");
+//                Product pQ = new Product("Personal Photo Dome", new BigDecimal(170), "Our Signature Preserved Flower Dome is meticulously handcrafted using long-lasting premium flowers. Make a lasting impression with this thoughtful gift, personalized with a memorable photo of your loved one.", new String[] {}, "OTHERS"); //bloomback
+//                Product pR = new Product("Lemongrass Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality lemongrass.", new String[] {}, "CRAFTS"); //olive tree
+//                Product pS = new Product("Birthstone Bag Charm", new BigDecimal(75), "This bag charm is crafted using long-lasting premium flowers and completed with a meaningful birthstone.", new String[] {}, "OTHERS");//bloomback
+//                Product pT = new Product("Roselle Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality roselle and rice milk.", new String[] {}, "CRAFTS"); //olive tree
+
+
                 productSessionBeanLocal.createNewProduct(pA, 1l);
                 productSessionBeanLocal.createNewProduct(pB, 1l);
                 productSessionBeanLocal.createNewProduct(pC, 1l);
@@ -450,6 +474,8 @@ public class DataInitSessionBean {
             byte[] imageBytesReviewA = Files.readAllBytes(imageFileReviewA.toPath()); 
              imageForProductReviewA[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesReviewA);}
 
+
+           
                 
                 
                 Review rA1 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, false, new Date());

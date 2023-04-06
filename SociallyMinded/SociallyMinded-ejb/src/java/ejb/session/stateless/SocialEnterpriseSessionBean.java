@@ -4,10 +4,7 @@
  */
 package ejb.session.stateless;
 
-import entity.Customer;
-import entity.Product;
 import entity.SocialEnterprise;
-import enumeration.AccountStatus;
 import exception.InputDataValidationException;
 import exception.SocialEnterpriseNotFoundException;
 import java.util.List;
@@ -60,6 +57,7 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
         }  
     }
     
+    @Override
     public List<SocialEnterprise> retrieveAllSocialEnterprises() {
         Query query = em.createQuery("SELECT e FROM SocialEnterprise e");
         return query.getResultList();
@@ -88,6 +86,18 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
         }        
     }
     
+    @Override
+    public SocialEnterprise retrieveSocialEnterpriseByFirebaseUid(String firebaseUid) throws SocialEnterpriseNotFoundException {
+        Query query = em.createQuery("SELECT se FROM SocialEnterprise se "
+                + "WHERE se.firebaseUid = :firebaseUid"
+        );
+        query.setParameter("firebaseUid", firebaseUid);
+        if (query.getResultList().isEmpty()) {
+            throw new SocialEnterpriseNotFoundException();
+        } else {
+            return (SocialEnterprise) query.getResultList().get(0);           
+        }
+    }
     
     @Override
     public void updateSocialEnterpriseDetails(SocialEnterprise newSocialEnterprise) throws InputDataValidationException {
@@ -98,4 +108,15 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
             throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
         }
     } 
+    
+    @Override
+    public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException {
+        Set<ConstraintViolation<SocialEnterprise>> constraintViolations = validator.validate(newSocialEnterprise);
+        if (constraintViolations.isEmpty()) {       
+            //em.persist(newSocialEnterprise);
+            createNewSocialEnterprise(newSocialEnterprise);
+        } else {
+            throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
+        }
+    }
 }

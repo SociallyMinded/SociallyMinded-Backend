@@ -27,5 +27,9 @@ public interface SocialEnterpriseSessionBeanLocal {
     public SocialEnterprise retrieveSocialEnterpriseByName(String enterpriseName) throws SocialEnterpriseNotFoundException;
 
     public void updateSocialEnterpriseDetails(SocialEnterprise newSocialEnterprise) throws InputDataValidationException;
+
+    public SocialEnterprise retrieveSocialEnterpriseByFirebaseUid(String firebaseUid) throws SocialEnterpriseNotFoundException;
+
+    public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException;
     
 }
