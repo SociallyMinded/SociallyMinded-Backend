@@ -46,7 +46,7 @@ public class Customer implements Serializable {
     private AccountStatus accountStatus;
     
     private String firebaseUid;
-    
+        
     @Temporal(DATE)
     private Date dateJoined;
     
@@ -233,7 +233,7 @@ public class Customer implements Serializable {
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
