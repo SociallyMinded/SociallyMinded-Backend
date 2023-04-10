@@ -6,6 +6,7 @@ package service;
 
 import ejb.session.stateless.OrderRecordSessionBeanLocal;
 import entity.OrderRecord;
+import entity.Product;
 import enumeration.OrderStatus;
 import exception.OrderRecordNotFoundException;
 import java.util.Date;
@@ -70,6 +71,25 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
                     .build();
         }
           
+    }
+    
+    @GET
+    @Path("findOrdersByEnterpriseId/{enterpriseId}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findOrdersByEnterpriseId(@PathParam("enterpriseId") Long enterpriseId) {
+        try {
+            List<OrderRecord> orderRecords = orderRecordSessionBeanLocal.retrieveAllOrdersByEnterpriseId(enterpriseId);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(orderRecords)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
     }
        
     @GET

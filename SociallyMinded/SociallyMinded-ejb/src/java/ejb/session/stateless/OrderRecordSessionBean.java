@@ -97,6 +97,15 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
         return query.getResultList();
     }
     
+    
+    @Override
+    public List<OrderRecord> retrieveAllOrdersByEnterpriseId(Long socialEnterpriseId) {
+        Query query = em.createQuery("SELECT o FROM OrderRecord o "
+                + "WHERE o.product.socialenterprise.socialEnterpriseId = :socialEnterpriseId");
+        query.setParameter("socialEnterpriseId", socialEnterpriseId);
+        return query.getResultList();       
+    }
+    
     @Override
     public OrderRecord retrieveOrderRecordById(Long orderRecordId) throws OrderRecordNotFoundException {
         if (em.find(OrderRecord.class, orderRecordId) == null) {

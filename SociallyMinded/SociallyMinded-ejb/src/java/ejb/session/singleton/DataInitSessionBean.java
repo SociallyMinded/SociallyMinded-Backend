@@ -65,7 +65,7 @@ public class DataInitSessionBean {
                 customerSessionBeanLocal.createNewCustomer(C);
                 customerSessionBeanLocal.createNewCustomer(D);
                 
-                SocialEnterprise sA = new SocialEnterprise("LittleMatchGirl");
+                SocialEnterprise sA = new SocialEnterprise("FashionShop");
                 
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sA);
                 

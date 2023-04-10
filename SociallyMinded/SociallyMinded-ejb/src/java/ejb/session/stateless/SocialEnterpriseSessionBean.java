@@ -88,6 +88,19 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
         }        
     }
     
+    @Override
+    public SocialEnterprise retrieveSocialEnterpriseByFirebaseUid(String firebaseUid) throws SocialEnterpriseNotFoundException {
+        Query query = em.createQuery("SELECT se FROM SocialEnterprise se "
+                + "WHERE se.firebaseUid = :firebaseUid"
+        );
+        query.setParameter("firebaseUid", firebaseUid);
+        if (query.getResultList().isEmpty()) {
+            throw new SocialEnterpriseNotFoundException();
+        } else {
+            return (SocialEnterprise) query.getResultList().get(0);           
+        }
+    }
+    
     
     @Override
     public void updateSocialEnterpriseDetails(SocialEnterprise newSocialEnterprise) throws InputDataValidationException {

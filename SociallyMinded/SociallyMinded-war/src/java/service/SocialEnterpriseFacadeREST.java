@@ -70,6 +70,25 @@ public class SocialEnterpriseFacadeREST extends AbstractFacade<SocialEnterprise>
     }
     
     @GET
+    @Path("findSocialEnterpriseByFirebaseUid/{firebaseUid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findSocialEnterpriseByFirebaseUid(@PathParam("firebaseUid") String firebaseUid) {
+        try {
+            SocialEnterprise enterprise = socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseByFirebaseUid(firebaseUid);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(enterprise)
+                    .build();
+        } catch (SocialEnterpriseNotFoundException ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response findSocialEnterpriseById(@PathParam("id") Long id) {

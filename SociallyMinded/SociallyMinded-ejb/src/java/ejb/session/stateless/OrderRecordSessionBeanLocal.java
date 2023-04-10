@@ -6,6 +6,7 @@
 package ejb.session.stateless;
 
 import entity.OrderRecord;
+import entity.Product;
 import enumeration.OrderStatus;
 import exception.CustomerNotFoundException;
 import exception.InputDataValidationException;
@@ -37,5 +38,7 @@ public interface OrderRecordSessionBeanLocal {
     public Long createNewOrderRecord(OrderRecord order, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;    
 
     public List<OrderRecord> retrieveOrderRecordsByCustomerFirebaseUid(String firebaseUid);
+
+    public List<OrderRecord> retrieveAllOrdersByEnterpriseId(Long socialEnterpriseId);
 }
 
