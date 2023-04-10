@@ -131,6 +131,26 @@ public class OrderRecordFacadeREST extends AbstractFacade<Order> {
     }
     
     @GET
+    @Path("findOrderRecordsByEnterpriseFirebaseUid/{firebaseUid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response findOrderRecordsByProductId(@PathParam("firebaseUid") String firebaseUid) {
+        try {
+            List<OrderRecord> records = orderRecordSessionBeanLocal.retrieveOrderRecordsByEnterpriseFirebaseUid(firebaseUid);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(records)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
+    
+    
+    @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
