@@ -74,6 +74,17 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
     }
     
     @Override
+    public SocialEnterprise retrieveSocialEnterpriseByEmail(String email) {
+        Query q = em.createQuery("SELECT se FROM SocialEnterprise se WHERE se.email = :email");
+        q.setParameter("email", email);
+        if (q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (SocialEnterprise) q.getSingleResult();
+        }
+    }
+    
+    @Override
     public SocialEnterprise retrieveSocialEnterpriseByName(String enterpriseName) throws SocialEnterpriseNotFoundException {
         Query query = em.createQuery("SELECT e FROM SocialEnterprise e "
                 + "WHERE e.enterpriseName = :enterpriseName");
@@ -112,9 +123,11 @@ public class SocialEnterpriseSessionBean implements SocialEnterpriseSessionBeanR
     @Override
     public void logInViaGmailAccount(SocialEnterprise newSocialEnterprise) throws InputDataValidationException {
         Set<ConstraintViolation<SocialEnterprise>> constraintViolations = validator.validate(newSocialEnterprise);
-        if (constraintViolations.isEmpty()) {       
-            //em.persist(newSocialEnterprise);
-            createNewSocialEnterprise(newSocialEnterprise);
+        if (constraintViolations.isEmpty()) {     
+            if (this.retrieveSocialEnterpriseByEmail(newSocialEnterprise.getEmail()) == null) {
+                em.persist(newSocialEnterprise);
+                //createNewSocialEnterprise(newSocialEnterprise);
+            }
         } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorMsg(constraintViolations));
         }

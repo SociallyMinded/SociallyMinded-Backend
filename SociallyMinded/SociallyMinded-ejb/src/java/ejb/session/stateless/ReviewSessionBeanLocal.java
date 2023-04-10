@@ -20,7 +20,6 @@ import javax.ejb.Local;
 @Local
 public interface ReviewSessionBeanLocal {
 
-
     public Review retrieveReviewById(Long reviewId) throws ReviewNotFoundException;
 
     public List<Review> retrieveAllReviews();
@@ -35,5 +34,4 @@ public interface ReviewSessionBeanLocal {
 
     public void updateReviewDetails(Review newReview, Long productId, String custFirebaseUid) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException;
 
-    
 }

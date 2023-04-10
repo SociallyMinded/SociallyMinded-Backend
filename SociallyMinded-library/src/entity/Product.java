@@ -68,6 +68,18 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public Product(String name, BigDecimal price, String description, String[] imageLink, String category, BigDecimal ratingScore, BigDecimal numRatings) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.imageLink = imageLink;
+        this.ratingScore = ratingScore;
+        this.numRatings = numRatings;
+        this.category = category;
+    }
+    
+    
+
 
     @XmlTransient
     public List<Review> getReviews() {
