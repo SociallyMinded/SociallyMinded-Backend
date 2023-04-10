@@ -131,6 +131,15 @@ public class OrderRecordSessionBean implements OrderRecordSessionBeanRemote, Ord
         return query.getResultList();
     }
     
+    @Override
+    public List<OrderRecord> retrieveOrderRecordsByEnterpriseFirebaseUid(String firebaseUid) {
+        Query query = em.createQuery("SELECT ord FROM OrderRecord ord "
+                + "WHERE ord.product.socialenterprise.firebaseUid = :firebaseUid");
+        query.setParameter("firebaseUid", firebaseUid);
+        return query.getResultList();
+    }
+    
+    
     //TODO : check if need to merge back to customer / product List
     @Override
     public void updateOrderRecordDetails(OrderRecord newOrderRecord, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException {
