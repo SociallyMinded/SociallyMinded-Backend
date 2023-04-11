@@ -61,7 +61,7 @@ public class DataInitSessionBean {
     @EJB
     private OrderRecordSessionBeanLocal orderRecordSessionBeanLocal;
     
-    
+   
     @PersistenceContext(unitName = "SociallyMinded-ejbPU")
     private EntityManager em;
     
@@ -114,17 +114,18 @@ public class DataInitSessionBean {
 //                String imagePath = servletContext.getRealPath("/images/myImage.jpg");
                 String imagePatha = imageUrla.getPath();
                 String imagePatha1 = imageUrla1.getPath();
-                 String imagePatha2 = imageUrla2.getPath();
+                String imagePatha2 = imageUrla2.getPath();
                 String[] imagePathsA = {imagePatha, imagePatha1,imagePatha2};
 //                if(imageUrl != null) {
-            for (int i = 0; i < imagePathsA.length; i++) {
-            // Read image file
-            File imageFileA = new File(imagePathsA[i]);
-            byte[] imageBytesA = Files.readAllBytes(imageFileA.toPath()); 
-            // Convert image to base64
-            imageForProductA[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesA);}
-            //imageForProductA[i] = Base64.getEncoder().encodeToString(imageBytesA);}
-//            }
+                for (int i = 0; i < imagePathsA.length; i++) {
+                    // Read image file
+                    File imageFileA = new File(imagePathsA[i]);
+                    byte[] imageBytesA = Files.readAllBytes(imageFileA.toPath()); 
+                    // Convert image to base64
+                    imageForProductA[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesA);
+                }
+                //imageForProductA[i] = Base64.getEncoder().encodeToString(imageBytesA);}
+    //            }
 
             //image for product b
                 int countB = 0;
@@ -137,25 +138,12 @@ public class DataInitSessionBean {
                 String imagePathB1 = imageUrlB1.getPath();
                 String imagePathB2 = imageUrlB2.getPath();
                 String[] imagePathsB = {imagePathB1, imagePathB2};
-            for (int i = 0; i < imagePathsB.length; i++) {
-            File imageFileB = new File(imagePathsB[i]);
-            byte[] imageBytesB = Files.readAllBytes(imageFileB.toPath()); 
-             imageForProductB[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesB);}
+                for (int i = 0; i < imagePathsB.length; i++) {
+                    File imageFileB = new File(imagePathsB[i]);
+                    byte[] imageBytesB = Files.readAllBytes(imageFileB.toPath()); 
+                    imageForProductB[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesB);
+                }
 
-            //image for product c
-//                int countC = 0;
-//                URL imageUrlC1 = classLoader.getResource("ejb/session/images/imageC1.jpg");
-//                countC++;
-////                URL imageUrlC2 = classLoader.getResource("ejb/session/images/imageC2.jpg");
-//
-//                String imagePathC1 = imageUrlC1.getPath();
-////                String imagePathC2 = imageUrlC2.getPath();
-//                String[] imagePathsC = {imagePathC1};
-//                String imageForProductC[] = new String[countC];
-//            for (int i = 0; i < imagePathsC.length; i++) {
-//            File imageFileC = new File(imagePathsC[i]);
-//            byte[] imageBytesC = Files.readAllBytes(imageFileC.toPath()); 
-//            imageForProductC[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesC);}
                 
             //image for product d
                 int countD = 0;
@@ -171,10 +159,11 @@ public class DataInitSessionBean {
                 
                 String imageForProductD[] = new String[countD];
                 String[] imagePathsD = {imagePathD1, imagePathD2, imagePathD3};
-            for (int i = 0; i < imagePathsD.length; i++) {
-            File imageFileD = new File(imagePathsD[i]);
-            byte[] imageBytesD = Files.readAllBytes(imageFileD.toPath()); 
-            imageForProductD[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesD);}
+                for (int i = 0; i < imagePathsD.length; i++) {
+                    File imageFileD = new File(imagePathsD[i]);
+                    byte[] imageBytesD = Files.readAllBytes(imageFileD.toPath()); 
+                    imageForProductD[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesD);
+                }
             
               //image for product E
 //              int countE = 0;
@@ -196,7 +185,7 @@ public class DataInitSessionBean {
 //            imageForProductE[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesE);}
 //            
               //image for product F
-            int countF = 0;
+                int countF = 0;
                 URL imageUrlF1 = classLoader.getResource("ejb/session/images/imageF1.jpg");
                 countF++;
                 URL imageUrlF2 = classLoader.getResource("ejb/session/images/imageF2.jpg");
@@ -208,13 +197,14 @@ public class DataInitSessionBean {
                 String imagePathF3 = imageUrlF3.getPath();
                 String imageForProductF[] = new String[countF];
                 String[] imagePathsF = {imagePathF1, imagePathF2, imagePathF3};
-            for (int i = 0; i < imagePathsF.length; i++) {
-            File imageFileF = new File(imagePathsF[i]);
-            byte[] imageBytesF = Files.readAllBytes(imageFileF.toPath()); 
-            imageForProductF[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesF);}
+                for (int i = 0; i < imagePathsF.length; i++) {
+                    File imageFileF = new File(imagePathsF[i]);
+                    byte[] imageBytesF = Files.readAllBytes(imageFileF.toPath()); 
+                    imageForProductF[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesF);
+                }
             
             //image for product G
-             int countG = 0;
+                int countG = 0;
                 URL imageUrlG1 = classLoader.getResource("ejb/session/images/imageG1.jpg");
                 countG++;
                 URL imageUrlG2 = classLoader.getResource("ejb/session/images/imageG2.jpg");
@@ -226,10 +216,11 @@ public class DataInitSessionBean {
                 String imagePathG3 = imageUrlG3.getPath();
                 String imageForProductG[] = new String[countG];
                 String[] imagePathsG = {imagePathG1, imagePathG2, imagePathG3};
-            for (int i = 0; i < imagePathsG.length; i++) {
-            File imageFileG = new File(imagePathsG[i]);
-            byte[] imageBytesG = Files.readAllBytes(imageFileG.toPath()); 
-            imageForProductG[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesG);}
+                for (int i = 0; i < imagePathsG.length; i++) {
+                    File imageFileG = new File(imagePathsG[i]);
+                    byte[] imageBytesG = Files.readAllBytes(imageFileG.toPath()); 
+                    imageForProductG[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesG);
+                }
             
             //image for product H
 //             int countH = 0;
@@ -260,7 +251,7 @@ public class DataInitSessionBean {
 //            
               
              //image for product J
-            int countJ = 0;
+                int countJ = 0;
                 URL imageUrlJ1 = classLoader.getResource("ejb/session/images/imageJ1.jpg");
                 countJ++;
                 URL imageUrlJ2 = classLoader.getResource("ejb/session/images/imageJ2.jpg");
@@ -269,13 +260,14 @@ public class DataInitSessionBean {
                 String imagePathJ2 = imageUrlJ2.getPath();
                 String imageForProductJ[] = new String[countJ];
                 String[] imagePathsJ = {imagePathJ1, imagePathJ2};
-            for (int i = 0; i < imagePathsJ.length; i++) {
-            File imageFileJ = new File(imagePathsJ[i]);
-            byte[] imageBytesJ = Files.readAllBytes(imageFileJ.toPath()); 
-            imageForProductJ[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesJ);}
+                for (int i = 0; i < imagePathsJ.length; i++) {
+                    File imageFileJ = new File(imagePathsJ[i]);
+                    byte[] imageBytesJ = Files.readAllBytes(imageFileJ.toPath()); 
+                    imageForProductJ[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesJ);
+                }
             
               //image for product K
-            int countK = 0;
+                int countK = 0;
                 URL imageUrlK1 = classLoader.getResource("ejb/session/images/imageK1.jpg");
                 countK++;
                 URL imageUrlK2 = classLoader.getResource("ejb/session/images/imageK2.jpg");
@@ -284,10 +276,11 @@ public class DataInitSessionBean {
                 String imagePathK2 = imageUrlK2.getPath();
                 String imageForProductK[] = new String[countK];
                 String[] imagePathsK = {imagePathK1, imagePathK2};
-            for (int i = 0; i < imagePathsK.length; i++) {
-            File imageFileK = new File(imagePathsK[i]);
-            byte[] imageBytesK = Files.readAllBytes(imageFileK.toPath()); 
-            imageForProductK[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesK);}
+                for (int i = 0; i < imagePathsK.length; i++) {
+                    File imageFileK = new File(imagePathsK[i]);
+                    byte[] imageBytesK = Files.readAllBytes(imageFileK.toPath()); 
+                    imageForProductK[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesK);
+                }
             
 //             //image for product L
 //             int countL = 0;
@@ -314,16 +307,17 @@ public class DataInitSessionBean {
 //            imageForProductM[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesM);}
 //            
               //image for product N
-             int countN = 0;
+                int countN = 0;
                 URL imageUrlN1 = classLoader.getResource("ejb/session/images/imageN1.jpg");
                 countN++;
                 String imagePathN1 = imageUrlN1.getPath();
                 String imageForProductN[] = new String[countN];
                 String[] imagePathsN = {imagePathN1};
-            for (int i = 0; i < imagePathsN.length; i++) {
-            File imageFileN = new File(imagePathsN[i]);
-            byte[] imageBytesN = Files.readAllBytes(imageFileN.toPath()); 
-            imageForProductN[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesN);}
+                for (int i = 0; i < imagePathsN.length; i++) {
+                    File imageFileN = new File(imagePathsN[i]);
+                    byte[] imageBytesN = Files.readAllBytes(imageFileN.toPath()); 
+                    imageForProductN[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesN);
+                }
             
               //image for product O
 //             int countO = 0;
@@ -365,7 +359,7 @@ public class DataInitSessionBean {
 //            imageForProductQ[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesQ);}
 //            
               //image for product R
-            int countR = 0;
+                int countR = 0;
                 URL imageUrlR1 = classLoader.getResource("ejb/session/images/imageR1.jpg");
                 countR++;
                 URL imageUrlR2 = classLoader.getResource("ejb/session/images/imageR2.jpg");
@@ -374,10 +368,11 @@ public class DataInitSessionBean {
                 String imagePathR2 = imageUrlR2.getPath();
                 String imageForProductR[] = new String[countR];
                 String[] imagePathsR = {imagePathR1, imagePathR2};
-            for (int i = 0; i < imagePathsR.length; i++) {
-            File imageFileR = new File(imagePathsR[i]);
-            byte[] imageBytesR = Files.readAllBytes(imageFileR.toPath()); 
-            imageForProductR[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesR);}
+                for (int i = 0; i < imagePathsR.length; i++) {
+                    File imageFileR = new File(imagePathsR[i]);
+                    byte[] imageBytesR = Files.readAllBytes(imageFileR.toPath()); 
+                    imageForProductR[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesR);
+                }
             
               //image for product S
 //            int countS = 0;
@@ -920,6 +915,7 @@ public class DataInitSessionBean {
 ////                reviewSessionBeanLocal.createNewReview(rI3, 9l, "abc3");
 ////                reviewSessionBeanLocal.createNewReview(rI4, 9l, "abc4");
 //                
+
                 reviewSessionBeanLocal.createNewReview(rJ1, 7l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rJ2, 7l, "abc2");
                 reviewSessionBeanLocal.createNewReview(rJ3, 7l, "abc3");
@@ -949,6 +945,7 @@ public class DataInitSessionBean {
 ////                reviewSessionBeanLocal.createNewReview(rO2, 15l, "abc2");
 ////                reviewSessionBeanLocal.createNewReview(rO3, 15l, "abc3");
 ////                reviewSessionBeanLocal.createNewReview(rO4, 15l, "abc4");
+
 
                
                 OrderRecord order1 = new OrderRecord(new BigDecimal(1),new BigDecimal(159),"In Delivery", "U-Shaped Back Dress Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate3);

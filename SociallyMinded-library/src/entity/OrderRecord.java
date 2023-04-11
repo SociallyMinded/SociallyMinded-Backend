@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,6 +41,9 @@ public class OrderRecord implements Serializable {
     private String orderStatus;
     private String orderTitle;
     private String address;
+    
+    @Column(columnDefinition="varchar(1000)")
+    private String orderDetails;
     
     @Temporal(DATE)
     private Date dateOfOrder;
@@ -80,14 +84,26 @@ public class OrderRecord implements Serializable {
         this.dateOfOrder = new Date();
         this.orderTitle = orderTitle;
         this.address = address;
+        this.orderDetails = "";
     }
     
-
+    public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, String orderTitle, String address, String orderDetails) {
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.orderStatus = "Pending Approval";
+        this.dateOfOrder = new Date();
+        this.orderTitle = orderTitle;
+        this.address = address;
+        this.orderDetails = orderDetails;
+    }
+    
+    
     public OrderRecord(BigDecimal quantity, BigDecimal totalPrice, OrderStatus orderStatus, Date dateOfOrder) {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.orderStatus = "Pending Approval";
         this.dateOfOrder = dateOfOrder;
+        this.orderDetails = "";
     }
     
     public Long getOrderRecordId() {
@@ -183,6 +199,14 @@ public class OrderRecord implements Serializable {
         this.address = address;
     }
 
+    public String getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(String orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+    
     @Override
     public String toString() {
         return "entity.Order[ id=" + orderRecordId + " ]";

@@ -19,17 +19,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ReviewSessionBeanRemote {
-    public Review retrieveReviewById(Long reviewId) throws ReviewNotFoundException;
 
-    public List<Review> retrieveAllReviews();
-    
-    public List<Review> retrieveReviewsByCustomerId(Long customerId);
-
-    public List<Review> retrieveReviewsByProductId(Long productId);
-
-    public void deleteReview(Long reviewId) throws ReviewNotFoundException;
-    
-    public Long createNewReview(Review review, Long productId, String customerFirebaseUid) throws ProductNotFoundException, CustomerNotFoundException, InputDataValidationException;
-
-    public void updateReviewDetails(Review newReview, Long productId, String custFirebaseUid) throws InputDataValidationException, ProductNotFoundException, CustomerNotFoundException;
 }
