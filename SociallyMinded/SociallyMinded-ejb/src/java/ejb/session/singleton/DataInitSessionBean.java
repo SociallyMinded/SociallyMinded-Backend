@@ -45,7 +45,7 @@ public class DataInitSessionBean {
 
     @EJB
     private ReviewSessionBeanLocal reviewSessionBeanLocal;
-
+    
     @EJB
     private ProductSessionBeanLocal productSessionBeanLocal;
 
