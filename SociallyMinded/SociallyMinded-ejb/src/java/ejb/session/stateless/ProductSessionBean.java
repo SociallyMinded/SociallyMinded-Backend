@@ -142,6 +142,29 @@ public class ProductSessionBean implements ProductSessionBeanRemote, ProductSess
     }
     
     @Override
+    public void setProductToInactive(Long productId, Long enterpriseId) throws SocialEnterpriseNotFoundException, ProductNotFoundException, UncompletedOrdersException {
+        if (socialEnterpriseSessionBeanLocal.retrieveSocialEnterpriseById(enterpriseId) == null) {
+            throw new SocialEnterpriseNotFoundException();
+        } else if (this.retrieveProductById(productId) == null) {
+            throw new ProductNotFoundException();
+        } else {
+            boolean noOrdersLeft = true;
+            Product product = this.retrieveProductById(productId);
+            for (OrderRecord order : product.getOrders()) {
+                if (!order.getOrderStatus().equals("Order Received")) {
+                    noOrdersLeft = false;
+                }
+            }
+            if (noOrdersLeft) {
+                product.setIsActive(false);
+                em.merge(product);
+            } else {
+                throw new UncompletedOrdersException();
+            }   
+        }    
+    }   
+    
+    @Override
     public void deleteProduct(Long oldProductId) throws ProductNotFoundException, UncompletedOrdersException {
         if (this.retrieveProductById(oldProductId) == null) {
             throw new ProductNotFoundException();
@@ -150,7 +173,7 @@ public class ProductSessionBean implements ProductSessionBeanRemote, ProductSess
             
             boolean noOrdersLeft = true;
             for (OrderRecord order : product.getOrders()) {
-                if (!order.getOrderStatus().equals("Completed")) {
+                if (!order.getOrderStatus().equals("Order Received")) {
                     noOrdersLeft = false;
                 }
             }

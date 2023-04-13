@@ -34,4 +34,6 @@ public interface ProductSessionBeanLocal {
     public Long createNewProduct(Product product, Long enterpriseId) throws SocialEnterpriseNotFoundException, InputDataValidationException;
 
     public void updateProductDetails(Product newProduct, Long enterpriseId) throws InputDataValidationException, SocialEnterpriseNotFoundException;
+
+    public void setProductToInactive(Long productId, Long enterpriseId) throws SocialEnterpriseNotFoundException, ProductNotFoundException, UncompletedOrdersException;
 }

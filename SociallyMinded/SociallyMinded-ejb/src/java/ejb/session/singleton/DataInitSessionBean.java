@@ -22,9 +22,11 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -73,8 +75,8 @@ public class DataInitSessionBean {
             try {
                 Customer A = new Customer("Abby", "abc1");
                 Customer B = new Customer("Ben", "abc2");
-                Customer C = new Customer("Casey", "abc3");
-                Customer D = new Customer("Dylan", "abc4");
+                Customer C = new Customer("Casey", "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                Customer D = new Customer("Dylan", "is3106demo@gmail.com", "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
                 //the password for Sam is password
                 Customer E = new Customer("Sam", "sam@gmail.com","AoQBzVXLlkecGuugz7W4ISsHuvp2");
                 customerSessionBeanLocal.createNewCustomer(A);
@@ -83,17 +85,17 @@ public class DataInitSessionBean {
                 customerSessionBeanLocal.createNewCustomer(D);
                 customerSessionBeanLocal.createNewCustomer(E);
                 
-                SocialEnterprise sA = new SocialEnterprise("LittleMatchGirl");
+                SocialEnterprise sA = new SocialEnterprise("LittleMatchGirl", "enterprise01@email.com", "0jID3wkXRJWx8ZF6th2xzRiBf4o1");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sA);
                 
 
-                SocialEnterprise sB = new SocialEnterprise("Artisan's Attic");
+                SocialEnterprise sB = new SocialEnterprise("Artisan's Attic", "enterprise02@email.com", "tgf8vIRRZwMbl2JIYttxuhoLRy02");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sB);
                 
-                SocialEnterprise sC = new SocialEnterprise("AbleWorks");
+                SocialEnterprise sC = new SocialEnterprise("AbleWorks", "enterprise03@email.com", "JvaxGC27ZeXslUebld19hcRFqPM2");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sC);
                 
-                SocialEnterprise sD = new SocialEnterprise("Wabi-Sabi");
+                SocialEnterprise sD = new SocialEnterprise("Wabi-Sabi", "enterprise04@email.com", "8x27CZ7PCbZv5mcKpOmiDgsDNEg1");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sD);
                 
                 //image for product a
@@ -449,21 +451,6 @@ public class DataInitSessionBean {
             byte[] imageBytes2_6 = Files.readAllBytes(imageFile2_6.toPath()); 
             imageForProduct2_6[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes2_6);}
             
-            //image for product 2_7
-            int count2_7 = 0;
-                URL imageUrl2_7A = classLoader.getResource("ejb/session/images/2_7A.jpg");
-                count2_7++;
-                URL imageUrl2_7B = classLoader.getResource("ejb/session/images/2_7B.jpg");
-                count2_7++;
-                String imagePath2_7A = imageUrl2_7A.getPath();
-                String imagePath2_7B = imageUrl2_7B.getPath();
-                String imageForProduct2_7[] = new String[count2_7];
-                String[] imagePaths2_7 = {imagePath2_7A, imagePath2_7B};
-            for (int i = 0; i < imagePaths2_7.length; i++) {
-            File imageFile2_7 = new File(imagePaths2_7[i]);
-            byte[] imageBytes2_7 = Files.readAllBytes(imageFile2_7.toPath()); 
-            imageForProduct2_7[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes2_7);}
-            
             //image for product 2_8
             int count2_8 = 0;
                 URL imageUrl2_8A = classLoader.getResource("ejb/session/images/2_8A.jpg");
@@ -525,19 +512,7 @@ public class DataInitSessionBean {
             File imageFile3_1 = new File(imagePaths3_1[i]);
             byte[] imageBytes3_1 = Files.readAllBytes(imageFile3_1.toPath()); 
             imageForProduct3_1[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes3_1);}
-            
-            // image for product 3_2
-            int count3_2 = 0;
-                URL imageUrl3_2A = classLoader.getResource("ejb/session/images/3_2A.jpg");
-                count3_2++;
-                String imagePath3_2A = imageUrl3_2A.getPath();
-                String imageForProduct3_2[] = new String[count3_2];
-                String[] imagePaths3_2 = {imagePath3_2A};
-            for (int i = 0; i < imagePaths3_2.length; i++) {
-            File imageFile3_2 = new File(imagePaths3_2[i]);
-            byte[] imageBytes3_2 = Files.readAllBytes(imageFile3_2.toPath()); 
-            imageForProduct3_2[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes3_2);}
-            
+         
             // image for product 3_3
             int count3_3 = 0;
                 URL imageUrl3_3A = classLoader.getResource("ejb/session/images/3_3A.jpg");
@@ -652,13 +627,11 @@ public class DataInitSessionBean {
             Product p2_4 = new Product("Pig Candy Necklace", new BigDecimal(20), "This is a necklace with a pig holding onto a marshmellow candy. Necklace straps of black, blue, green and purple colour are provided in the purchase.", imageForProduct2_4, "CRAFTS");
 //            Product p2_5 = new Product("Sushi Charm", new BigDecimal(8), "This is a sushi polymer clay charm that can be fitted with a phone plug or keychain hook.", imageForProduct2_5, "CRAFTS");
             Product p2_6 = new Product("Halloween Cat Necklace", new BigDecimal(14), "A halloween themed black cat in a pumpkin charm fitted onto a necklace string. Necklace strap is adjustable", imageForProduct2_6, "CRAFTS");
-            Product p2_7 = new Product("Marshmellow earring", new BigDecimal(5), "A christmas inspired marshmellow polymer clay earring charm", imageForProduct2_7, "CRAFTS");
             Product p2_8 = new Product("Snowman necklace", new BigDecimal(25), "A christmas inspired snowman charm fitted onto a necklace string", imageForProduct2_8, "CRAFTS");
             Product p2_9 = new Product("Chocolate rabbit charm", new BigDecimal(12), "A polymer clay charm featuring a chocolate shaped in the form of a rabbit", imageForProduct2_9, "CRAFTS");
             Product p2_10 = new Product("Rabbit daruma charm", new BigDecimal(7), "Daruma dolls are seen as a symbol of perseverance and good luck, making them a popular gift of encouragement. This is a rabbit daruma charm created using air dry porcelain clay", imageForProduct2_10, "CRAFTS");
 
             Product p3_1 = new Product("Flower Socks", new BigDecimal(10), "Flower socks sized 8 to 12 in black, pink, green, blue and white", imageForProduct3_1, "CLOTHING");
-            Product p3_2 = new Product("Dinosaur Socks", new BigDecimal(10), "Dinosaur socks sized 8 to 12 in brown, dark green and white", imageForProduct3_2, "CLOTHING");
             Product p3_3 = new Product("Cloud Ceramic Mug", new BigDecimal(12), "Blue ceramic clay mug with a cloud pattern. It comes with a coaster as well", imageForProduct3_3, "OTHERS");
             Product p3_4 = new Product("Monocolor Ceramic Mug", new BigDecimal(4), "Ceramic clay mugs in a variety of colors such as purple, blue and beige", imageForProduct3_4, "OTHERS");
             Product p3_5 = new Product("Sakura Sugar Cookies", new BigDecimal(4), "Celebrate the spring season with our delicious sakura flower sugar cookies! Note: there are no peanut allergens present in the cookies", imageForProduct3_5, "FOOD");
@@ -690,7 +663,6 @@ public class DataInitSessionBean {
 //            Product pT = new Product("Rice Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality roselle and rice milk.", imageForProductT, "CRAFTS",new BigDecimal(20),new BigDecimal(4)); //olive tree
 
             productSessionBeanLocal.createNewProduct(pF, 1l);
-            productSessionBeanLocal.createNewProduct(p2_7, 2l);
             productSessionBeanLocal.createNewProduct(p2_8, 2l);
             productSessionBeanLocal.createNewProduct(pD, 1l);
             productSessionBeanLocal.createNewProduct(p4_1, 4l);
@@ -706,12 +678,11 @@ public class DataInitSessionBean {
             productSessionBeanLocal.createNewProduct(p2_10, 2l);
             productSessionBeanLocal.createNewProduct(p3_1, 3l);
             productSessionBeanLocal.createNewProduct(pB, 1l); //17
-            productSessionBeanLocal.createNewProduct(p3_2, 3l);
             productSessionBeanLocal.createNewProduct(pK, 1l); //19
             productSessionBeanLocal.createNewProduct(p2_9, 2l);
             productSessionBeanLocal.createNewProduct(pN, 1l); //21
             productSessionBeanLocal.createNewProduct(p3_3, 3l);
-            productSessionBeanLocal.createNewProduct(p3_5, 3l);
+            productSessionBeanLocal.createNewProduct(p3_5, 2l);
             productSessionBeanLocal.createNewProduct(pG, 1l); //24
             productSessionBeanLocal.createNewProduct(pR, 1l); //25
 
@@ -764,31 +735,41 @@ public class DataInitSessionBean {
             File imageFileReviewD = new File(imagePathsReviewD[i]);
             byte[] imageBytesReviewD = Files.readAllBytes(imageFileReviewD.toPath()); 
             imageForReviewD[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesReviewD);}
-
-                //17 days ago
+            
+                            //1 day ago
                 Calendar cal1 = Calendar.getInstance();
-                cal1.add(Calendar.DATE, - 17);
+                cal1.add(Calendar.DATE, - 1);
                 Date todate1 = cal1.getTime();
                 
-                //10 days ago 
+                //2 days ago 
                 Calendar cal2 = Calendar.getInstance();
-                cal2.add(Calendar.DATE, -10);
+                cal2.add(Calendar.DATE, -2);
                 Date todate2 = cal2.getTime();
                 
-                //5 days ago
+                //3 days ago 
                 Calendar cal3 = Calendar.getInstance();
-                cal3.add(Calendar.DATE, -5);
+                cal3.add(Calendar.DATE, -3);
                 Date todate3 = cal3.getTime();
-
-                 //2 days ago
+                
+                
+                //4 days ago 
                 Calendar cal4 = Calendar.getInstance();
-                cal4.add(Calendar.DATE, -2);
+                cal4.add(Calendar.DATE, -4);
                 Date todate4 = cal4.getTime();
                 
-                 //1 days ago
+                //4 days ago 
                 Calendar cal5 = Calendar.getInstance();
-                cal5.add(Calendar.DATE, - 1);
+                cal5.add(Calendar.DATE, -5);
                 Date todate5 = cal5.getTime();
+                
+                
+                ArrayList<Date> dates = new ArrayList();
+                for (int i = 1; i < 20; i+=2) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, -1 * i);
+                    Date todate = cal.getTime();
+                    dates.add(todate);
+                }
                 
                 Review rA1 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, true, todate1);
                 Review rA2 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!", 5, false, imageForProductReviewA,todate2);
@@ -871,89 +852,113 @@ public class DataInitSessionBean {
 //                
                 reviewSessionBeanLocal.createNewReview(rA1, 12l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rA2, 12l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rA3, 12l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rA4, 12l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rA3, 12l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rA4, 12l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
                 
                 reviewSessionBeanLocal.createNewReview(rB1, 17l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rB2, 17l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rB3, 17l,"abc3");
-                reviewSessionBeanLocal.createNewReview(rB4, 17l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rB3, 17l,"CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rB4, 17l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
 //                reviewSessionBeanLocal.createNewReview(rC1, 3l, "abc1");
 //                reviewSessionBeanLocal.createNewReview(rC2, 3l, "abc2");
-//                reviewSessionBeanLocal.createNewReview(rC3, 3l, "abc3");
-//                reviewSessionBeanLocal.createNewReview(rC4, 3l, "abc4");
+//                reviewSessionBeanLocal.createNewReview(rC3, 3l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+//                reviewSessionBeanLocal.createNewReview(rC4, 3l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
                 reviewSessionBeanLocal.createNewReview(rD1, 4l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rD2, 4l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rD3, 4l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rD4, 4l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rD3, 4l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rD4, 4l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
 //                reviewSessionBeanLocal.createNewReview(rE1, 5l, "abc1");
 //                reviewSessionBeanLocal.createNewReview(rE2, 5l, "abc2");
-//                reviewSessionBeanLocal.createNewReview(rE3, 5l, "abc3");
-//                reviewSessionBeanLocal.createNewReview(rE4, 5l, "abc4");
+//                reviewSessionBeanLocal.createNewReview(rE3, 5l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+//                reviewSessionBeanLocal.createNewReview(rE4, 5l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //     
                 reviewSessionBeanLocal.createNewReview(rF1, 1l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rF2, 1l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rF3, 1l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rF4, 1l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rF3, 1l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rF4, 1l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
                 
 //                     
-                reviewSessionBeanLocal.createNewReview(rG1, 24l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rG2, 24l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rG3, 24l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rG4, 24l, "abc4");
-                
+
 ////                reviewSessionBeanLocal.createNewReview(rH1, 8l, "abc1");
 ////                reviewSessionBeanLocal.createNewReview(rH2, 8l, "abc2");
-////                reviewSessionBeanLocal.createNewReview(rH3, 8l, "abc3");
-////                reviewSessionBeanLocal.createNewReview(rH4, 8l, "abc4");
+////                reviewSessionBeanLocal.createNewReview(rH3, 8l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+////                reviewSessionBeanLocal.createNewReview(rH4, 8l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
 ////                reviewSessionBeanLocal.createNewReview(rI1, 9l, "abc1");
 ////                reviewSessionBeanLocal.createNewReview(rI2, 9l, "abc2");
-////                reviewSessionBeanLocal.createNewReview(rI3, 9l, "abc3");
-////                reviewSessionBeanLocal.createNewReview(rI4, 9l, "abc4");
+////                reviewSessionBeanLocal.createNewReview(rI3, 9l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+////                reviewSessionBeanLocal.createNewReview(rI4, 9l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
 
                 reviewSessionBeanLocal.createNewReview(rJ1, 7l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rJ2, 7l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rJ3, 7l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rJ4, 7l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rJ3, 7l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rJ4, 7l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
                 reviewSessionBeanLocal.createNewReview(rK1, 19l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rK2, 19l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rK3, 19l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rK4, 19l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rK3, 19l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rK4, 19l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //              
 ////                reviewSessionBeanLocal.createNewReview(rL1, 12l, "abc1");
 ////                reviewSessionBeanLocal.createNewReview(rL2, 12l, "abc2");
-////                reviewSessionBeanLocal.createNewReview(rL3, 12l, "abc3");
-////                reviewSessionBeanLocal.createNewReview(rL4, 12l, "abc4");
+////                reviewSessionBeanLocal.createNewReview(rL3, 12l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+////                reviewSessionBeanLocal.createNewReview(rL4, 12l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 ////                
 ////                reviewSessionBeanLocal.createNewReview(rM1, 13l, "abc1");
 ////                reviewSessionBeanLocal.createNewReview(rM2, 13l, "abc2");
-////                reviewSessionBeanLocal.createNewReview(rM3, 13l, "abc3");
-////                reviewSessionBeanLocal.createNewReview(rM4, 13l, "abc4");
+////                reviewSessionBeanLocal.createNewReview(rM3, 13l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+////                reviewSessionBeanLocal.createNewReview(rM4, 13l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 ////                
                 reviewSessionBeanLocal.createNewReview(rN1, 21l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rN2, 21l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rN3, 21l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rN4, 21l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rN3, 21l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rN4, 21l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
 ////                reviewSessionBeanLocal.createNewReview(rO1, 15l, "abc1");
 ////                reviewSessionBeanLocal.createNewReview(rO2, 15l, "abc2");
-////                reviewSessionBeanLocal.createNewReview(rO3, 15l, "abc3");
-////                reviewSessionBeanLocal.createNewReview(rO4, 15l, "abc4");
-
+////                reviewSessionBeanLocal.createNewReview(rO3, 15l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+////                reviewSessionBeanLocal.createNewReview(rO4, 15l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 
                
                 OrderRecord order1 = new OrderRecord(new BigDecimal(1),new BigDecimal(159),"In Delivery", "U-Shaped Back Dress Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate3);
-                OrderRecord order2 = new OrderRecord(new BigDecimal(1),new BigDecimal(25),"In Delivery", "Snowman necklace Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate4);
+                OrderRecord order2 = new OrderRecord(new BigDecimal(1),new BigDecimal(25),"Order Received", "Snowman necklace Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate4);
                 OrderRecord order3 = new OrderRecord(new BigDecimal(1),new BigDecimal(20),"Pending Approval", "Clay Fox Charm Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate5);
+                
                 orderRecordSessionBeanLocal.createNewOrderRecord(order1,1l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                orderRecordSessionBeanLocal.createNewOrderRecord(order1,1l,"fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
+
                 orderRecordSessionBeanLocal.createNewOrderRecord(order2,3l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                orderRecordSessionBeanLocal.createNewOrderRecord(order2,3l,"fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
+
                 orderRecordSessionBeanLocal.createNewOrderRecord(order3,10l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                orderRecordSessionBeanLocal.createNewOrderRecord(order3,10l,"fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
+                
+                for (Date date : dates) {
+                    Random rand1 = new Random();
+                    int num1 = rand1.nextInt((10 - 1) + 1) + 1;
+                
+                    Random rand2 = new Random();
+                    int num2 = rand2.nextInt((20 - 1) + 1) + 1;
+                
+                    Random rand3 = new Random();
+                    int num3 = rand3.nextInt((30 - 1) + 1) + 1;
+                    
+                    Random rand4 = new Random();
+                    int num4 = rand4.nextInt((15 - 1) + 1) + 1;
+                    
+                    OrderRecord order_1 = new OrderRecord(new BigDecimal(num1),new BigDecimal(num1).multiply(new BigDecimal(25)),"Pending Approval", "Snowman necklace Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI #01-12 SINGAPORE 120416",date);
+                    orderRecordSessionBeanLocal.createNewOrderRecord(order_1,2l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                    OrderRecord order_3 = new OrderRecord(new BigDecimal(num3),new BigDecimal(num3).multiply(new BigDecimal(7)),"In Delivery", "Rabbit Daruma Charm Order","408 TAMPINES ST 41 #10-193 SINGAPORE 520408",date);
+                    orderRecordSessionBeanLocal.createNewOrderRecord(order_3,14l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                    OrderRecord order_4 = new OrderRecord(new BigDecimal(num4),new BigDecimal(num4).multiply(new BigDecimal(4)),"Pending Approval", "Sakura Sugar Cookies Order","408 TAMPINES ST 41 #10-193 SINGAPORE 520408",date);
+                    orderRecordSessionBeanLocal.createNewOrderRecord(order_4,21l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+
+                }
+
                 
             } catch (Exception ex) {
                 Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);

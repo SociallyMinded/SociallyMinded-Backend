@@ -198,6 +198,24 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                     .build();
         }
     }
+    
+    @PUT
+    @Path("deactivateProduct/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response deactiveProduct(@PathParam("id") Long id, CreateOrUpdateProductTemplate productReq) {
+        try {
+            productSessionBeanLocal.setProductToInactive(id, productReq.getSocialEnterpriseId());
+            return Response
+                    .status(Response.Status.OK)
+                    .build();
+        } catch (Exception ex) {
+            ErrorResponseTemplate errorRsp = new ErrorResponseTemplate(ex.toString());
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorRsp)
+                    .build();
+        }
+    }
       
     @DELETE
     @Path("{id}")

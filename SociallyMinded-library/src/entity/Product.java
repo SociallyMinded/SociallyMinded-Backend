@@ -38,6 +38,7 @@ public class Product implements Serializable {
     private BigDecimal ratingScore;
     private BigDecimal numRatings;
     private String category;
+    private boolean isActive;
     
     @JsonbTransient
     @OneToMany(mappedBy="product")
@@ -66,6 +67,7 @@ public class Product implements Serializable {
         this.ratingScore = new BigDecimal(0);
         this.numRatings = new BigDecimal(0);
         this.category = category;
+        this.isActive = true;
     }
 
     public Product(String name, BigDecimal price, String description, String[] imageLink, String category, BigDecimal ratingScore, BigDecimal numRatings) {
@@ -76,10 +78,9 @@ public class Product implements Serializable {
         this.ratingScore = ratingScore;
         this.numRatings = numRatings;
         this.category = category;
+        this.isActive = true;
     }
     
-    
-
 
     @XmlTransient
     public List<Review> getReviews() {
@@ -106,7 +107,14 @@ public class Product implements Serializable {
     public void setOrders(List<OrderRecord> orders) {
         this.orders = orders;
     }
-    
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
     
 
     public Number getRatingScore() {
@@ -157,6 +165,7 @@ public class Product implements Serializable {
     public void setImageLink(String[] imageLink) {
         this.imageLink = imageLink;
     }
+    
     
     
     public Long getProductId() {
