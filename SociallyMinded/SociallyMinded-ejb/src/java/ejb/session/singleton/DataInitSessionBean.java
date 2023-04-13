@@ -6,10 +6,12 @@ package ejb.session.singleton;
 
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
+import ejb.session.stateless.OrderRecordSessionBeanLocal;
 import ejb.session.stateless.ProductSessionBeanLocal;
 import ejb.session.stateless.ReviewSessionBeanLocal;
 import ejb.session.stateless.SocialEnterpriseSessionBeanLocal;
 import entity.Customer;
+import entity.OrderRecord;
 import entity.Product;
 import entity.Review;
 import entity.SocialEnterprise;
@@ -21,6 +23,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Blob;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +58,10 @@ public class DataInitSessionBean {
     @EJB
     private CustomerSessionBeanLocal customerSessionBeanLocal;
     
+    @EJB
+    private OrderRecordSessionBeanLocal orderRecordSessionBeanLocal;
+    
+   
     @PersistenceContext(unitName = "SociallyMinded-ejbPU")
     private EntityManager em;
     
@@ -68,15 +75,18 @@ public class DataInitSessionBean {
                 Customer B = new Customer("Ben", "abc2");
                 Customer C = new Customer("Casey", "abc3");
                 Customer D = new Customer("Dylan", "abc4");
+                //the password for Sam is password
+                Customer E = new Customer("Sam", "sam@gmail.com","AoQBzVXLlkecGuugz7W4ISsHuvp2");
                 customerSessionBeanLocal.createNewCustomer(A);
                 customerSessionBeanLocal.createNewCustomer(B);
                 customerSessionBeanLocal.createNewCustomer(C);
                 customerSessionBeanLocal.createNewCustomer(D);
-                
+                customerSessionBeanLocal.createNewCustomer(E);
                 
                 SocialEnterprise sA = new SocialEnterprise("LittleMatchGirl");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sA);
                 
+
                 SocialEnterprise sB = new SocialEnterprise("Artisan's Attic");
                 socialEnterpriseSessionBean.createNewSocialEnterprise(sB);
                 
@@ -675,7 +685,7 @@ public class DataInitSessionBean {
 //            Product pO = new Product("Choco Kopi", new BigDecimal(8), "For Mondays, hangovers, make ups, breakups, late nights, early starts, rainy days… A hug in a mug. Our toasty Kopi-o with a malty chocolate infusion. ", imageForProductO, "FOOD",new BigDecimal(20),new BigDecimal(4)); //noharmdone
 //            Product pP = new Product("Gula Melaka Kopi", new BigDecimal(8), "We've blended our signature Kopi-o with caramelised coconut sugar, giving your favourite brew a decadent twist." , imageForProductP, "FOOD",new BigDecimal(20),new BigDecimal(4));
 //            Product pQ = new Product("Personalised Photo Dome", new BigDecimal(170), "Our Signature Preserved Flower Dome is meticulously handcrafted using long-lasting premium flowers. Make a lasting impression with this thoughtful gift, personalized with a memorable photo of your loved one.", imageForProductQ, "OTHERS",new BigDecimal(20),new BigDecimal(4)); //bloomback
-            Product pR = new Product("Lemongrass Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality lemongrass.", imageForProductR, "CRAFTS",new BigDecimal(20),new BigDecimal(4)); //olive tree
+            Product pR = new Product("Lemongrass Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality lemongrass.", imageForProductR, "CRAFTS",new BigDecimal(0),new BigDecimal(0)); //olive tree
 //            Product pS = new Product("Birthstone Charms", new BigDecimal(75), "This bag charm is crafted using long-lasting premium flowers and completed with a meaningful birthstone.", imageForProductS, "OTHERS",new BigDecimal(20),new BigDecimal(4));//bloomback
 //            Product pT = new Product("Rice Soap", new BigDecimal(10), "Our NO. 1 BESTSELLER hand-crafted soap is made using high-quality roselle and rice milk.", imageForProductT, "CRAFTS",new BigDecimal(20),new BigDecimal(4)); //olive tree
 
@@ -685,83 +695,138 @@ public class DataInitSessionBean {
             productSessionBeanLocal.createNewProduct(pD, 1l);
             productSessionBeanLocal.createNewProduct(p4_1, 4l);
             productSessionBeanLocal.createNewProduct(p3_4, 3l);
-            productSessionBeanLocal.createNewProduct(pJ, 1l);
+            productSessionBeanLocal.createNewProduct(pJ, 1l); //7
             productSessionBeanLocal.createNewProduct(p4_2, 4l);
             productSessionBeanLocal.createNewProduct(p4_4, 4l);
             productSessionBeanLocal.createNewProduct(p2_1, 2l);
             productSessionBeanLocal.createNewProduct(p2_4, 2l);
-            productSessionBeanLocal.createNewProduct(pA, 1l);
+            productSessionBeanLocal.createNewProduct(pA, 1l); //12
             productSessionBeanLocal.createNewProduct(p2_6, 2l);
             productSessionBeanLocal.createNewProduct(p4_3, 4l);
             productSessionBeanLocal.createNewProduct(p2_10, 2l);
             productSessionBeanLocal.createNewProduct(p3_1, 3l);
-            productSessionBeanLocal.createNewProduct(pB, 1l);
+            productSessionBeanLocal.createNewProduct(pB, 1l); //17
             productSessionBeanLocal.createNewProduct(p3_2, 3l);
-            productSessionBeanLocal.createNewProduct(pK, 1l);
+            productSessionBeanLocal.createNewProduct(pK, 1l); //19
             productSessionBeanLocal.createNewProduct(p2_9, 2l);
-            productSessionBeanLocal.createNewProduct(pN, 1l);
+            productSessionBeanLocal.createNewProduct(pN, 1l); //21
             productSessionBeanLocal.createNewProduct(p3_3, 3l);
             productSessionBeanLocal.createNewProduct(p3_5, 3l);
-            productSessionBeanLocal.createNewProduct(pG, 1l);
-            productSessionBeanLocal.createNewProduct(pR, 1l);
+            productSessionBeanLocal.createNewProduct(pG, 1l); //24
+            productSessionBeanLocal.createNewProduct(pR, 1l); //25
 
 
                 //image for review A
                 int countReviewA = 0;
-  
-//                URL imageUrlReviewA1 = classLoader.getResource("ejb/session/images/imageB1.jpg");
                 countReviewA++;
-//                URL imageUrlReviewA2 = classLoader.getResource("ejb/session/images/imageB2.jpg");
                 countReviewA++;
                 countReviewA++;
                 String imageForProductReviewA[] = new String[countReviewA];
-//                String imagePathB1 = imageUrlReviewA1.getPath();
-//                String imagePathB2 = imageUrlReviewA2.getPath();
-               // String[] imagePathsReviewA = {imagePathA, imagePathA2};
                  String[] imagePathsReviewA = {imagePatha1,imagePatha,imagePatha2};
             for (int i = 0; i < imagePathsReviewA.length; i++) {
             File imageFileReviewA = new File(imagePathsReviewA[i]);
             byte[] imageBytesReviewA = Files.readAllBytes(imageFileReviewA.toPath()); 
              imageForProductReviewA[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesReviewA);}
+            
+            //image for review F
+             int countReviewF = 0;
+                URL imageUrlReviewF1 = classLoader.getResource("ejb/session/images/ReviewF1.jpg");
+                countReviewF++;
+                URL imageUrlReviewF2 = classLoader.getResource("ejb/session/images/ReviewF2.jpg");
+                countReviewF++;
+                URL imageUrlReviewF3 = classLoader.getResource("ejb/session/images/ReviewF3.jpg");
+                countReviewF++;
+                String imagePathReviewF1 = imageUrlReviewF1.getPath();
+                String imagePathReviewF2 = imageUrlReviewF2.getPath();
+                String imagePathReviewF3 = imageUrlReviewF3.getPath();
+                String imageForReviewF[] = new String[countReviewF];
+                String[] imagePathsReviewF = {imagePathReviewF1, imagePathReviewF2,imagePathReviewF3};
+            for (int i = 0; i < imagePathsReviewF.length; i++) {
+            File imageFileReviewF = new File(imagePathsReviewF[i]);
+            byte[] imageBytesReviewF = Files.readAllBytes(imageFileReviewF.toPath()); 
+            imageForReviewF[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesReviewF);}
+            
+            
+             //image for review D
+             int countReviewD = 0;
+                URL imageUrlReviewD1 = classLoader.getResource("ejb/session/images/ReviewD1.jpg");
+                countReviewD++;
+                URL imageUrlReviewD2 = classLoader.getResource("ejb/session/images/ReviewD2.jpg");
+                countReviewD++;
+                URL imageUrlReviewD3 = classLoader.getResource("ejb/session/images/ReviewD3.jpg");
+                countReviewD++;
+                String imagePathReviewD1 = imageUrlReviewD1.getPath();
+                String imagePathReviewD2 = imageUrlReviewD2.getPath();
+                String imagePathReviewD3 = imageUrlReviewD3.getPath();
+                String imageForReviewD[] = new String[countReviewD];
+                String[] imagePathsReviewD = {imagePathReviewD1, imagePathReviewD2,imagePathReviewD3};
+            for (int i = 0; i < imagePathsReviewD.length; i++) {
+            File imageFileReviewD = new File(imagePathsReviewD[i]);
+            byte[] imageBytesReviewD = Files.readAllBytes(imageFileReviewD.toPath()); 
+            imageForReviewD[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesReviewD);}
 
-
-                Review rA1 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, false, new Date());
-                Review rA2 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!", 5, false, imageForProductReviewA,new Date());
-
-                Review rA3 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 3, false, new Date());
-                Review rA4 = new Review("The colour of the dress is very unique and it has become my favourite piece in my closet!",5, false, new Date());
+                //17 days ago
+                Calendar cal1 = Calendar.getInstance();
+                cal1.add(Calendar.DATE, - 17);
+                Date todate1 = cal1.getTime();
                 
-                Review rB1 = new Review("Very nice!",5, false, new Date());
-                Review rB2 = new Review("These pants are so flare that it looks like a skirt from far.  A very versatile piece to style :)",5, false, new Date());
-                Review rB3 = new Review("I like these pants so much that I bought 2 of it in both colours, black and blue.",5, false, new Date());
-                Review rB4 = new Review("This is my favourite pants at the moment :)",5, false, new Date());
+                //10 days ago 
+                Calendar cal2 = Calendar.getInstance();
+                cal2.add(Calendar.DATE, -10);
+                Date todate2 = cal2.getTime();
                 
-                Review rC1 = new Review("Looks very nice",5, false, new Date());
+                //5 days ago
+                Calendar cal3 = Calendar.getInstance();
+                cal3.add(Calendar.DATE, -5);
+                Date todate3 = cal3.getTime();
 
-                Review rC2 = new Review("The turquoise colour of the dress is very unique. It is hard to find dresses in this colour so I really like this piece",5, false, new Date());
-                Review rC3 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!",5, false, new Date());
-                Review rC4 = new Review("The sizing of this dress runs big. It is recommended that you size down if you are in between sizes",2, false, new Date());
+                 //2 days ago
+                Calendar cal4 = Calendar.getInstance();
+                cal4.add(Calendar.DATE, -2);
+                Date todate4 = cal4.getTime();
+                
+                 //1 days ago
+                Calendar cal5 = Calendar.getInstance();
+                cal5.add(Calendar.DATE, - 1);
+                Date todate5 = cal5.getTime();
+                
+                Review rA1 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, true, todate1);
+                Review rA2 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!", 5, false, imageForProductReviewA,todate2);
+                Review rA3 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 3, false, todate3);
+                Review rA4 = new Review(5, false,todate4);
+                
+                Review rB1 = new Review(5, true, todate1);
+                Review rB2 = new Review("These pants are so flare that it looks like a skirt from far.  A very versatile piece to style :)",5, false, todate2);
+                Review rB3 = new Review("I like these pants so much that I bought 2 of it in both colours, black and blue.",5, false, todate3);
+                Review rB4 = new Review("This is my favourite pants at the moment :)",5, false, todate4);
+                
+                Review rC1 = new Review(5, false, todate1);
+
+                Review rC2 = new Review("The turquoise colour of the dress is very unique. It is hard to find dresses in this colour so I really like this piece",5, true, todate2);
+                Review rC3 = new Review("The material of the dress is very good.  This dress is on the pricier side but this is truly worth every dollar spent!",5, false, todate3);
+                Review rC4 = new Review("The sizing of this dress runs big. It is recommended that you size down if you are in between sizes",2, false, todate4);
                    
-                Review rD1 = new Review("Buy this for my friend, she like it a lot", 5, false, new Date());
-                Review rD2 = new Review("This is my first time purchasing clothing of this material and it has become my favourite kind due to its high quality!", 5, false, new Date());
-                Review rD3 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, false, new Date());
-                Review rD4 = new Review("This dress is very long and not suitable for girls who are petite.  I am 154cm and this dress is way too long for me :(", 1, false, new Date());
+                Review rD1 = new Review(5, false, todate1);
+                Review rD2 = new Review("This is my first time purchasing clothing of this material and it has become my favourite kind due to its high quality!", 5, true,imageForReviewD,todate2);
+                Review rD3 = new Review("Very pretty dress, I wore it to a friend's birthday party and received compliments from all of my friends.", 5, false, todate3);
+                Review rD4 = new Review("This dress is very long and not suitable for girls who are petite.  I am 154cm and this dress is way too long for me :(", 1, false, todate4);
                 
-                Review rE1 = new Review("Beautiful!", 5, false, new Date());
-                Review rE2 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 2, false, new Date());
-                Review rE3 = new Review("I love the flowy cut of the dress, it is very easy to move in and is definitely very comfortable to wear!", 5, false, new Date());
-                Review rE4 = new Review("Love the material of the dress!  It is resistant to high temperatures especially when ironing.", 5, false, new Date()); 
+                Review rE1 = new Review(5, true, todate1);
+                Review rE2 = new Review("The sizing is not accurate as this dress runs small.  It is recommended that you upsize if you are in between sizes.", 2, false, todate2);
+                Review rE3 = new Review("I love the flowy cut of the dress, it is very easy to move in and is definitely very comfortable to wear!", 5, false, todate3);
+                Review rE4 = new Review("Love the material of the dress!  It is resistant to high temperatures especially when ironing.", 5, false, todate4); 
 
-                Review rF1 = new Review("WORTH IT", 5, false, new Date());
-                Review rF2 = new Review("Long the high neckline for the dress.  Modest yet stylish!", 5, false, new Date());
-                Review rF3 = new Review("Dress is made of premium quality, purchase is very worth it!", 5, false, new Date());
-                Review rF4 = new Review("Dress is too expensive.  Bought the dress but found a cheaper version elsewhere.  The price difference was a $100.", 1, false, new Date()); 
+                Review rF1 = new Review(5, true,todate1);
+                Review rF2 = new Review("Long the high neckline for the dress.  Modest yet stylish!", 5, false,imageForReviewF,todate2);
+                Review rF3 = new Review("Dress is made of premium quality, purchase is very worth it!", 5, false, todate3);
+                Review rF4 = new Review("Dress is too expensive.  Bought the dress but found a cheaper version elsewhere.  The price difference was a $100.", 1, false, todate4); 
 
-                Review rG1 = new Review("Very WORTH IT", 5, false, new Date());
-                Review rG2 = new Review("This dress is very long and not suitable for girls who are petite.  I am 154cm and this dress is way too long for me :(", 5, false, new Date());
-                Review rG3 = new Review("I like this dress so much that I bought 2 of it in both colours, red and blue.", 5, false, new Date());
-                Review rG4 = new Review("Dress is made of premium quality, purchase is very worth it!", 5, false, new Date()); 
+                Review rG1 = new Review(5, false,todate1);
+                Review rG2 = new Review("This dress is very long and not suitable for girls who are petite.  I am 154cm and this dress is way too long for me :(", 5, true, todate2);
+                Review rG3 = new Review("I like this dress so much that I bought 2 of it in both colours, red and blue.", 5, false, todate3);
+                Review rG4 = new Review("Dress is made of premium quality, purchase is very worth it!", 5, false, todate4); 
                 
+
 //                Review rH1 = new Review("The scent is very nice. I love it", 5, false, new Date());
 //                Review rH2 = new Review("The tamarined and rice really complement eachother to produce a very fragrant scent", 5, false,new Date());
 //                Review rH3 = new Review("I prefer this to store-bought soap products as there are no artificial ingredeints in this one!", 5, false, new Date());
@@ -773,15 +838,15 @@ public class DataInitSessionBean {
 //                Review rI3 = new Review("Very cute product, would definitely buy again as I am a huge fan of crotchet handicrafts!", 5, false, new Date());
 //                Review rI4 = new Review("I bought this for my granddaughter and it is her favourite toy now!", 5, false, new Date()); 
 
-                Review rJ1 = new Review("Beautiful", 5, false, new Date());
-                Review rJ2 = new Review("Very pretty blouse, I wore it to a friend's birthday party and received compliments from all of my friends.\"", 5, false, new Date());
-                Review rJ3 = new Review("The sizing is not accurate as this blouse runs small.  It is recommended that you upsize if you are in between sizes.", 5, false, new Date());
-                Review rJ4 = new Review("Love the material of the dress!  It is resistant to high temperatures especially when ironing.", 5, false, new Date()); 
+                Review rJ1 = new Review(5, true, todate1);
+                Review rJ2 = new Review("Very pretty blouse, I wore it to a friend's birthday party and received compliments from all of my friends.\"", 5, true, todate2);
+                Review rJ3 = new Review("The sizing is not accurate as this blouse runs small.  It is recommended that you upsize if you are in between sizes.", 5, false, todate3);
+                Review rJ4 = new Review("Love the material of the dress!  It is resistant to high temperatures especially when ironing.", 5, false, todate4); 
                 
-                Review rK1 = new Review("I give it to my friend as a birthday gift and she love it!", 5, false, new Date());
-                Review rK2 = new Review("Very tasty even with no artificial flavouring! A very healthy and delicious snack :)", 5, false, new Date());
-                Review rK3 = new Review("I stunbled upon this website and decided to try some of their food products and I must say that I am not disappointed at all!", 5, false, new Date());
-                Review rK4 = new Review("This snack was a little too salty for my liking, would prefer if it was more bland.  Nonetheless, it still makes a very good snack!", 5, false, new Date()); 
+                Review rK1 = new Review(5, false, todate1);
+                Review rK2 = new Review("Very tasty even with no artificial flavouring! A very healthy and delicious snack :)", 5, true, todate2);
+                Review rK3 = new Review("I stunbled upon this website and decided to try some of their food products and I must say that I am not disappointed at all!", 5, false, todate3);
+                Review rK4 = new Review("This snack was a little too salty for my liking, would prefer if it was more bland.  Nonetheless, it still makes a very good snack!", 5, false, todate4); 
                 
 //                Review rL1 = new Review("Delicious!!", 5, false, new Date());
 //                Review rL2 = new Review("This peanut butter beats those that are commonly found in the supermarkets!  It is very healthy to with no artificial ingredients and flavouring.", 5, false, new Date());
@@ -792,105 +857,104 @@ public class DataInitSessionBean {
 //                Review rM2 = new Review("The coffee beans were very fragrant.  These are of very good quality and is worth every dollar spent.", 5, false, new Date());
 //                Review rM3 = new Review("These are my favourite coffee beans, I have tried many brands but nothing can compare to these ones", 5, false, new Date());
 //                Review rM4 = new Review("This is my first time buying coffee beans in these flavour and I wil definitely be buying this again very soon :)", 5, false, new Date()); 
-//                
-                Review rN1 = new Review("My family love this drink a lot", 5, false, new Date());
-                Review rN2 = new Review("The tea leaves were very fragrant.  These are of very good quality and is worth every dollar spent.", 5, false, new Date());
-                Review rN3 = new Review("The portion of leaves in each packet is very little, this product is slightly expenisve compared to other brands, will not be buying again.", 5, false, new Date());
-                Review rN4 = new Review("This is my favourite product for tea, I have tried many brands but nothing can compare to these ones", 5, false, new Date()); 
+
+                Review rN1 = new Review(5, false, todate1);
+                Review rN2 = new Review("The tea leaves were very fragrant.  These are of very good quality and is worth every dollar spent.", 5, true, todate2);
+                Review rN3 = new Review("The portion of leaves in each packet is very little, this product is slightly expenisve compared to other brands, will not be buying again.", 5, false,todate3);
+                Review rN4 = new Review("This is my favourite product for tea, I have tried many brands but nothing can compare to these ones", 5, false, todate4); 
+
                 
 //                Review rO1 = new Review("Will buy again. :D", 5, false, new Date());
 //                Review rO2 = new Review("The coffee beans were very fragrant.  These are of very good quality and is worth every dollar spent.", 5, false, new Date());
 //                Review rO3 = new Review("Chocolate and coffee taste surprisngly good.  It is one of my favourite combinations for coffee and I will definitely be buying this very often! ", 5, false, new Date());
 //                Review rO4 = new Review("The chocolate taste overpowered the coffee.  This drink is still decent but I would prefer if the drink had equal portions of coffee and chocolate tastel", 5, false, new Date()); 
 //                
-                reviewSessionBeanLocal.createNewReview(rA1, 1l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rA2, 1l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rA3, 1l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rA4, 1l, "abc4");
+                reviewSessionBeanLocal.createNewReview(rA1, 12l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rA2, 12l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rA3, 12l, "abc3");
+                reviewSessionBeanLocal.createNewReview(rA4, 12l, "abc4");
                 
-                reviewSessionBeanLocal.createNewReview(rB1, 2l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rB2, 2l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rB3, 2l,"abc3");
-                reviewSessionBeanLocal.createNewReview(rB4, 2l, "abc4");
-                
-                reviewSessionBeanLocal.createNewReview(rC1, 3l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rC2, 3l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rC3, 3l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rC4, 3l, "abc4");
-                
+                reviewSessionBeanLocal.createNewReview(rB1, 17l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rB2, 17l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rB3, 17l,"abc3");
+                reviewSessionBeanLocal.createNewReview(rB4, 17l, "abc4");
+//                
+//                reviewSessionBeanLocal.createNewReview(rC1, 3l, "abc1");
+//                reviewSessionBeanLocal.createNewReview(rC2, 3l, "abc2");
+//                reviewSessionBeanLocal.createNewReview(rC3, 3l, "abc3");
+//                reviewSessionBeanLocal.createNewReview(rC4, 3l, "abc4");
+//                
                 reviewSessionBeanLocal.createNewReview(rD1, 4l, "abc1");
                 reviewSessionBeanLocal.createNewReview(rD2, 4l, "abc2");
                 reviewSessionBeanLocal.createNewReview(rD3, 4l, "abc3");
                 reviewSessionBeanLocal.createNewReview(rD4, 4l, "abc4");
-                
-                reviewSessionBeanLocal.createNewReview(rE1, 5l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rE2, 5l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rE3, 5l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rE4, 5l, "abc4");
-     
-                reviewSessionBeanLocal.createNewReview(rF1, 6l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rF2, 6l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rF3, 6l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rF4, 6l, "abc4");
-                
-                     
-                reviewSessionBeanLocal.createNewReview(rG1, 7l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rG2, 7l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rG3, 7l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rG4, 7l, "abc4");
-                
-//                reviewSessionBeanLocal.createNewReview(rH1, 8l, "abc1");
-//                reviewSessionBeanLocal.createNewReview(rH2, 8l, "abc2");
-//                reviewSessionBeanLocal.createNewReview(rH3, 8l, "abc3");
-//                reviewSessionBeanLocal.createNewReview(rH4, 8l, "abc4");
-                
-//                reviewSessionBeanLocal.createNewReview(rI1, 9l, "abc1");
-//                reviewSessionBeanLocal.createNewReview(rI2, 9l, "abc2");
-//                reviewSessionBeanLocal.createNewReview(rI3, 9l, "abc3");
-//                reviewSessionBeanLocal.createNewReview(rI4, 9l, "abc4");
-                
-                reviewSessionBeanLocal.createNewReview(rJ1, 10l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rJ2, 10l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rJ3, 10l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rJ4, 10l, "abc4");
-                
-                reviewSessionBeanLocal.createNewReview(rK1, 11l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rK2, 11l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rK3, 11l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rK4, 11l, "abc4");
-              
-//                reviewSessionBeanLocal.createNewReview(rL1, 12l, "abc1");
-//                reviewSessionBeanLocal.createNewReview(rL2, 12l, "abc2");
-//                reviewSessionBeanLocal.createNewReview(rL3, 12l, "abc3");
-//                reviewSessionBeanLocal.createNewReview(rL4, 12l, "abc4");
 //                
-//                reviewSessionBeanLocal.createNewReview(rM1, 13l, "abc1");
-//                reviewSessionBeanLocal.createNewReview(rM2, 13l, "abc2");
-//                reviewSessionBeanLocal.createNewReview(rM3, 13l, "abc3");
-//                reviewSessionBeanLocal.createNewReview(rM4, 13l, "abc4");
-//                
-                reviewSessionBeanLocal.createNewReview(rN1, 14l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rN2, 14l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rN3, 14l, "abc3");
-                reviewSessionBeanLocal.createNewReview(rN4, 14l, "abc4");
+//                reviewSessionBeanLocal.createNewReview(rE1, 5l, "abc1");
+//                reviewSessionBeanLocal.createNewReview(rE2, 5l, "abc2");
+//                reviewSessionBeanLocal.createNewReview(rE3, 5l, "abc3");
+//                reviewSessionBeanLocal.createNewReview(rE4, 5l, "abc4");
+//     
+                reviewSessionBeanLocal.createNewReview(rF1, 1l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rF2, 1l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rF3, 1l, "abc3");
+                reviewSessionBeanLocal.createNewReview(rF4, 1l, "abc4");
                 
-            //image for product c
-//                int countC = 0;
-//                URL imageUrlC1 = classLoader.getResource("ejb/session/images/imageC1.jpg");
-//                countC++;
-////                URL imageUrlC2 = classLoader.getResource("ejb/session/images/imageC2.jpg");
-//
-//                String imagePathC1 = imageUrlC1.getPath();
-////                String imagePathC2 = imageUrlC2.getPath();
-//                String[] imagePathsC = {imagePathC1};
-//                String imageForProductC[] = new String[countC];
-//            for (int i = 0; i < imagePathsC.length; i++) {
-//            File imageFileC = new File(imagePathsC[i]);
-//            byte[] imageBytesC = Files.readAllBytes(imageFileC.toPath()); 
-//            imageForProductC[i] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytesC);}
+//                     
+                reviewSessionBeanLocal.createNewReview(rG1, 24l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rG2, 24l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rG3, 24l, "abc3");
+                reviewSessionBeanLocal.createNewReview(rG4, 24l, "abc4");
+                
+////                reviewSessionBeanLocal.createNewReview(rH1, 8l, "abc1");
+////                reviewSessionBeanLocal.createNewReview(rH2, 8l, "abc2");
+////                reviewSessionBeanLocal.createNewReview(rH3, 8l, "abc3");
+////                reviewSessionBeanLocal.createNewReview(rH4, 8l, "abc4");
+//                
+////                reviewSessionBeanLocal.createNewReview(rI1, 9l, "abc1");
+////                reviewSessionBeanLocal.createNewReview(rI2, 9l, "abc2");
+////                reviewSessionBeanLocal.createNewReview(rI3, 9l, "abc3");
+////                reviewSessionBeanLocal.createNewReview(rI4, 9l, "abc4");
+//                
+
+                reviewSessionBeanLocal.createNewReview(rJ1, 7l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rJ2, 7l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rJ3, 7l, "abc3");
+                reviewSessionBeanLocal.createNewReview(rJ4, 7l, "abc4");
+//                
+                reviewSessionBeanLocal.createNewReview(rK1, 19l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rK2, 19l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rK3, 19l, "abc3");
+                reviewSessionBeanLocal.createNewReview(rK4, 19l, "abc4");
+//              
+////                reviewSessionBeanLocal.createNewReview(rL1, 12l, "abc1");
+////                reviewSessionBeanLocal.createNewReview(rL2, 12l, "abc2");
+////                reviewSessionBeanLocal.createNewReview(rL3, 12l, "abc3");
+////                reviewSessionBeanLocal.createNewReview(rL4, 12l, "abc4");
+////                
+////                reviewSessionBeanLocal.createNewReview(rM1, 13l, "abc1");
+////                reviewSessionBeanLocal.createNewReview(rM2, 13l, "abc2");
+////                reviewSessionBeanLocal.createNewReview(rM3, 13l, "abc3");
+////                reviewSessionBeanLocal.createNewReview(rM4, 13l, "abc4");
+////                
+                reviewSessionBeanLocal.createNewReview(rN1, 21l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rN2, 21l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rN3, 21l, "abc3");
+                reviewSessionBeanLocal.createNewReview(rN4, 21l, "abc4");
+//                
+////                reviewSessionBeanLocal.createNewReview(rO1, 15l, "abc1");
+////                reviewSessionBeanLocal.createNewReview(rO2, 15l, "abc2");
+////                reviewSessionBeanLocal.createNewReview(rO3, 15l, "abc3");
+////                reviewSessionBeanLocal.createNewReview(rO4, 15l, "abc4");
 
 
-
+               
+                OrderRecord order1 = new OrderRecord(new BigDecimal(1),new BigDecimal(159),"In Delivery", "U-Shaped Back Dress Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate3);
+                OrderRecord order2 = new OrderRecord(new BigDecimal(1),new BigDecimal(25),"In Delivery", "Snowman necklace Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate4);
+                OrderRecord order3 = new OrderRecord(new BigDecimal(1),new BigDecimal(20),"Pending Approval", "Clay Fox Charm Order","416 CLEMENTI AVENUE 1 CASA CLEMENTI SINGAPORE 120416",todate5);
+                orderRecordSessionBeanLocal.createNewOrderRecord(order1,1l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                orderRecordSessionBeanLocal.createNewOrderRecord(order2,3l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                orderRecordSessionBeanLocal.createNewOrderRecord(order3,10l,"AoQBzVXLlkecGuugz7W4ISsHuvp2");
+                
             } catch (Exception ex) {
                 Logger.getLogger(DataInitSessionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
