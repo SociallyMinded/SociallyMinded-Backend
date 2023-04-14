@@ -840,9 +840,9 @@ public class DataInitSessionBean {
 //                Review rM4 = new Review("This is my first time buying coffee beans in these flavour and I wil definitely be buying this again very soon :)", 5, false, new Date()); 
 
                 Review rN1 = new Review(5, false, todate1);
-                Review rN2 = new Review("The tea leaves were very fragrant.  These are of very good quality and is worth every dollar spent.", 5, true, todate2);
-                Review rN3 = new Review("The portion of leaves in each packet is very little, this product is slightly expenisve compared to other brands, will not be buying again.", 5, false,todate3);
-                Review rN4 = new Review("This is my favourite product for tea, I have tried many brands but nothing can compare to these ones", 5, false, todate4); 
+                Review rN2 = new Review("Such a cute necklace! My niece absolutely loved it!", 5, true, todate2);
+                Review rN3 = new Review("Great attention to detail! It is amazing that the charm is entirely handmade", 5, false,todate3);
+                Review rN4 = new Review("Necklace strap was missing in the mail :(", 3, false, todate4); 
 
                 
 //                Review rO1 = new Review("Will buy again. :D", 5, false, new Date());
@@ -913,10 +913,10 @@ public class DataInitSessionBean {
 ////                reviewSessionBeanLocal.createNewReview(rM3, 13l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
 ////                reviewSessionBeanLocal.createNewReview(rM4, 13l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 ////                
-                reviewSessionBeanLocal.createNewReview(rN1, 21l, "abc1");
-                reviewSessionBeanLocal.createNewReview(rN2, 21l, "abc2");
-                reviewSessionBeanLocal.createNewReview(rN3, 21l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
-                reviewSessionBeanLocal.createNewReview(rN4, 21l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
+                reviewSessionBeanLocal.createNewReview(rN1, 2l, "abc1");
+                reviewSessionBeanLocal.createNewReview(rN2, 2l, "abc2");
+                reviewSessionBeanLocal.createNewReview(rN3, 2l, "CbCG3pbpqVeBq1bz0ckts5Tj8JF3");
+                reviewSessionBeanLocal.createNewReview(rN4, 2l, "fu0vYVzgMEeUfMEExlI8ZdEb1CZ2");
 //                
 ////                reviewSessionBeanLocal.createNewReview(rO1, 15l, "abc1");
 ////                reviewSessionBeanLocal.createNewReview(rO2, 15l, "abc2");
