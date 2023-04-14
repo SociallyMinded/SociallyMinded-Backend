@@ -13,22 +13,36 @@ Link to diagram : https://drive.google.com/file/d/1z9gSA7jFjqo1jwGhS31tJ3rkOcxK4
 ![Untitled Diagram drawio-3](https://user-images.githubusercontent.com/97529863/231953801-f22a8a8f-9b6e-4284-87c7-abe3d2154a1a.png)
 
 ## Software Architecture & Design
-Component Based Architecture
-  - Entity Classes represent tables in our data model (mapped to their respective tables in the MySQL database using JPA)
+### Component Based Architecture
+The backend is divided into components, each representing a subsytem of our application, with session beans created to implement required business methods 
+  - Entity Classes are mapped as tables to the MySQL database using JPA
+    - Customer
+    - SocialEnterprise
+    - OrderRecord
+    - Product
+    - Review
+  - Singleton Session Bean contains a datainit session bean, that persists dummy data to the database upon deployment (to aid in the purposes of the demo)
   - Stateless Session Beans contain business methods to query, create, update and delete their respective entities
-  - Stateless Session Beans contain interfaces to expose their business methods to the web service 
+    - CustomerSessionBean
+    - SocialEnterpriseSessionBean
+    - OrderRecordSessionBean
+    - ProductSessionBean
+    - ReviewSessionBean
+  - Local interfaces of Stateless Session Beans expose business methods to the web service 
+    - CustomerSessionBeanLocal
+    - SocialEnterpriseSessionBeanLocal
+    - OrderRecordSessionBeanLocal
+    - ProductSessionBeanLocal
+    - ReviewSessionBeanLocal
   - Jakarta RESTful Web Services (JAX-RS) expose session bean business methods to the frontend (via GET, PUT, POST, DELETE methods)
  
-REST APIs 
-- Take reference to data input templates under `model` folder
-- Implemented in the respective REST files for each entity under `service` folder
-
 Bean Validation
   - Enforced at the backend with the help of Java's ValidatorFactory API
 
 ## REST API Reference
+These are some of the basic REST APIs implemented at the web service layer, to interact with the frontend clients 
 
-Path : http://localhost:8080/SociallyMinded-war/webresources/ [api path]
+Common API Path : http://localhost:8080/SociallyMinded-war/webresources/ [insert subsequent api path]
 
 ### Customer
 
@@ -55,7 +69,6 @@ Path : http://localhost:8080/SociallyMinded-war/webresources/ [api path]
 
 `/entity.customer/{id}` 
 - Update customer details
-
 
 ### Social Enterprise
 
