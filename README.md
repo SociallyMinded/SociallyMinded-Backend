@@ -2,6 +2,16 @@
 
 This repository contains the backend codes for SociallyMinded
 
+## Demo video
+[insert demo video]
+
+## Installation Guide
+1. mkdir [folder_name]
+2. cd [folder_name]
+3. git clone https://github.com/SociallyMinded/SociallyMinded-Backend.git
+4. Open project in Netbeans
+5. Set up MySQL database with name SociallyMinded
+
 ## Backend Tech Stack
 - Java EE 8
 - MySQL 8.0.31 and Java Persistence API (JPA)
