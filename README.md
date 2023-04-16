@@ -2,9 +2,6 @@
 
 This repository contains the backend codes for SociallyMinded
 
-## Demo video
-[insert demo video]
-
 ## Installation Guide
 1. mkdir [folder_name]
 2. cd [folder_name]
